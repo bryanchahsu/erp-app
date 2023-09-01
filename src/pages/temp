@@ -1,0 +1,107 @@
+{/* right side bar */}
+
+<Flex
+
+    direction="column"
+    borderRight={'solid'}
+    borderColor="gray.300" // Customize the border color
+    borderWidth="1px" // Customize the border width
+    bg= "white"
+    h="100vh"
+    w="250px"
+    position="fixed"
+    top={0}
+    // left={0}
+    right={200}
+    // zIndex={1}
+
+    >
+        
+    {/* Sidebar content */}
+    <Box p={4}
+        mt={20}
+        borderBottom= "1px solid"
+        borderBottomColor=" gray.300"
+        h="150px"
+        > 
+        {/* Sidebar items */}
+        {/* ... */}
+        <List spacing={2}>
+        <ListItem>
+            <Box
+            bg= "#F0F0F0"
+            as={RouterLink}
+            to="/dashboard"
+            display="flex"
+            alignItems="center"
+            textDecoration="none"
+            _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
+            >
+            Dashboard
+            
+            </Box>
+        </ListItem>
+        <ListItem>
+            <Box
+            as={RouterLink}
+            bg= "#F0F0F0"
+            to="/profile"
+            display="flex"
+            alignItems="center"
+            textDecoration="none"
+            _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
+            >
+            Profile
+            </Box>
+        </ListItem>
+        <ListItem>
+            <Box
+            as={RouterLink}
+            
+            bg= "#F0F0F0"
+            to="/settings"
+            display="flex"
+            alignItems="center"
+            textDecoration="none"
+            _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
+            >
+            Settings
+            </Box>
+        </ListItem>
+        </List>
+    </Box>
+    <Box            
+        mt={20}
+        borderBottom= "1px solid"
+        borderBottomColor=" gray.300"
+        h="200px"
+        >
+            test
+        {/* <InventoryTable/>                  */}
+    </Box>
+
+    <Box            
+        mt={20}
+        borderBottom= "1px solid"
+        borderBottomColor=" gray.300"
+        h="200px"
+        >
+        {/* <InventoryTable/>                  */}
+    </Box>
+
+    <Box            
+        mt={20}
+        borderBottom= "1px solid"
+        borderBottomColor=" gray.300"
+        h="200px"
+        >
+        {/* <InventoryTable/>                  */}
+    </Box>
+
+
+    Suck my dick bich
+
+
+
+
+    </Flex>              
