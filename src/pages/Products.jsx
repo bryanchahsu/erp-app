@@ -122,7 +122,7 @@ export default function Products(){
         <Box
                 h="100%"
                 w="100%"
-                bg="purple"
+                bg="blue"
                 position= "relative"
                 top= "60px"
                 borderRadius="8px"
