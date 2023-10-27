@@ -9,11 +9,14 @@ export default function Import(){
     return(
         <div>
             <Button 
-                colorScheme='teal' 
+               
                 size='md'
                 position="absolute"
                 top="2"
-                right="100"
+                right="125"
+                colorScheme="gray" 
+                variant="solid"
+                bg="#E3E3E3"
                 
                 >
                  Import

@@ -7,7 +7,7 @@ import Sidebar from "./components/Sidebar"
 import Indicator_test from "./components/Indicator_test";
 import Export from "./components/export";
 import Import from "./components/import";
-import InventoryTable from "./components/Inventory";
+// import InventoryTable from "./components/ProductInventory";
 import {
     Stat,
     StatLabel,
@@ -16,6 +16,8 @@ import {
     StatArrow,
     StatGroup,
   } from '@chakra-ui/react'
+
+  import DateButton from "./components/DateButton";
 
 
 export default function Analytics(){
@@ -71,8 +73,10 @@ export default function Analytics(){
                 <Box>
                 {/* Content for the title */}
                     <Heading as="h1" size="md">
-                        Inventory: 18502 Ibex Ave
+                        Analytics
                     </Heading>
+                    <DateButton/>
+
                 </Box>
                 
 
@@ -95,7 +99,9 @@ export default function Analytics(){
                 height="100vh"
                 // bg="black"
                 > */}
-        <Flex
+
+        
+        {/* <Flex
                 align="center"
                 justify="space-between"
                 // borderBottom={'solid'}
@@ -162,115 +168,8 @@ export default function Analytics(){
             </Flex>
             <Divider orientation="vertical" borderColor="gray.400" />
    
-            {/* <Flex style={containerStyle}>
-                <StatGroup
-                    p={-2}
-                    mb="10px"
-                    // pl={100}
-                    >
-                    
-                    <Stat>
-                        <StatLabel>Orders</StatLabel>
-                        <StatNumber>345,670</StatNumber>
-                        <StatHelpText>
-                        <StatArrow type='increase' />
-                        23.36%
-                        </StatHelpText>
-                    </Stat>
-
-                    <Stat>
-                        <StatLabel pt="22px"></StatLabel>
-                        <StatNumber>45</StatNumber>
-                        <StatHelpText>
-                        <StatArrow type='decrease' />
-                        9.05%
-                        </StatHelpText>
-                    </Stat>
-                </StatGroup>     
-            </Flex>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            <Flex style={containerStyle}>
-                <StatGroup
-                    p={-2}
-                    mb="10px"
-                    // pl={100}
-                    >
-                    
-                    <Stat>
-                        <StatLabel>Orders Items</StatLabel>
-                        <StatNumber>345,670</StatNumber>
-                        <StatHelpText>
-                        <StatArrow type='increase' />
-                        23.36%
-                        </StatHelpText>
-                    </Stat>
-
-                    <Stat>
-                        <StatLabel>   </StatLabel>
-                        <StatNumber pt="22px">45</StatNumber>
-                        <StatHelpText>
-                        <StatArrow type='decrease' />
-                        9.05%
-                        </StatHelpText>
-                    </Stat>
-                </StatGroup>     
-            </Flex>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            <Flex style={containerStyle}>
-            <StatGroup
-                    p={-2}
-                    mb="10px"
-                    // pl={100}
-                    >
-                    
-                    <Stat>
-                        <StatLabel>Fulfilled</StatLabel>
-                        <StatNumber>345,670</StatNumber>
-                        <StatHelpText>
-                        <StatArrow type='increase' />
-                        23.36%
-                        </StatHelpText>
-                    </Stat>
-
-                    <Stat>
-                        <StatLabel pt="22px"></StatLabel>
-                        <StatNumber>45</StatNumber>
-                        <StatHelpText>
-                        <StatArrow type='decrease' />
-                        9.05%
-                        </StatHelpText>
-                    </Stat>
-                </StatGroup>   
-            </Flex>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            <Flex style={containerStyle}>
-            <StatGroup
-                    p={-2}
-                    mb="10px"
-                    // pl={100}
-                    >
-                    
-                    <Stat>
-                        <StatLabel>Delivered</StatLabel>
-                        <StatNumber>345,670</StatNumber>
-                        <StatHelpText>
-                        <StatArrow type='increase' />
-                        23.36%
-                        </StatHelpText>
-                    </Stat>
-
-                    <Stat>
-                        <StatLabel pt="22px"></StatLabel>
-                        <StatNumber>45</StatNumber>
-                        <StatHelpText>
-                        <StatArrow type='decrease' />
-                        9.05%
-                        </StatHelpText>
-                    </Stat>
-                </StatGroup>   
-            </Flex> */}
-                    
-        </Flex>
+            
+        </Flex> */}
 
         <Box 
                 h="100%"
@@ -298,13 +197,14 @@ export default function Analytics(){
                         top={0}
                         left={0}
                         right={0}
-                        zIndex={10}
+                        marginBottom="10px"
+                        // zIndex={10}
 
                     >
                         <Box>
                         {/* Content for the title */}
                         <Heading as="h1" size="md">
-                            Inventory:
+                            Reports:
                         </Heading>
                         </Box>
                         
@@ -328,6 +228,27 @@ export default function Analytics(){
                                                         
 
                      {/* //This is for the inventory */}
+                     <Flex flexWrap="wrap" justifyContent="center" position= "absolute" marginTop="100px">
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+                            <Box
+                            key={item}
+                            width="400px" // Adjust the width to be 5 times bigger
+                            height="400px" // Adjust the height to be 5 times bigger
+                            // backgroundColor="gray.200"
+                            backgroundColor="white"
+                            margin="10px"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            fontSize="2xl"
+                            >
+                            {item}
+                            </Box>
+                        ))}
+                    </Flex>
+
+
+
                      <Box
                      top={100}
                      position= "absolute"
@@ -337,7 +258,7 @@ export default function Analytics(){
                     //  borderRadius={8}
                      
                      >   
-                        <InventoryTable/>
+                        {/* <InventoryTable/> */}
                     </Box>
         </Box>
             {/* </Flex> */}

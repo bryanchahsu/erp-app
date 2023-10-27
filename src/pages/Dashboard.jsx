@@ -16,7 +16,7 @@ import { Container } from '@chakra-ui/react'
 import TableSample from "../../components/TableSample"
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
-import InventoryTable from "./components/InventoryTable"
+import InventoryTable from "./components/Dashboard_Inventory"
 import Indicator_test from "./components/Indicator_test";
 
 export default function Dashboard() {

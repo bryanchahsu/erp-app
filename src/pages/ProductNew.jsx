@@ -14,25 +14,25 @@ import SalesChannelsList from "./components/test2_saleschannel";
 import { useQuery } from 'react-query';
 
 
-const fetchProductDetail = async (productId) => {
-  const response = await fetch(`http://localhost:8000/products/${productId}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
-export default function ProductDetail(){
+// const fetchProductDetail = async (productId) => {
+//   const response = await fetch(`http://localhost:8000/products/${productId}`);
+//   if (!response.ok) {
+//     throw new Error('Network response was not ok');
+//   }
+//   return response.json();
+// };
+export default function ProductNew(){
 
     // Access the URL parameter ":productId"
     let { productId } = useParams();
 
     // Use "productId" to fetch product details using React Query
-    const { data, isLoading, isError, error } = useQuery(['product', productId], () =>
-    fetchProductDetail (productId)
-    );
+    // const { data, isLoading, isError, error } = useQuery(['product', productId], () =>
+    // fetchProductDetail (productId)
+    // );
 
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error: {error.message}</div>;
+    // if (isLoading) return <div>Loading...</div>;
+    // if (isError) return <div>Error: {error.message}</div>;
 
       
     const firstDivStyle= {
@@ -97,7 +97,7 @@ export default function ProductDetail(){
                             //  boxShadow="0 2px 4px grey"
                              >
                               
-                  <ProductDetailTest products= {data}/>
+                  <ProductDetailTest products= {"0"}/>
                  
                 </Flex>
                 

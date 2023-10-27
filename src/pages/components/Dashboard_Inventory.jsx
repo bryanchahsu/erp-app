@@ -1,4 +1,6 @@
 
+// THIS IS CONNECTED TO THE HOME PAGE//
+
 import {
     Table,
     Thead,

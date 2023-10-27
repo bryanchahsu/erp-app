@@ -1,19 +1,26 @@
 // src/components/CustomerTable.js
 import React, { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
+
+const fetchData = async () => {
+  const response = await fetch('http://localhost:8000/customers');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
 
 const CustomerTable = () => {
-  const [customers, setCustomers] = useState([]);
 
+  const { data, isLoading, isError } = useQuery('products', fetchData);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching data</div>;
   
-  useEffect(() => {
-    fetch('http://localhost:8000/customers')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data); // Check the data structure here
-        setCustomers(data);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+
+
+
   
   return (
     <div>
@@ -28,8 +35,10 @@ const CustomerTable = () => {
             <th>Phone</th>
           </tr>
         </thead>
+
+        
         <tbody>
-          {customers.map(customer => (
+          {data.map(customer => (
             <tr key={customer.id}>
               <td>{customer.id}</td>
               <td>{customer.firstName}</td>
@@ -39,6 +48,7 @@ const CustomerTable = () => {
             </tr>
           ))}
         </tbody>
+
       </table>
     </div>
   );

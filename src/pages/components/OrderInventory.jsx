@@ -10,7 +10,7 @@
 //   ]);
 
 //   const handleQuantityChange = (itemId, newQuantity) => {
-//     setInventoryData((prevInventory) =>
+//     setInventoryData((prevInventory) =>+++++++++
 //       prevInventory.map((item) =>
 //         item.id === itemId ? { ...item, quantity: newQuantity } : item
 //       )
@@ -60,7 +60,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, Checkbox, Input, Link, Box, Heading } 
 import { Link as ReactLink } from "react-router-dom";
 
 
-const InventoryTable = () => {
+const OrderInventory = ({ products }) => {
   const [inventoryData, setInventoryData] = useState([]);
 
   
@@ -74,15 +74,15 @@ const InventoryTable = () => {
   };
 
 
-    useEffect(() => {
-      fetch('http://localhost:8000/products')
-        .then(response => response.json())
-        .then(data => {
-          console.log(data); // Check the data structure here
-          setInventoryData(data);
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }, []);
+    // useEffect(() => {
+    //   fetch('http://localhost:8000/products')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       console.log(data); // Check the data structure here
+    //       setInventoryData(data);
+    //     })
+    //     .catch(error => console.error('Error fetching data:', error));
+    // }, []);
 
   return (
     <Box p={4} bg="#F5F5F5"
@@ -99,13 +99,67 @@ const InventoryTable = () => {
             <Th>
               <Checkbox /> {/* Checkbox for select all */}
             </Th>
-            <Th>Product</Th>
-            <Th>SKU</Th>
-            <Th>Quantity</Th>
-            <Th>Price</Th>
-            <Th>Update Quantity</Th>
+            <Th>Orders</Th>
+            <Th>Date</Th>
+            <Th>Customer</Th>
+            <Th>Total</Th>
+            <Th>Fulfillment Status</Th>
+            <Th>Items</Th>
+            <Th>Tags</Th>
           </Tr>
         </Thead>
+
+        <Tbody>
+          {products.map((item) => (
+            <Tr
+              key={item.id}
+              _hover={{ boxShadow: "md" }} // Add hover shadow on each row
+              cursor="pointer" // Change cursor to indicate clickable row
+            >
+              <Td>
+                <Checkbox /> {/* Checkbox for individual item selection */}
+              </Td>
+              <Td>
+                <Link as={ReactLink} to={`/orders/${item.id}`}>
+                  <Box>{item.id}</Box>
+                </Link>
+              </Td>
+              <Td>
+                <Link as={ReactLink} to={`/orders/${item.id}`}>
+                  <Box>{item.orderDate}</Box>
+                </Link>
+              </Td>
+              <Td>
+                <Link as={ReactLink} to={`/orders/${item.id}`}>
+                  <Box>{item.customerName}</Box>
+                </Link>
+              </Td>
+              <Td>
+                <Link as={ReactLink} to={`/orders/${item.id}`}>
+                  <Box>{item.price}</Box>
+                </Link>
+              </Td>
+              <Td>
+                <Link as={ReactLink} to={`/orders/${item.id}`}>
+                  <Box>{item.fulfillmentStatus}</Box>
+                </Link>
+              </Td>
+              <Td>
+                <Link as={ReactLink} to={`/orders/${item.id}`}>
+                  <Box>{item.price}</Box>
+                </Link>
+              </Td>
+              <Td>
+                <Link as={ReactLink} to={`/orders/${item.id}`}>
+                  <Box>{item.tags}</Box>
+                </Link>
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+
+
+{/*         
         <Tbody>
           {inventoryData.map((item) => (
             <Tr
@@ -114,7 +168,7 @@ const InventoryTable = () => {
               cursor="pointer" // Change cursor to indicate clickable row
             >
               <Td>
-                <Checkbox /> {/* Checkbox for individual item selection */}
+                <Checkbox /> 
               </Td>
               <Td>
                 <Link as={ReactLink} to={`/products/${item.id}`}>
@@ -140,16 +194,16 @@ const InventoryTable = () => {
                 <Input
                   size="sm"
                   type="number"
-                  // value={item.quantity}
                   onChange={(e) => handleQuantityChange(item.id, e.target.value)}
                 />
               </Td>
             </Tr>
           ))}
-        </Tbody>
+        </Tbody> */}
+
       </Table>
     </Box>
   );
 };
 
-export default InventoryTable;
+export default OrderInventory;

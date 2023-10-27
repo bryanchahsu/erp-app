@@ -11,7 +11,7 @@ const BackButton = () => {
   };
 
   return (
-    <Button colorScheme="blue" onClick={handleGoBack}>
+    <Button  onClick={handleGoBack}>
       <ArrowBackIcon/>
     </Button>
   );

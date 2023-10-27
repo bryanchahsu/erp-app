@@ -3,22 +3,42 @@ import React from "react";
 import TableSample from "../../components/TableSample"
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
-// import InventoryTable from "./components/InventoryTable"
-import Indicator_test from "./components/Indicator_test";
 import Export from "./components/export";
 import Import from "./components/import";
-import InventoryTable from "./components/Inventory";
+import OrderInventory from "./components/OrderInventory";
+import { useQuery } from 'react-query';
+// import SearchBar from "./components/Header/search";
+import SearchBar from "./components/Header/searchResults";
 
+const fetchData = async () => {
+    const response = await fetch('http://localhost:8000/orders');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    // return response.json();
+    return response.json();
+
+  };
+  
 
 export default function Orders(){
+    const { data, isLoading, isError } = useQuery('products', fetchData);
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error fetching data</div>;
+
+
+
+
     const containerStyle = {
         flexBasis: "20%", // Equal width for all containers (5 containers = 100%)
         textAlign: "center",
         padding: "20px",
-        backgroundColor: "#e0e0e0",
+        // backgroundColor: "white",
+        // backgroundColor: "#e0e0e0",
       };
     const firstDivStyle= {
-        background: "#F0F0F0",
+        background: "#f1f1f1",
+        
         margin: 0,
         padding: 0,
         minHeight: '100vh', // To ensure the background covers the full viewport height
@@ -63,7 +83,7 @@ export default function Orders(){
                 <Box>
                 {/* Content for the title */}
                     <Heading as="h1" size="md">
-                        Inventory: 18502 Ibex Ave
+                        Orders: All Locations
                     </Heading>
                 </Box>
                 
@@ -82,12 +102,8 @@ export default function Orders(){
                     
         </Flex>
 
-        {/* <Flex justifyContent="center" 
-                alignItems="center" 
-                height="100vh"
-                // bg="black"
-                > */}
-        <Flex
+
+         <Flex
                 align="center"
                 justify="space-between"
                 // borderBottom={'solid'}
@@ -95,9 +111,9 @@ export default function Orders(){
                 // borderWidth="1px" // Customize the border width
                 
                 bg="white"
-                boxShadow="0 0.5px px grey"
+                boxShadow="0 2px 5px rgba(0, 0, 0, 0.1)" // Improved box shadow
                 borderRadius= "8px"
-                
+                fontFamily="Roboto, Arial, sans-serif" // Change to desired font
                 h="60px"
                 px={4}
                 position="absolute"
@@ -105,23 +121,70 @@ export default function Orders(){
                 left={5}
                 right={5}
                 zIndex={10}
+                style={{ alignItems: 'flex-start' }}
 
             >
-            <Box style={containerStyle}>
-                {/* <Indicator_test/> */}
-                Container 1
-                Container 1
+            <Flex style={containerStyle} >
+                Today
                 
-            </Box>
+            </Flex>
             <Divider orientation="vertical" borderColor="gray.400" />
-            <Box style={containerStyle}>Container 2</Box>
+
+            <Flex style={{ ...containerStyle, alignItems: 'center', justifyContent: 'left', position: 'relative' }}>
+                <Box style={{ position: 'absolute', top: 5 }}>
+                    Orders
+                </Box>
+                <Flex justifyContent="space-between" >
+                    <Box flex="1" > 
+                        <ul>
+                        <li style={{ color: "blue" }}><strong>0-30:</strong> Your text here</li>
+                        </ul>
+                    </Box>
+                    <Box flex="1" ml='20px'>
+                        <ul>
+                        <li style={{ color: "green" }}><strong>31-90:</strong> Your text here</li>
+                        </ul>
+                    </Box>
+                    <Box flex="1" ml='20px' >
+                        <ul>
+                        <li style={{ color: "red" }}><strong>91+:</strong> 14 Var</li>
+                        </ul>
+                    </Box>
+                </Flex>      
+            </Flex>
             <Divider orientation="vertical" borderColor="gray.400" />
-            <Box style={containerStyle}>Container 3</Box>
+            
+            <Flex style={{ ...containerStyle, alignItems: 'center', justifyContent: 'left', position: 'relative' }}>
+                <Box style={{ position: 'absolute', top: 5 }}>
+                    Ordered Items
+                </Box>
+                <Box >
+                    a
+                </Box>                    
+            </Flex>
             <Divider orientation="vertical" borderColor="gray.400" />
-            <Box style={containerStyle}>Container 4</Box>
+            
+            <Flex style={{ ...containerStyle, alignItems: 'center', justifyContent: 'left', position: 'relative' }}>
+                <Box style={{ position: 'absolute', top: 5 }}>
+                    Fulfilled Items
+                </Box>
+                <Box >
+                    a
+                </Box>                    
+            </Flex>
             <Divider orientation="vertical" borderColor="gray.400" />
-            <Box style={containerStyle}>Container 5</Box>
-                    
+            
+            <Flex style={{ ...containerStyle, alignItems: 'center', justifyContent: 'left', position: 'relative' }}>
+                <Box style={{ position: 'absolute', top: 5 }}>
+                    Fulfilled Orders
+                </Box>
+                <Box >
+                    a
+                </Box>                    
+            </Flex>
+            <Divider orientation="vertical" borderColor="gray.400" />
+   
+            
         </Flex>
 
         <Box
@@ -155,8 +218,10 @@ export default function Orders(){
                     >
                         <Box>
                         {/* Content for the title */}
+                        
+
                         <Heading as="h1" size="md">
-                            Inventory:
+                            Search All Orders:
                         </Heading>
                         </Box>
                         
@@ -189,12 +254,19 @@ export default function Orders(){
                     //  borderRadius={8}
                      
                      >   
-                        <InventoryTable/>
+                        <OrderInventory products= {data}/>
+                        <SearchBar></SearchBar>
+                    </Box>
+
+                    <Box background="black">
+                       
+
                     </Box>
         </Box>
-            {/* </Flex> */}
-      {/* </Box> */}
+        {/* <SearchBar></SearchBar> */}
+
     </Box>
+
 
 
 

@@ -11,7 +11,9 @@ export default function Sidebar() {
       borderColor="gray.300"
       borderWidth="1px"
       // bg="#F0F0F0"
-      bg="#FFFFFF"
+      // bg="#FFFFFF"
+      // bg="#E6E6E6"
+      bg="#ebebeb"
       h="100vh"
       w="250px"
       position="fixed"
@@ -19,12 +21,13 @@ export default function Sidebar() {
       left={0}
       zIndex={1}
     >
-      <Box p={4} mt={20}>
-        <List spacing={2}>
+      <Box p={4} mt={20} >
+        <List spacing={2} >
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#F0F0F0"
+              // bg="#E6E6E6"
+              bg="#ebebeb"
               to="/"
               display="flex"
               alignItems="center"
@@ -32,13 +35,13 @@ export default function Sidebar() {
               _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
             >
               <Icon as={FaHome} mr={2} />
-              Home
+              <Text fontWeight="bold">Home</Text>
             </Box>
           </ListItem>
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#F0F0F0"
+              bg="#ebebeb"
               to="/orders"
               display="flex"
               alignItems="center"
@@ -46,13 +49,13 @@ export default function Sidebar() {
               _hover={{ boxShadow: '0 2px 4px grey' }}
             >
               <Icon as={FaClipboardList} mr={2} />
-              Orders
+              <Text fontWeight="bold">Orders</Text>
             </Box>
           </ListItem>
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#F0F0F0"
+              bg="#ebebeb"
               to="/products"
               display="flex"
               alignItems="center"
@@ -60,13 +63,13 @@ export default function Sidebar() {
               _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
             >
               <Icon as={FaBox} mr={2} />
-              Products
+              <Text fontWeight="bold">Products</Text>
             </Box>
           </ListItem>
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#F0F0F0"
+              bg="#ebebeb"
               to="/customers"
               display="flex"
               alignItems="center"
@@ -74,13 +77,13 @@ export default function Sidebar() {
               _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
             >
               <Icon as={FaUsers} mr={2} />
-              Customers
+              <Text fontWeight="bold">Customers</Text>
             </Box>
           </ListItem>
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#F0F0F0"
+              bg="#ebebeb"
               to="/analytics"
               display="flex"
               alignItems="center"
@@ -88,7 +91,7 @@ export default function Sidebar() {
               _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
             >
               <Icon as={FaChartBar} mr={2} />
-              Analytics
+              <Text fontWeight="bold">Analytics</Text>
             </Box>
           </ListItem>
         </List>

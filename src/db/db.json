@@ -1,21 +1,20 @@
 {
-    "customers": [
-      {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "john@example.com",
-        "phone": "123-456-7890"
-      },
-      {
-        "id": 2,
-        "firstName": "Jane",
-        "lastName": "Smith",
-        "email": "jane@example.com",
-        "phone": "987-654-3210"
-      }
-    ],
-      
+  "customers": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "phone": "123-456-7890"
+    },
+    {
+      "id": 2,
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane@example.com",
+      "phone": "987-654-3210"
+    }
+  ],
   "inventory": [
     {
       "id": 1,
@@ -36,37 +35,58 @@
     {
       "id": 1,
       "customerId": 1,
+      "customerName": "John Doe",
       "items": [
-        { "productId": 1, "quantity": 3 },
-        { "productId": 2, "quantity": 2 }
+        {
+          "productId": 1,
+          "quantity": 3
+        },
+        {
+          "productId": 2,
+          "quantity": 2
+        }
       ],
-      "orderDate": "2023-07-15T10:00:00Z"
+      "orderDate": "2023-07-15T10:00:00Z",
+      "fulfillmentStatus": "Pending",
+      "tags": [
+        "Urgent",
+        "Express"
+      ],
+      "total": 50
     },
     {
       "id": 2,
       "customerId": 2,
+      "customerName": "Jane Smith",
       "items": [
-        { "productId": 2, "quantity": 1 }
+        {
+          "productId": 2,
+          "quantity": 1
+        }
       ],
-      "orderDate": "2023-07-16T15:30:00Z"
+      "orderDate": "2023-07-16T15:30:00Z",
+      "fulfillmentStatus": "Shipped",
+      "tags": [
+        "Standard"
+      ],
+      "total": 150
     }
   ],
   "products": [
     {
       "id": 1,
-      "sku": "SKU123",
-      "title": "Product 1",
-      "description": "Description of Product 1",
-      "quantity": 10,
-      "cost": 50.99,
+      "title": "test",
+      "description": "<p>Description of Product 12354654</p>",
       "price": 89.99,
-      "image": "https://via.placeholder.com/150"
+      "sku": "SKU12321",
+      "quantity": 10,
+      "cost": 50.99
     },
     {
       "id": 2,
       "sku": "SKU456",
       "title": "Product 2",
-      "description": "Description of Product 2",
+      "description": "<p>Description of Product 2</p>",
       "quantity": 15,
       "cost": 75.49,
       "price": 129.99,
@@ -78,7 +98,7 @@
       "title": "Product 3",
       "description": "Description of Product 3",
       "quantity": 20,
-      "cost": 120.00,
+      "cost": 120,
       "price": 189.99,
       "image": "https://via.placeholder.com/150"
     },
@@ -106,9 +126,9 @@
       "id": 6,
       "sku": "SKU303",
       "title": "Product 6",
-      "description": "Description of Product 6",
+      "description": "<p>Description of Product 6</p>",
       "quantity": 18,
-      "cost": 65.00,
+      "cost": 65,
       "price": 119.99,
       "image": "https://via.placeholder.com/150"
     },
@@ -128,7 +148,7 @@
       "title": "Product 8",
       "description": "Description of Product 8",
       "quantity": 5,
-      "cost": 110.50,
+      "cost": 110.5,
       "price": 169.99,
       "image": "https://via.placeholder.com/150"
     },
@@ -148,7 +168,7 @@
       "title": "Product 10",
       "description": "Description of Product 10",
       "quantity": 6,
-      "cost": 60.00,
+      "cost": 60,
       "price": 99.99,
       "image": "https://via.placeholder.com/150"
     },
@@ -178,7 +198,7 @@
       "title": "Product 13",
       "description": "Description of Product 13",
       "quantity": 7,
-      "cost": 50.00,
+      "cost": 50,
       "price": 89.99,
       "image": "https://via.placeholder.com/150"
     },
@@ -188,7 +208,7 @@
       "title": "Product 14",
       "description": "Description of Product 14",
       "quantity": 16,
-      "cost": 62.50,
+      "cost": 62.5,
       "price": 109.99,
       "image": "https://via.placeholder.com/150"
     },
@@ -198,7 +218,7 @@
       "title": "Product 15",
       "description": "Description of Product 15",
       "quantity": 9,
-      "cost": 38.00,
+      "cost": 38,
       "price": 79.99,
       "image": "https://via.placeholder.com/150"
     },
@@ -218,7 +238,7 @@
       "title": "Product 17",
       "description": "Description of Product 17",
       "quantity": 28,
-      "cost": 85.00,
+      "cost": 85,
       "price": 149.99,
       "image": "https://via.placeholder.com/150"
     },
@@ -248,13 +268,9 @@
       "title": "Product 20",
       "description": "Description of Product 20",
       "quantity": 3,
-      "cost": 100.00,
+      "cost": 100,
       "price": 149.99,
       "image": "https://via.placeholder.com/150"
     }
   ]
-  
-  }
-
-
-
+}
