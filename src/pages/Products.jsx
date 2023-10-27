@@ -313,7 +313,11 @@ export default function Products(){
         <Box
                 h="100%"
                 w="100%"
+<<<<<<< HEAD
                 // bg="blue"
+=======
+                bg="blue"
+>>>>>>> e761d70 (2nd version test)
                 position= "relative"
                 top= "20px"
                 borderRadius="8px"
