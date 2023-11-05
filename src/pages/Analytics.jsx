@@ -17,7 +17,8 @@ import {
     StatGroup,
   } from '@chakra-ui/react'
 
-  import DateButton from "./components/DateButton";
+import DateButton from "./components/DateButton";
+import SimpleLineChart from "./components/Analytics/Total_Sale";  
 
 
 export default function Analytics(){
@@ -94,82 +95,6 @@ export default function Analytics(){
                     
         </Flex>
 
-        {/* <Flex justifyContent="center" 
-                alignItems="center" 
-                height="100vh"
-                // bg="black"
-                > */}
-
-        
-        {/* <Flex
-                align="center"
-                justify="space-between"
-                // borderBottom={'solid'}
-                // borderColor="gray.300" // Customize the border color
-                // borderWidth="1px" // Customize the border width
-                
-                bg="white"
-                boxShadow="0 0.5px px grey"
-                borderRadius= "8px"
-                
-                h="60px"
-                px={4}
-                position="absolute"
-                top={20}
-                left={5}
-                right={5}
-                zIndex={10}
-                style={{ alignItems: 'flex-start' }}
-
-            >
-            <Flex style={containerStyle}>
-                Today
-                
-            </Flex>
-            <Divider orientation="vertical" borderColor="gray.400" />
-
-            <Flex style={{ ...containerStyle, alignItems: 'center', justifyContent: 'left', position: 'relative' }}>
-                <Box style={{ position: 'absolute', top: 5 }}>
-                    Orders
-                </Box>
-                <Box >
-                    a
-                </Box>                    
-            </Flex>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            
-            <Flex style={{ ...containerStyle, alignItems: 'center', justifyContent: 'left', position: 'relative' }}>
-                <Box style={{ position: 'absolute', top: 5 }}>
-                    Ordered Items
-                </Box>
-                <Box >
-                    a
-                </Box>                    
-            </Flex>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            
-            <Flex style={{ ...containerStyle, alignItems: 'center', justifyContent: 'left', position: 'relative' }}>
-                <Box style={{ position: 'absolute', top: 5 }}>
-                    Fulfilled Items
-                </Box>
-                <Box >
-                    a
-                </Box>                    
-            </Flex>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            
-            <Flex style={{ ...containerStyle, alignItems: 'center', justifyContent: 'left', position: 'relative' }}>
-                <Box style={{ position: 'absolute', top: 5 }}>
-                    Fulfilled Orders
-                </Box>
-                <Box >
-                    a
-                </Box>                    
-            </Flex>
-            <Divider orientation="vertical" borderColor="gray.400" />
-   
-            
-        </Flex> */}
 
         <Box 
                 h="100%"
@@ -243,6 +168,7 @@ export default function Analytics(){
                             fontSize="2xl"
                             >
                             {item}
+                            <SimpleLineChart/>
                             </Box>
                         ))}
                     </Flex>

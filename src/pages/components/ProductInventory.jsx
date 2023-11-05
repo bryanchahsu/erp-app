@@ -19,7 +19,7 @@ const InventoryTable = ({ products }) => {
   };
 
   return (
-    <Box p={4} bg="#F0F0F0" pt="70px"
+    <Box p={4} bg="#F0F0F0" pt="70px" width="calc(100% + 135px)"
         >
       {/* Heading */}
       {/* <Heading as="h2" size="md" bg="#EDEDED" p={2} mb={2}>

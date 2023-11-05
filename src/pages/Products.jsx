@@ -107,7 +107,7 @@ export default function Products(){
             >
                 <Box>
                 {/* Content for the title */}
-                    <Heading as="h1" size="md">
+                    <Heading as="h1" size="md" ml="40px">
                         Products
                     </Heading>
                 </Box>
@@ -142,7 +142,7 @@ export default function Products(){
                         pr="0.5em"
                         pl="0.5em"  
                         >
-                      Add Button  
+                      Add Product  
                     </Box>
                 </Flex>
 
@@ -160,6 +160,8 @@ export default function Products(){
                         borderColor="gray.300" // Customize the border color
                         borderWidth="1px" // Customize the border width
                         // justify="space-between"
+                        width="calc(100% + 100px)"
+                        marginLeft="-50px" // Move it to the left by 50px
         >
             {/* left inner box */}
             <Box flex="1" bg="white" p="4" height="75px" borderRadius="8px">
@@ -313,6 +315,7 @@ export default function Products(){
         <Box
                 h="100%"
                 w="100%"
+                right="70px"
 
                 position= "relative"
                 top= "20px"
@@ -335,15 +338,15 @@ export default function Products(){
                         position="absolute"
                         top={1}
                         left={4}
-                        right={4}
+                        right={-120}
                         zIndex={10}
 
                     >
                         <Box>
-                        {/* Content for the title */}
-                        <Heading as="h1" size="md">
-                            Inventory:
-                        </Heading>
+                            {/* Content for the title */}
+                            <Heading as="h1" size="md">
+                                Inventory:
+                            </Heading>
                         </Box>
                         
                         <Box
