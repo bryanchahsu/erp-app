@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -13,30 +13,56 @@ import {
   PopoverBody,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
-// import "../CSS/DatePickerStyles.css"
 
+const DateButton = ({ onChange }) => {
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [nextMonth, setNextMonth] = useState(new Date());
 
-const DateButton = () => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  useEffect(() => {
+    // Calculate the next month based on the current start date
+    const calculatedNextMonth = new Date(startDate);
+    calculatedNextMonth.setMonth(calculatedNextMonth.getMonth() + 1);
+    setNextMonth(calculatedNextMonth);
+  }, [startDate]); // Recalculate when startDate changes
 
-  const popoverContentStyle = {
-    position: "absolute",
-    zIndex: 999999, // Adjust the zIndex value as needed
-    width: "500px", // Adjust the width of the popover container
+  const handleChangeStart = (date) => {
+    setStartDate(date);
+    if (date > endDate) {
+      // If the new start date is after the current end date, update the end date to match
+      setEndDate(date);
+    }
+    onChange({ startDate: date, endDate: endDate > date ? endDate : date });
+  };
+
+  const handleChangeEnd = (date) => {
+    if (date >= startDate) {
+      setEndDate(date);
+      onChange({ startDate: startDate, endDate: date });
+    }
+  };
+
+  const handleClearDates = () => {
+    setStartDate(null);
+    setEndDate(null);
+    onChange({ startDate: null, endDate: null });
   };
 
   const handleApply = () => {
-    console.log("Selected start date:", startDate);
-    console.log("Selected end date:", endDate);
-    // Add your logic to handle the selected dates (e.g., save them to state or send them to the server)
+    onChange({ startDate: startDate, endDate: endDate });
+  };
+
+  const popoverContentStyle = {
+    position: "absolute",
+    zIndex: 999999,
+    width: "500px",
   };
 
   return (
     <Flex flexDirection="column">
       <Popover placement="bottom" closeOnBlur={false}>
         <PopoverTrigger>
-          <Button bg="white" border= "solid">Today</Button>
+          <Button bg="white" border="solid">Select Dates</Button>
         </PopoverTrigger>
         <PopoverContent style={popoverContentStyle}>
           <PopoverHeader>Select Dates</PopoverHeader>
@@ -51,7 +77,7 @@ const DateButton = () => {
                 marginRight="2"
                 flex="1"
               />
-              <ChevronRightIcon boxSize={6} mt={2} mb={2} marginRight="2" />
+              <ChevronRightIcon boxSize={6} mt="2" mb="2" marginRight="2" />
               <Input
                 type="text"
                 placeholder="End date"
@@ -63,27 +89,30 @@ const DateButton = () => {
             <Flex justifyContent="space-between">
               <DatePicker
                 selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                onChange={handleChangeStart}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
                 dateFormat="MM/dd/yyyy"
-                showMonthDropdown={false} // Hide month dropdown
-                showYearDropdown={false}  // Hide year dropdown
                 inline
               />
               <DatePicker
                 selected={endDate}
-                onChange={(date) => setEndDate(date)}
+                onChange={handleChangeEnd}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
                 dateFormat="MM/dd/yyyy"
-                showMonthDropdown={false} // Hide month dropdown
-                showYearDropdown={false}  // Hide year dropdown
                 inline
+                // Force the calendar to the next month
+                month={nextMonth.getMonth()}
+                year={nextMonth.getFullYear()}
               />
             </Flex>
             <Flex justifyContent="flex-end" marginTop="10px">
-              <Button variant="outline" marginRight={2} onClick={() => setStartDate(null)}>
-                Clear
-              </Button>
-              <Button variant="outline" marginRight={2} onClick={() => setEndDate(null)}>
-                Clear End Date
+              <Button variant="outline" marginRight="2" onClick={handleClearDates}>
+                Clear Dates
               </Button>
               <Button colorScheme="teal" onClick={handleApply}>
                 Apply

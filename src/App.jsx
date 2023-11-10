@@ -17,8 +17,8 @@ import Orders from './pages/Orders'
 import OrderDetail from './pages/OrderDetail'
 import Analytics from './pages/Analytics'
 import ProductNew from './pages/ProductNew'
-
-
+import OrderPage from './pages/components/OrderDetail/OrderDetail'
+import Total_Sale from './pages/components/Analytics/Reports/Total_Sales'
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 
@@ -38,6 +38,8 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Dashboard />} />
       <Route path="orders" element={<Orders/>} />
+
+      {/* <Route path="orders" element={<OrderPage/>} /> */}
       <Route path="products" element={<Products/>} />
       <Route path="customers" element={<Customers />} />
       <Route path="dashboards" element={<Create />} />
@@ -45,6 +47,8 @@ const router = createBrowserRouter(
       <Route path="products/new" element={<ProductNew />} />
       <Route path="products/:productId" element={<ProductDetail />} />
       <Route path="orders/1" element={<OrderDetail />} />
+
+      <Route path="analytics/total_sale" element={<Total_Sale />} />
 
 
     </Route>

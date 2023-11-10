@@ -359,7 +359,7 @@ export default function Products(){
                             
                         {/* Content for the search bar */}
                         
-                            <Input placeholder="Search" />
+                            <Input placeholder="Search" isReadOnly   />
                             
                         </Box>
     

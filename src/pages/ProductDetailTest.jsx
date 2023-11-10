@@ -25,6 +25,19 @@ const ProductDetailTest = ({products}) => {
   //   quantity: products.quantity,
   //   cost: products.cost
   // });
+  const images = productDetails.image
+
+
+  const handleImageChange = (imageFile) => {
+    // Convert file to URL for preview (optional)
+    const imageUrl = URL.createObjectURL(imageFile);
+  
+    // Update productDetails state with the new image URL
+    setProductDetails((prevProductDetails) => ({
+      ...prevProductDetails,
+      image: "imageUrl"
+    }));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +56,8 @@ const ProductDetailTest = ({products}) => {
     } else {
       setProductDetails(prevProductDetails => ({
         ...prevProductDetails,
-        [name]: value
+        [name]: value,
+        image: "foooo"
       }));
     }
   };
@@ -253,7 +267,8 @@ const ProductDetailTest = ({products}) => {
           Media
         </Heading>
         {/* <Image src="https://via.placeholder.com/300" alt="Product" height="100px" /> */}
-        <ImageUpload/>
+        <Image src= {productDetails.image}  alt="Product" height="100px" />
+        <ImageUpload imagechange={handleImageChange}/>
       {/* Display product details */}
       <button onClick={handleUpdate} disabled={isUpdating} style={{ backgroundColor: 'black', color: 'white', padding: '10px' }}>
         {isUpdating ? 'Updating...' : 'Update Product'}

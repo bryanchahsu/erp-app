@@ -39,6 +39,7 @@ const SearchBar_ = () => {
         placeholder="Search..."
         value={input}
         onChange={handleInputChange}
+        isReadOnly 
       />
       {filteredItems.length > 0 && input !== '' ? (
         <SearchResults items={filteredItems} />

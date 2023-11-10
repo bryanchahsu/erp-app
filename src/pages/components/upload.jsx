@@ -15,18 +15,30 @@ import {
   ModalBody,
 } from "@chakra-ui/react";
 
-const ImageUpload = () => {
+const ImageUpload = (imagechange) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isImageModalOpen, setImageModalOpen] = useState(false);
 
+  // const handleImageUpload = (event) => {
+  //   const imageFile = event.target.files[0];
+  //   if (imageFile) {
+  //     const imageUrl = URL.createObjectURL(imageFile);
+  //     setSelectedImage(imageUrl);
+  //   }
+  // };
   const handleImageUpload = (event) => {
     const imageFile = event.target.files[0];
     if (imageFile) {
+      // Set the local state for the preview
       const imageUrl = URL.createObjectURL(imageFile);
       setSelectedImage(imageUrl);
+
+      // Call the parent's imagechange handler
+      imagechange(imageFile);
     }
   };
 
+  
   const openImageModal = () => {
     setImageModalOpen(true);
   };
@@ -42,11 +54,12 @@ const ImageUpload = () => {
           Upload Image
         </Button>
         <Input
-          type="file"
-          id="image-upload"
-          accept="image/*"
-          style={{ display: "none" }}
-          onChange={handleImageUpload}
+            name="image"
+            type="file"
+            id="image-upload"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleImageUpload} // Use the local handler
         />
         {selectedImage && (
           <Box

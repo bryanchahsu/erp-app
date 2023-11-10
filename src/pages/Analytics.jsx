@@ -1,5 +1,5 @@
-import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider } from "@chakra-ui/react";
-import React from "react";
+import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
 import TableSample from "../../components/TableSample"
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
@@ -7,6 +7,7 @@ import Sidebar from "./components/Sidebar"
 import Indicator_test from "./components/Indicator_test";
 import Export from "./components/export";
 import Import from "./components/import";
+import MyGraph from "./components/Analytics/samplegraph";
 // import InventoryTable from "./components/ProductInventory";
 import {
     Stat,
@@ -19,9 +20,15 @@ import {
 
 import DateButton from "./components/DateButton";
 import SimpleLineChart from "./components/Analytics/Total_Sale";  
+import CustomDatePicker from "./components/Analytics/CustomDatepicker";
+
 
 
 export default function Analytics(){
+
+
+
+    
     const containerStyle = {
         flexBasis: "20%", // Equal width for all containers (5 containers = 100%)
         textAlign: "center",
@@ -33,10 +40,41 @@ export default function Analytics(){
         margin: 0,
         padding: 0,
         minHeight: '100vh', // To ensure the background covers the full viewport height
-      };0
+      };
+    const graphData = [
+    { id: 1, title: 'Box 1', graphReport: <MyGraph/> },
+    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // Add more data as needed
+    ];
+    const [dates, setDates] = useState({
+        startDate: null, // start with null or a specific date if required
+        endDate: null, // start with null or a specific date if required
+      });
+    
+      const handleDateChange = (newDates) => {
+        setDates(newDates);
+      };
+    
+      const handleLogDates = () => {
+        console.log("Start Date:", dates.startDate);
+        console.log("End Date:", dates.endDate);
+      };
+    
+    
+
+
     return(
 
     <div style= {firstDivStyle}>
+
+
   
 
      <Header/>
@@ -76,7 +114,16 @@ export default function Analytics(){
                     <Heading as="h1" size="md">
                         Analytics
                     </Heading>
-                    <DateButton/>
+                    
+                    <DateButton onChange={handleDateChange} />
+                    {/* <Button onClick={handleLogDates}>Log Dates</Button> */}
+                    {/* <CustomDatePicker/> */}
+                    {/* <Button colorScheme="teal" onClick={handleApply}>
+                        Apply
+                    </Button> */}
+
+
+
 
                 </Box>
                 
@@ -153,13 +200,12 @@ export default function Analytics(){
                                                         
 
                      {/* //This is for the inventory */}
-                     <Flex flexWrap="wrap" justifyContent="center" position= "absolute" marginTop="100px">
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+                     <Flex flexWrap="wrap" justifyContent="center" position="absolute" marginTop="100px">
+                        {graphData.map((item) => (
                             <Box
-                            key={item}
-                            width="400px" // Adjust the width to be 5 times bigger
-                            height="400px" // Adjust the height to be 5 times bigger
-                            // backgroundColor="gray.200"
+                            key={item.id}
+                            width="400px"
+                            height="400px"
                             backgroundColor="white"
                             margin="10px"
                             display="flex"
@@ -167,11 +213,12 @@ export default function Analytics(){
                             justifyContent="center"
                             fontSize="2xl"
                             >
-                            {item}
-                            <SimpleLineChart/>
+                            {item.graphReport} {/* Render the component from graphReport property */}
                             </Box>
                         ))}
                     </Flex>
+
+                    
 
 
 
