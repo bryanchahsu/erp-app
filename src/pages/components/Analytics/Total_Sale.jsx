@@ -1,19 +1,10 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Flex,
   Box,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Input,
-  Heading,
-  Divider,
   Button,
+  Heading,
 } from "@chakra-ui/react";
-import React from "react";
 import {
   LineChart,
   Line,
@@ -24,7 +15,6 @@ import {
   Legend,
 } from "recharts";
 import { useQuery } from "react-query";
-import { Link as RouterLink } from "react-router-dom";
 
 const fetchData = async () => {
   const response = await fetch("http://localhost:8000/orders");
@@ -34,56 +24,40 @@ const fetchData = async () => {
   return response.json();
 };
 
-export default function Total_Sale_Shortcut() {
-  const { data, isLoading, isError } = useQuery("products", fetchData);
-  const [startDate, setStartDate] = useState(""); // State for the starting date
-  const [endDate, setEndDate] = useState(""); // State for the ending date
-  const [dataInterval, setDataInterval] = useState("daily"); // State for data aggregation interval
-  const [filteredOrders, setFilteredOrders] = useState([]); // State for filtered orders
+const Total_Sale_Shortcut = ({ dates }) => {
+  const { data, isLoading, isError } = useQuery("orders", fetchData);
+  const [dataInterval, setDataInterval] = useState("daily");
+  const [filteredOrders, setFilteredOrders] = useState([]);
 
-  // Handle input changes for start and end dates
-  const handleStartDateChange = (e) => {
-    setStartDate(e.target.value);
-  };
+  useEffect(() => {
+    filterOrdersByDate();
+  }, [dates]); // Only listen for changes in 'dates' prop
 
-  const handleEndDateChange = (e) => {
-    setEndDate(e.target.value);
-  };
-
-  // Function to handle interval change
-  const handleDataIntervalChange = (interval) => {
-    setDataInterval(interval);
-  };
-
-  // Function to filter orders based on date range
   const filterOrdersByDate = () => {
+    if (!data) return;
+
     const filtered = data.filter((order) => {
-      const orderDate = new Date(order.orderDate); // Convert order date to Date object
-      const startDateObj = new Date(startDate);
-      const endDateObj = new Date(endDate);
+      const orderDate = new Date(order.orderDate);
+      const startDateObj = new Date(dates.startDate);
+      const endDateObj = new Date(dates.endDate);
 
-      // Set time to midnight to ignore the time zone offset
       startDateObj.setUTCHours(0, 0, 0, 0);
-      endDateObj.setUTCHours(23, 59, 59, 999); // Set to end of the day
+      endDateObj.setUTCHours(23, 59, 59, 999);
 
-      return (
-        orderDate >= startDateObj && orderDate <= endDateObj
-      );
+      return orderDate >= startDateObj && orderDate <= endDateObj;
     });
 
     setFilteredOrders(filtered);
   };
 
-  // Calculate total sales over the selected date range and interval
   const calculateTotalSales = () => {
     const salesData = [];
 
-    const startDateObj = new Date(startDate);
-    const endDateObj = new Date(endDate);
+    const startDateObj = new Date(dates.startDate);
+    const endDateObj = new Date(dates.endDate);
 
-    // Set time to midnight to ignore the time zone offset
     startDateObj.setUTCHours(0, 0, 0, 0);
-    endDateObj.setUTCHours(23, 59, 59, 999); // Set to end of the day
+    endDateObj.setUTCHours(23, 59, 59, 999);
 
     let currentDate = new Date(startDateObj);
     currentDate.setUTCHours(0, 0, 0, 0);
@@ -92,10 +66,9 @@ export default function Total_Sale_Shortcut() {
       const formattedDate = currentDate.toISOString().split("T")[0];
       let totalSales = 0;
 
-      // Calculate total sales for the selected interval
       if (dataInterval === "daily") {
         totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate); // Convert order date to Date object
+          const orderDate = new Date(order.orderDate);
           orderDate.setUTCHours(0, 0, 0, 0);
 
           if (
@@ -108,15 +81,14 @@ export default function Total_Sale_Shortcut() {
           return total;
         }, 0);
 
-        currentDate.setUTCHours(24, 0, 0, 0); // Move to the next day
+        currentDate.setUTCHours(24, 0, 0, 0);
       } else if (dataInterval === "weekly") {
-        // Calculate total sales for the week
         const weekEndDate = new Date(currentDate);
-        weekEndDate.setUTCDate(currentDate.getUTCDate() + 6); // End of the week
-        weekEndDate.setUTCHours(23, 59, 59, 999); // Set to end of the day
+        weekEndDate.setUTCDate(currentDate.getUTCDate() + 6);
+        weekEndDate.setUTCHours(23, 59, 59, 999);
 
         totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate); // Convert order date to Date object
+          const orderDate = new Date(order.orderDate);
           orderDate.setUTCHours(0, 0, 0, 0);
 
           if (
@@ -128,9 +100,8 @@ export default function Total_Sale_Shortcut() {
           return total;
         }, 0);
 
-        currentDate.setUTCDate(currentDate.getUTCDate() + 7); // Move to the next week
+        currentDate.setUTCDate(currentDate.getUTCDate() + 7);
       } else if (dataInterval === "monthly") {
-        // Calculate total sales for the month
         const nextMonthDate = new Date(
           currentDate.getUTCFullYear(),
           currentDate.getUTCMonth() + 1,
@@ -139,10 +110,10 @@ export default function Total_Sale_Shortcut() {
           0,
           0,
           0
-        ); // Next month, 1st day
+        );
 
         totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate); // Convert order date to Date object
+          const orderDate = new Date(order.orderDate);
           orderDate.setUTCHours(0, 0, 0, 0);
 
           if (
@@ -177,19 +148,19 @@ export default function Total_Sale_Shortcut() {
         <Input
           type="date"
           placeholder="Start Date"
-          value={startDate}
-          onChange={handleStartDateChange}
+          value={dates.startDate}
+          onChange={() => {}}
         />
         <Input
           type="date"
           placeholder="End Date"
-          value={endDate}
-          onChange={handleEndDateChange}
+          value={dates.endDate}
+          onChange={() => {}}
         />
         <Button onClick={filterOrdersByDate}>Apply Filter</Button>
-        <Button onClick={() => handleDataIntervalChange("daily")}>Daily</Button>
-        <Button onClick={() => handleDataIntervalChange("weekly")}>Weekly</Button>
-        <Button onClick={() => handleDataIntervalChange("monthly")}>Monthly</Button>
+        <Button onClick={() => setDataInterval("daily")}>Daily</Button>
+        <Button onClick={() => setDataInterval("weekly")}>Weekly</Button>
+        <Button onClick={() => setDataInterval("monthly")}>Monthly</Button>
       </Box>
       <LineChart width={800} height={300} data={salesData}>
         <XAxis dataKey="name" />
@@ -201,4 +172,6 @@ export default function Total_Sale_Shortcut() {
       </LineChart>
     </div>
   );
-}
+};
+
+export default Total_Sale_Shortcut;

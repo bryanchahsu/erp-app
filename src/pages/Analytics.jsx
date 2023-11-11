@@ -21,6 +21,7 @@ import {
 import DateButton from "./components/DateButton";
 import SimpleLineChart from "./components/Analytics/Total_Sale";  
 import CustomDatePicker from "./components/Analytics/CustomDatepicker";
+import Total_Sale_Shortcut from "./components/Analytics/Total_Sale";
 
 
 
@@ -41,22 +42,16 @@ export default function Analytics(){
         padding: 0,
         minHeight: '100vh', // To ensure the background covers the full viewport height
       };
-    const graphData = [
-    { id: 1, title: 'Box 1', graphReport: <MyGraph/> },
-    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    // Add more data as needed
-    ];
+
     const [dates, setDates] = useState({
-        startDate: null, // start with null or a specific date if required
-        endDate: null, // start with null or a specific date if required
+        startDate: "2023-07-15T10:00:00Z", // start with null or a specific date if required
+        endDate: "2023-07-16T15:30:00Z", // start with null or a specific date if required
       });
+
+    // const [dates, setDates] = useState({
+    // startDate: null, // start with null or a specific date if required
+    // endDate: null, // start with null or a specific date if required
+    // });     
     
       const handleDateChange = (newDates) => {
         setDates(newDates);
@@ -67,7 +62,20 @@ export default function Analytics(){
         console.log("End Date:", dates.endDate);
       };
     
+      const graphData = [
+        { id: 1, title: 'Box 1', graphReport: <Total_Sale_Shortcut dates={dates}/> },
+        // { id: 1, title: 'Box 1', graphReport: <MyGraph/> },
     
+        // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+        // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+        // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+        // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+        // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+        // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+        // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+        // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+        // Add more data as needed
+        ];
 
 
     return(
@@ -79,7 +87,7 @@ export default function Analytics(){
 
      <Header/>
 
-     <Sidebar/>
+     {/* <Sidebar/> */}
      <Box 
         position="relative"
             // bg= "blue"
@@ -146,7 +154,7 @@ export default function Analytics(){
         <Box 
                 h="100%"
                 w="100%"
-                bg="purple"
+                // bg="purple"
                 position= "relative"
                 top= "80px"
                 borderRadius="8px"
