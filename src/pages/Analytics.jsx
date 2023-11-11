@@ -43,14 +43,14 @@ export default function Analytics(){
       };
     const graphData = [
     { id: 1, title: 'Box 1', graphReport: <MyGraph/> },
-    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
-    { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
+    // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
     // Add more data as needed
     ];
     const [dates, setDates] = useState({
@@ -116,7 +116,7 @@ export default function Analytics(){
                     </Heading>
                     
                     <DateButton onChange={handleDateChange} />
-                    {/* <Button onClick={handleLogDates}>Log Dates</Button> */}
+                    <Button onClick={handleLogDates}>Log Dates</Button>
                     {/* <CustomDatePicker/> */}
                     {/* <Button colorScheme="teal" onClick={handleApply}>
                         Apply

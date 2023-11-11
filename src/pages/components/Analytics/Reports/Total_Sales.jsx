@@ -34,7 +34,7 @@ const fetchData = async () => {
   return response.json();
 };
 
-export default function Total_Sale() {
+export default function Total_Sale({dates}) {
   const { data, isLoading, isError } = useQuery("products", fetchData);
   const [startDate, setStartDate] = useState(""); // State for the starting date
   const [endDate, setEndDate] = useState(""); // State for the ending date
@@ -94,67 +94,73 @@ export default function Total_Sale() {
 
       // Calculate total sales for the selected interval
       if (dataInterval === "daily") {
-        totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate); // Convert order date to Date object
-          orderDate.setUTCHours(0, 0, 0, 0);
+        if (filteredOrders) {
+          totalSales = filteredOrders.reduce((total, order) => {
+            const orderDate = new Date(order.orderDate); // Convert order date to Date object
+            orderDate.setUTCHours(0, 0, 0, 0);
 
-          if (
-            orderDate.getUTCFullYear() === currentDate.getUTCFullYear() &&
-            orderDate.getUTCMonth() === currentDate.getUTCMonth() &&
-            orderDate.getUTCDate() === currentDate.getUTCDate()
-          ) {
-            return total + order.total;
-          }
-          return total;
-        }, 0);
+            if (
+              orderDate.getUTCFullYear() === currentDate.getUTCFullYear() &&
+              orderDate.getUTCMonth() === currentDate.getUTCMonth() &&
+              orderDate.getUTCDate() === currentDate.getUTCDate()
+            ) {
+              return total + order.total;
+            }
+            return total;
+          }, 0);
+        }
 
         currentDate.setUTCHours(24, 0, 0, 0); // Move to the next day
       } else if (dataInterval === "weekly") {
-        // Calculate total sales for the week
-        const weekEndDate = new Date(currentDate);
-        weekEndDate.setUTCDate(currentDate.getUTCDate() + 6); // End of the week
-        weekEndDate.setUTCHours(23, 59, 59, 999); // Set to end of the day
+        if (filteredOrders) {
+          // Calculate total sales for the week
+          const weekEndDate = new Date(currentDate);
+          weekEndDate.setUTCDate(currentDate.getUTCDate() + 6); // End of the week
+          weekEndDate.setUTCHours(23, 59, 59, 999); // Set to end of the day
 
-        totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate); // Convert order date to Date object
-          orderDate.setUTCHours(0, 0, 0, 0);
+          totalSales = filteredOrders.reduce((total, order) => {
+            const orderDate = new Date(order.orderDate); // Convert order date to Date object
+            orderDate.setUTCHours(0, 0, 0, 0);
 
-          if (
-            orderDate >= currentDate &&
-            orderDate <= weekEndDate
-          ) {
-            return total + order.total;
-          }
-          return total;
-        }, 0);
+            if (
+              orderDate >= currentDate &&
+              orderDate <= weekEndDate
+            ) {
+              return total + order.total;
+            }
+            return total;
+          }, 0);
+        }
 
         currentDate.setUTCDate(currentDate.getUTCDate() + 7); // Move to the next week
       } else if (dataInterval === "monthly") {
-        // Calculate total sales for the month
-        const nextMonthDate = new Date(
-          currentDate.getUTCFullYear(),
-          currentDate.getUTCMonth() + 1,
-          1,
-          0,
-          0,
-          0,
-          0
-        ); // Next month, 1st day
+        if (filteredOrders) {
+          // Calculate total sales for the month
+          const nextMonthDate = new Date(
+            currentDate.getUTCFullYear(),
+            currentDate.getUTCMonth() + 1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ); // Next month, 1st day
 
-        totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate); // Convert order date to Date object
-          orderDate.setUTCHours(0, 0, 0, 0);
+          totalSales = filteredOrders.reduce((total, order) => {
+            const orderDate = new Date(order.orderDate); // Convert order date to Date object
+            orderDate.setUTCHours(0, 0, 0, 0);
 
-          if (
-            orderDate >= currentDate &&
-            orderDate < nextMonthDate
-          ) {
-            return total + order.total;
-          }
-          return total;
-        }, 0);
+            if (
+              orderDate >= currentDate &&
+              orderDate < nextMonthDate
+            ) {
+              return total + order.total;
+            }
+            return total;
+          }, 0);
 
-        currentDate = nextMonthDate;
+          currentDate = nextMonthDate;
+        }
       }
 
       salesData.push({ name: formattedDate, sales: totalSales });

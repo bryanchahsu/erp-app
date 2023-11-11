@@ -184,7 +184,7 @@ function SearchBar() {
 
 
   const [searchQuery, setSearchQuery] = useState('');
-  const { data: suggestions } = useQuery(['search', searchQuery], () => fetchData(searchQuery));
+  // const { data: suggestions } = useQuery(['search', searchQuery], () => fetchData(searchQuery));
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [searchHistory, setSearchHistory] = useState([]);

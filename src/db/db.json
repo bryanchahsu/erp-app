@@ -31,7 +31,80 @@
       "quantity": 30
     }
   ],
-  
+  "production":
+  [
+    {
+      "ProductID": 1,
+      "Name": "Product A",
+      "Description": "High-quality product A",
+      "Cost": 15.99,
+      "Quantity": 57
+    },
+    {
+      "ProductID": 2,
+      "Name": "Product B",
+      "Description": "Popular product B",
+      "Cost": 10.99,
+      "Quantity": 82
+    },
+    {
+      "ProductID": 3,
+      "Name": "Product C",
+      "Description": "Versatile product C",
+      "Cost": 12.49,
+      "Quantity": 29
+    },
+    {
+      "ProductID": 4,
+      "Name": "Product D",
+      "Description": "Premium product D",
+      "Cost": 25.99,
+      "Quantity": 41
+    },
+    {
+      "ProductID": 5,
+      "Name": "Product E",
+      "Description": "Elegant product E",
+      "Cost": 18.99,
+      "Quantity": 64
+    },
+    {
+      "ProductID": 6,
+      "Name": "Product F",
+      "Description": "Functional product F",
+      "Cost": 8.99,
+      "Quantity": 14
+    },
+    {
+      "ProductID": 7,
+      "Name": "Product G",
+      "Description": "Durable product G",
+      "Cost": 30.99,
+      "Quantity": 93
+    },
+    {
+      "ProductID": 8,
+      "Name": "Product H",
+      "Description": "Compact product H",
+      "Cost": 9.49,
+      "Quantity": 37
+    },
+    {
+      "ProductID": 9,
+      "Name": "Product I",
+      "Description": "Innovative product I",
+      "Cost": 22.99,
+      "Quantity": 72
+    },
+    {
+      "ProductID": 10,
+      "Name": "Product J",
+      "Description": "Sleek product J",
+      "Cost": 11.99,
+      "Quantity": 3
+    }
+  ],
+
     "orders": [
       {
         "id": 1,
