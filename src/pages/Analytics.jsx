@@ -64,6 +64,7 @@ export default function Analytics(){
     
       const graphData = [
         { id: 1, title: 'Box 1', graphReport: <Total_Sale_Shortcut dates={dates}/> },
+        
         // { id: 1, title: 'Box 1', graphReport: <MyGraph/> },
     
         // { id: 2, title: 'Box 2', graphReport: <MyGraph/> },
