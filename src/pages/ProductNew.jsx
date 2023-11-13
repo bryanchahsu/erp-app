@@ -44,7 +44,7 @@ export default function ProductNew(){
       };
     return(
         <div>
-            <Header_Save/>
+            {/* <Header_Save/> */}
             <Sidebar/>
             <Box
               position="relative"
@@ -69,7 +69,7 @@ export default function ProductNew(){
                   left={200}
                   right={0}
                   zIndex={10}>
-                <Box>
+                <Box mt="5">
                   {/* Content for the title */}
                       {/* <BackButton/> */}
                       <Heading as="h1" size="md" 
@@ -88,7 +88,7 @@ export default function ProductNew(){
               >
 
                 {/* Left Container */}
-                <Flex width="70%" ml="0" alignItems="center" flexDirection="column" 
+                <Flex width="70%" ml="0" alignItems="center" flexDirection="column" mt="-55"
                   // bg="black"
                   >
                   <ProductNew_Form />
@@ -96,7 +96,7 @@ export default function ProductNew(){
 
 
                 {/* Right Container */}
-                <Flex width="30%" mr="50px" mt="-615px" alignItems="center" flexDirection="column" 
+                <Flex width="30%" mr="50px" mt="-610px" alignItems="center" flexDirection="column" 
                     // bg="purple"
                     >
                   <Flex p={5} mt="20px" borderRadius="8px" boxShadow="0 2px 4px grey" h="100px" w="75%" flexDirection="column" bg="white">

@@ -18,8 +18,12 @@ import OrderDetail from './pages/OrderDetail'
 import Analytics from './pages/Analytics'
 import ProductNew from './pages/ProductNew'
 import OrderPage from './pages/components/OrderDetail/OrderDetail'
+import OrderNew from './pages/OrderNew'  
 import Total_Sale from './pages/components/Analytics/Reports/Total_Sales'
+import CreateCustomerModal from './pages/components/OrderNew/CustomerForm'
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+
 
 
 const queryClient = new QueryClient();
@@ -46,7 +50,13 @@ const router = createBrowserRouter(
       <Route path="analytics" element={<Analytics />} />
       <Route path="products/new" element={<ProductNew />} />
       <Route path="products/:productId" element={<ProductDetail />} />
-      <Route path="orders/1" element={<OrderDetail />} />
+      <Route path="orders/:orderId" element={<OrderDetail />} />
+      <Route path="orders/2" element={<OrderPage />} />
+      <Route path="orders/test" element={<CreateCustomerModal />} />
+
+      <Route path="orders/new" element={<OrderNew />} />
+
+
 
       <Route path="analytics/total_sale" element={<Total_Sale />} />
 

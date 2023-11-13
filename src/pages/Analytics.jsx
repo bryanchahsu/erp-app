@@ -88,7 +88,7 @@ export default function Analytics(){
 
      <Header/>
 
-     {/* <Sidebar/> */}
+     <Sidebar/>
      <Box 
         position="relative"
             // bg= "blue"

@@ -12,8 +12,8 @@ export default function Import(){
                
                 size='md'
                 position="absolute"
-                top="2"
-                right="125"
+                top="2.5"
+                right="126"
                 colorScheme="gray" 
                 variant="solid"
                 bg="#E3E3E3"

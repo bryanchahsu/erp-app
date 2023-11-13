@@ -140,7 +140,8 @@ export default function Products(){
                         alignItems="center"
                         justifyContent="center"
                         pr="0.5em"
-                        pl="0.5em"  
+                        pl="0.5em"
+                        ml= "3"  
                         >
                       Add Product  
                     </Box>

@@ -243,6 +243,7 @@ function SearchBar() {
           size="lg" // Apply a size to the input (you can change this)
           variant="filled" // Apply a filled variant to the input (you can change this)
           color="black"
+          bg="black"
         />
         {/* <Button onClick={toggleDashboard}>Toggle Dashboard</Button> */}
       </Box>

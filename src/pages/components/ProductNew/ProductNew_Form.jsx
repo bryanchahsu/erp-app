@@ -8,7 +8,7 @@ import useUpdateProduct from '../useUpdateProduct';
 import { useMutation, useQueryClient } from 'react-query';
 import DOMPurify from 'dompurify';
 import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS
-
+import Header_Save from './Header_Save';
 
 
 //React Query API
@@ -155,6 +155,7 @@ const ProductNew_Form = () => {
   
 
   return (
+    
     <Flex
       direction="column"
       maxWidth="100%" // Set the width to 100%
@@ -165,7 +166,9 @@ const ProductNew_Form = () => {
       width="100%" // Set the width to 100%
       // height="100%"
       >
-        
+        {/* <Header_Save productDetails={productDetails}/> */}
+        {productDetails && <Header_Save productDetails={productDetails} />}
+
       {/* Product Details */}
       <Box flex="2" padding="10px" borderRadius="8px" boxShadow="0 0.5px 2px grey" 
           bg="white" 
@@ -319,21 +322,20 @@ const ProductNew_Form = () => {
 
 
       {/* /////////////////////////// header_save//////////// */}
-      {showHeader && (
+      {/* {showHeader && (
         <Box p="10px" bg="gray.200">
           <Flex justify="space-between">
             <Heading size="md">Unsaved Changes</Heading>
             <Button variant="outline" colorScheme="red" onClick={handleDiscard}>
               Discard
             </Button>
-            {/* <Button colorScheme="green" onClick={handleSave}> */}
             <Button colorScheme="green" onClick={handleSubmit }>
             
               Save
             </Button>
           </Flex>
         </Box>
-      )}
+      )} */}
 
       {/* <Input
         placeholder="Type something..."
