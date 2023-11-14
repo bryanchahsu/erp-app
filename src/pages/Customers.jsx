@@ -9,6 +9,8 @@ import Export from "./components/export";
 import Import from "./components/import";
 import OrderInventory from "./components/OrderInventory";
 import { useQuery } from 'react-query';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 
 const fetchData = async () => {
@@ -28,13 +30,11 @@ export default function Customers(){
     if (isError) return <div>Error fetching data</div>;
 
 
-
-
     const containerStyle = {
         flexBasis: "20%", // Equal width for all containers (5 containers = 100%)
         textAlign: "center",
         padding: "20px",
-        backgroundColor: "#e0e0e0",
+        backgroundColor: "purple",
       };
     const firstDivStyle= {
         background: "#F0F0F0",
@@ -42,6 +42,27 @@ export default function Customers(){
         padding: 0,
         minHeight: '100vh', // To ensure the background covers the full viewport height
       };0
+
+
+      const ulStyle = {
+        color: 'blue',
+        listStyle: 'none',
+      };
+    
+      const bulletPointStyle = {
+        fontSize: '3em',  // Adjust the font size here to make the bullet point bigger
+        verticalAlign: 'middle',  // Optional: Align the bullet point vertically
+        color: "blue"
+      };
+      
+      const boldStyle = {
+        fontWeight: 'bold', 
+        color: 'black',
+        verticalAlign: 'middle',
+       
+      };
+    
+
     return(
 
     <div style= {firstDivStyle}>
@@ -81,10 +102,11 @@ export default function Customers(){
             >
                 <Box>
                 {/* Content for the title */}
-                    <Heading as="h1" size="md">
+                    <Heading as="h1" size="md" ml="40px">
                         Customers
                     </Heading>
                 </Box>
+                
                 
 
                 {/* Nested flexbox */}
@@ -92,8 +114,32 @@ export default function Customers(){
                     
                     // bg="black"
                     >
-                    <Export/>
+
+
+                    
                     <Import/>
+                    <Export/>
+                    <Box
+                        as={RouterLink}
+                        // bg="#E6E6E6"
+                        borderRadius="md"
+                        cursor="pointer"
+                        _hover={{
+                          bg: "#CCCCCC",
+                        }}
+                        bg="black"
+                        color="white"
+                        to="/customers/new"
+                        textAlign="center"  // Center the text
+                        display="flex"     // Use flexbox to center vertically and horizontally
+                        alignItems="center"
+                        justifyContent="center"
+                        pr="0.5em"
+                        pl="0.5em"
+                        ml= "2"  
+                        >
+                      Add Customer  
+                    </Box>
                 </Flex>
 
 
@@ -101,54 +147,174 @@ export default function Customers(){
                     
         </Flex>
 
-        {/* <Flex justifyContent="center" 
-                alignItems="center" 
-                height="100vh"
-                // bg="black"
-                > */}
-        <Flex
-                align="center"
-                justify="space-between"
-                // borderBottom={'solid'}
-                // borderColor="gray.300" // Customize the border color
-                // borderWidth="1px" // Customize the border width
-                
-                bg="white"
-                boxShadow="0 0.5px px grey"
-                borderRadius= "8px"
-                
-                h="60px"
-                px={4}
-                position="absolute"
-                top={20}
-                left={5}
-                right={5}
-                zIndex={10}
 
-            >
-            <Box style={containerStyle}>
-                {/* <Indicator_test/> */}
-                17109 customers
-                
-                
+        {/* new header */}
+        <Flex justify="space-between" maxheight= "10px"
+                        align="center"
+                        borderRadius="8px"
+                        borderBottom={'solid'}
+                        borderColor="gray.300" // Customize the border color
+                        borderWidth="1px" // Customize the border width
+                        // justify="space-between"
+                        width="calc(100% + 100px)"
+                        marginLeft="-50px" // Move it to the left by 50px
+        >
+            {/* left inner box */}
+            <Box flex="1" bg="white" p="4" height="75px" borderRadius="8px">
+                <Box>
+                   box 1
+                </Box>
+                <Box>
+                   box 1
+                   
+                </Box>
             </Box>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            <Box style={containerStyle}>100% of your customer base</Box>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            <Box style={containerStyle}>Container 3</Box>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            <Box style={containerStyle}>Container 4</Box>
-            <Divider orientation="vertical" borderColor="gray.400" />
-            <Box style={containerStyle}>Container 5</Box>
-                    
-        </Flex>
+            
+            <Divider orientation='vertical' />
+             {/* middle  inner box */}
+            <Box flex="1" bg="white" p="4" 
+                height="75px"
+                borderRadius="8px"
+            >
+                <Box position="absolute">
+                    Days of inventory remaining
+                </Box>
 
+                
+                <Flex justifyContent="space-between" width="100%" height="100%">
+                {/* <Box> */}
+                    <Box flex="1"  > 
+                        {/* <ul style={{ color: "blue" }}>
+                            <li>
+                                <span style={{ color: "black" }}>0-30:</span>
+                            </li>
+                        </ul> */}
+                        <ul style={ulStyle}>
+                            <li>
+                                <span style={{ color: 'black',position: 'relative', bottom: '0.15em'}}>
+                                    <span style={bulletPointStyle}>•</span>
+                                </span>
+                                <span style={boldStyle}>
+                                    0-30 &nbsp;&nbsp;  
+                                    <span >
+                                        3 varients
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>                        
+                    </Box>
+                    <Box flex="1" ml='20px'>
+
+                        <ul style={ulStyle}>
+                            <li>
+                                <span style={{ color: 'black',position: 'relative', bottom: '0.15em' }}>
+                                    <span style={bulletPointStyle}>•</span>
+                                </span>
+                                <span style={boldStyle}>
+                                    31-90 &nbsp; 
+                                    <span >
+                                    10 variants
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>       
+                    </Box>
+                    <Box flex="1" ml='20px' >
+
+                        <ul style={ulStyle}>
+                            <li>
+                                <span style={{ color: 'black' ,position: 'relative', bottom: '0.15em'}}>
+                                    <span style={bulletPointStyle}>•</span>
+                                </span>
+                                <span style={boldStyle}>
+                                    91+ &nbsp;&nbsp;  
+                                    <span >
+                                    10 variants
+                                    </span>
+                                </span>
+                            </li>
+                        </ul> 
+                    </Box>
+                </Flex>    
+                {/* </Box> */}
+            </Box>
+
+            {/* right inner box */}
+            <Divider orientation='vertical' />
+            <Box flex="1" bg="white" p="4" height="75px" borderRadius="8px">
+                <Box position="absolute">
+                    Inventory value by price
+                </Box>
+                
+                <Flex justifyContent="space-between" width="100%" height= "25px">
+                {/* <Box> */}
+                    <Box flex="1" > 
+                        {/* <ul style={{ color: "blue" }}>
+                            <li>
+                                <span style={{ color: "black" }}>0-30:</span>
+                            </li>
+                        </ul> */}
+                        <ul style={ulStyle}>
+                            <li>
+                                <span style={{ color: 'black',position: 'relative', bottom: '0.15em'}}>
+                                    <span style={bulletPointStyle}>•</span>
+                                </span>
+                                <span style={boldStyle}>
+                                    0-30 &nbsp;&nbsp;  
+                                    <span >
+                                        3 varients
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>                        
+                    </Box>
+                    <Box flex="1" ml='20px'>
+
+                        <ul style={ulStyle}>
+                            <li>
+                                <span style={{ color: 'black',position: 'relative', bottom: '0.15em' }}>
+                                    <span style={bulletPointStyle}>•</span>
+                                </span>
+                                <span style={boldStyle}>
+                                    31-90 &nbsp; 
+                                    <span >
+                                    10 variants
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>       
+                    </Box>
+                    <Box flex="1" ml='20px' >
+
+                        <ul style={ulStyle}>
+                            <li>
+                                <span style={{ color: 'black' ,position: 'relative', bottom: '0.15em'}}>
+                                    <span style={bulletPointStyle}>•</span>
+                                </span>
+                                <span style={boldStyle}>
+                                    91+ &nbsp;&nbsp;  
+                                    <span >
+                                    10 variants
+                                    </span>
+                                </span>
+                            </li>
+                        </ul> 
+                    </Box>
+                </Flex>    
+                {/* </Box> */}
+            </Box>
+        </Flex> 
+      
+        
+
+        {/* inventory table below */}
         <Box
                 h="100%"
                 w="100%"
-                bg="purple"
+                right="70px"
+
                 position= "relative"
-                top= "60px"
+                top= "20px"
                 borderRadius="8px"
                 
                 >
@@ -166,17 +332,17 @@ export default function Customers(){
                         h="60px"
                         px={4}
                         position="absolute"
-                        top={0}
-                        left={0}
-                        right={0}
+                        top={1}
+                        left={4}
+                        right={-120}
                         zIndex={10}
 
                     >
                         <Box>
-                        {/* Content for the title */}
-                        <Heading as="h1" size="md">
-                            Inventory:
-                        </Heading>
+                            {/* Content for the title */}
+                            <Heading as="h1" size="md">
+                                Search Customer:
+                            </Heading>
                         </Box>
                         
                         <Box
@@ -189,7 +355,7 @@ export default function Customers(){
                             
                         {/* Content for the search bar */}
                         
-                            <Input placeholder="Search" />
+                            <Input placeholder="Search" isReadOnly   />
                             
                         </Box>
     
@@ -200,7 +366,7 @@ export default function Customers(){
 
                      {/* //This is for the inventory */}
                      <Box
-                     top={100}
+                     top={-1}
                      position= "absolute"
                     //  bg="black"
                      h="100%"
@@ -208,16 +374,15 @@ export default function Customers(){
                     //  borderRadius={8}
                      
                      >   
-                        <OrderInventory products= {data}/>
-                        
+                        {/* <InventoryTable products= {data}/> */}
+                        {/* <CustomerTable/> */}
                     </Box>
         </Box>
             {/* </Flex> */}
       {/* </Box> */}
     </Box>
-    Profile
       
-      <CustomerTable/>
+      {/* <CustomerTable/> */}
 
 
 

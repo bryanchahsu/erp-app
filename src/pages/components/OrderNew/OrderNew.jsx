@@ -21,6 +21,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons';
+import CreateCustomerModal from './CustomerForm';
 
 const ProductTable = () => {
   // Sample data and inventory

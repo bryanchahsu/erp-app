@@ -1,20 +1,78 @@
 {
-  "customers": [
+  "customer":[
     {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Doe",
-      "email": "john@example.com",
-      "phone": "123-456-7890"
+        "customer_id": 1,
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "address": {
+            "country": "USA",
+            "street": "123 Main St",
+            "apartment_suite": "Apt 101",
+            "city": "Anytown",
+            "state": "StateX",
+            "zip_code": "12345"
+        },
+        "phone": "+1-234-567-8901"
     },
     {
-      "id": 2,
-      "firstName": "Jane",
-      "lastName": "Smith",
-      "email": "jane@example.com",
-      "phone": "987-654-3210"
+        "customer_id": 2,
+        "name": "Jane Smith",
+        "email": "janesmith@example.com",
+        "address": {
+            "country": "USA",
+            "street": "456 Elm St",
+            "apartment_suite": "Suite 202",
+            "city": "Somewhere",
+            "state": "StateY",
+            "zip_code": "23456"
+        },
+        "phone": "+1-234-567-8902"
+    },
+    {
+        "customer_id": 3,
+        "name": "Emily Johnson",
+        "email": "emilyjohnson@example.com",
+        "address": {
+            "country": "USA",
+            "street": "789 Oak St",
+            "apartment_suite": "",
+            "city": "Thistown",
+            "state": "StateZ",
+            "zip_code": "34567"
+        },
+        "phone": "+1-234-567-8903"
+    },
+    {
+        "customer_id": 4,
+        "name": "Michael Brown",
+        "email": "michaelbrown@example.com",
+        "address": {
+            "country": "USA",
+            "street": "101 Pine St",
+            "apartment_suite": "Apt 303",
+            "city": "Othertown",
+            "state": "StateA",
+            "zip_code": "45678"
+        },
+        "phone": "+1-234-567-8904"
+    },
+    {
+        "customer_id": 5,
+        "name": "Jessica Garcia",
+        "email": "jessicagarcia@example.com",
+        "address": {
+            "country": "USA",
+            "street": "202 Maple Ave",
+            "apartment_suite": "Apt 404",
+            "city": "Yettown",
+            "state": "StateB",
+            "zip_code": "56789"
+        },
+        "phone": "+1-234-567-8905"
     }
+
   ],
+
   "inventory": [
     {
       "id": 1,

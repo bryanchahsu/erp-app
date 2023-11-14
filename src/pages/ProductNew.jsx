@@ -2,13 +2,7 @@ import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, List, ListI
 import { Select } from '@chakra-ui/react'
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import React from "react";
-import Header from "./components/Header"
-// import Header_Save from "./components/ProductNew/Header_Save";
 import Sidebar from "./components/Sidebar"
-
-import Export from "./components/export";
-import Import from "./components/import";
-
 import ProductDetailTest from "./ProductDetailTest";
 import BackButton from "./components/back";
 import SalesChannelsList from "./components/test2_saleschannel";
