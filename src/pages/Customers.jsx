@@ -1,4 +1,4 @@
-import CustomerTable from "./components/customerTable.jsx"
+// import CustomerTable from "./components/customerTable.jsx"
 // import TextEditor from "./components/textEditor.jsx"
 import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider } from "@chakra-ui/react";
 import React from "react";
@@ -7,14 +7,14 @@ import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 import Export from "./components/export";
 import Import from "./components/import";
-import OrderInventory from "./components/OrderInventory";
+
 import { useQuery } from 'react-query';
 import { Link as RouterLink } from 'react-router-dom';
-
+import CustomerTable from "./components/Customer/CustomerTable.jsx";
 
 
 const fetchData = async () => {
-    const response = await fetch('http://localhost:8000/orders');
+    const response = await fetch('http://localhost:8000/customer');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -25,7 +25,7 @@ const fetchData = async () => {
   
 
 export default function Customers(){
-    const { data, isLoading, isError } = useQuery('products', fetchData);
+    const { data, isLoading, isError } = useQuery('customers', fetchData);
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
 
@@ -321,7 +321,7 @@ export default function Customers(){
 
 
                     {/* //Sub-heading for the table */}
-                    <Flex
+                    {/* <Flex
                         align="center"
                         justify="space-between"
                         borderRadius="8px"
@@ -339,7 +339,6 @@ export default function Customers(){
 
                     >
                         <Box>
-                            {/* Content for the title */}
                             <Heading as="h1" size="md">
                                 Search Customer:
                             </Heading>
@@ -353,15 +352,13 @@ export default function Customers(){
                                 w="800px"
                             >
                             
-                        {/* Content for the search bar */}
                         
                             <Input placeholder="Search" isReadOnly   />
                             
                         </Box>
     
-                        {/* <ProfileBox></ProfileBox> */}
                 
-                    </Flex>
+                    </Flex> */}
                                                         
 
                      {/* //This is for the inventory */}
@@ -374,8 +371,9 @@ export default function Customers(){
                     //  borderRadius={8}
                      
                      >   
-                        {/* <InventoryTable products= {data}/> */}
-                        {/* <CustomerTable/> */}
+
+                        <CustomerTable customers={data}/>
+
                     </Box>
         </Box>
             {/* </Flex> */}

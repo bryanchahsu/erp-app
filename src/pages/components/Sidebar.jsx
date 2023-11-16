@@ -1,18 +1,21 @@
 import React from 'react';
 import { Flex, Box, List, ListItem, Text, Link as ChakraLink, Icon } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { FaHome, FaClipboardList, FaBox, FaUsers, FaChartBar } from 'react-icons/fa';
 
 export default function Sidebar() {
+  const location = useLocation();
+
+  const isCurrentPage = (path) => {
+    return location.pathname === path;
+  };
+
   return (
     <Flex
       direction="column"
       borderRight="solid"
       borderColor="gray.300"
       borderWidth="1px"
-      // bg="#F0F0F0"
-      // bg="#FFFFFF"
-      // bg="#E6E6E6"
       bg="#ebebeb"
       h="100vh"
       w="250px"
@@ -21,18 +24,20 @@ export default function Sidebar() {
       left={0}
       zIndex={1}
     >
-      <Box p={4} mt={20} >
-        <List spacing={2} >
+      <Box p={4} mt={20}>
+        <List spacing={2}>
           <ListItem>
             <Box
               as={RouterLink}
-              // bg="#E6E6E6"
-              bg="#ebebeb"
+              bg={isCurrentPage('/') ? 'white' : '#ebebeb'}
               to="/"
               display="flex"
               alignItems="center"
               textDecoration="none"
-              _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
+              _hover={{ bg: '#f5f5f5' }}
+              borderRadius="md" // Add border radius
+              p="2.5px"
+              
             >
               <Icon as={FaHome} mr={2} />
               <Text fontWeight="bold">Home</Text>
@@ -41,12 +46,15 @@ export default function Sidebar() {
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#ebebeb"
+              bg={isCurrentPage('/orders') ? 'white' : '#ebebeb'}
               to="/orders"
               display="flex"
               alignItems="center"
               textDecoration="none"
-              _hover={{ boxShadow: '0 2px 4px grey' }}
+              _hover={{ bg: '#f5f5f5' }}
+              borderRadius="md" // Add border radius
+              p="2.5px"
+              mt="-6px"
             >
               <Icon as={FaClipboardList} mr={2} />
               <Text fontWeight="bold">Orders</Text>
@@ -55,12 +63,16 @@ export default function Sidebar() {
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#ebebeb"
+              bg={isCurrentPage('/products') ? 'white' : '#ebebeb'}
               to="/products"
               display="flex"
               alignItems="center"
               textDecoration="none"
-              _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
+              _hover={{ bg: '#f5f5f5' }}
+              borderRadius="md" // Add border radius
+              p="2.5px"
+              mt="-6px"
+
             >
               <Icon as={FaBox} mr={2} />
               <Text fontWeight="bold">Products</Text>
@@ -69,12 +81,17 @@ export default function Sidebar() {
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#ebebeb"
+              bg={isCurrentPage('/customers') ? 'white' : '#ebebeb'}
               to="/customers"
               display="flex"
               alignItems="center"
               textDecoration="none"
-              _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
+              _hover={{ bg: '#f5f5f5' }}
+              borderRadius="md" // Add border radius
+              p="2.5px"
+              mt="-6px"
+
+
             >
               <Icon as={FaUsers} mr={2} />
               <Text fontWeight="bold">Customers</Text>
@@ -83,12 +100,17 @@ export default function Sidebar() {
           <ListItem>
             <Box
               as={RouterLink}
-              bg="#ebebeb"
+              bg={isCurrentPage('/analytics') ? 'white' : '#ebebeb'}
               to="/analytics"
               display="flex"
               alignItems="center"
               textDecoration="none"
-              _hover={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
+              _hover={{ bg: '#f5f5f5' }}
+              borderRadius="md" // Add border radius
+              p="2.5px"
+              mt="-6px"
+
+
             >
               <Icon as={FaChartBar} mr={2} />
               <Text fontWeight="bold">Analytics</Text>

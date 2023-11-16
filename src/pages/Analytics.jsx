@@ -44,8 +44,10 @@ export default function Analytics(){
       };
 
     const [dates, setDates] = useState({
-        startDate: "2023-07-15T10:00:00Z", // start with null or a specific date if required
-        endDate: "2023-07-16T15:30:00Z", // start with null or a specific date if required
+        // startDate: "2023-07-15T10:00:00Z", // start with null or a specific date if required
+        // endDate: "2023-07-16T15:30:00Z", // start with null or a specific date if required
+        startDate: "2023-07-15", // yyyy-MM-dd format
+        endDate: "2023-07-16",   // yyyy-MM-dd format
       });
 
     // const [dates, setDates] = useState({

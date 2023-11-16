@@ -141,11 +141,9 @@ const Total_Sale_Shortcut = ({ dates }) => {
 
   return (
     <div>
-      <Heading size="lg" mb={4}>
-        Sales Summary
-      </Heading>
+
       <Box mb={4}>
-        <Input
+        {/* <Input
           type="date"
           placeholder="Start Date"
           value={dates.startDate}
@@ -156,11 +154,14 @@ const Total_Sale_Shortcut = ({ dates }) => {
           placeholder="End Date"
           value={dates.endDate}
           onChange={() => {}}
-        />
+        /> */}
         <Button onClick={filterOrdersByDate}>Apply Filter</Button>
         <Button onClick={() => setDataInterval("daily")}>Daily</Button>
         <Button onClick={() => setDataInterval("weekly")}>Weekly</Button>
         <Button onClick={() => setDataInterval("monthly")}>Monthly</Button>
+        <Heading size="lg" mb={4}>
+        Sales Over Time
+      </Heading>
       </Box>
       <LineChart width={800} height={300} data={salesData}>
         <XAxis dataKey="name" />

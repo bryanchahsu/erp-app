@@ -23,6 +23,7 @@ import Total_Sale from './pages/components/Analytics/Reports/Total_Sales'
 import CreateCustomerModal from './pages/components/OrderNew/CustomerForm'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import CustomerNew from './pages/CustomerNew'
+import SalesOverTime from './pages/components/Analytics/Reports/SalesOverTime'
 
 
 
@@ -61,6 +62,8 @@ const router = createBrowserRouter(
 
 
       <Route path="analytics/total_sale" element={<Total_Sale />} />
+      <Route path="analytics/salesovertime" element={<SalesOverTime />} />
+
 
 
     </Route>

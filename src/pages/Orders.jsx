@@ -1,5 +1,4 @@
-import CustomerTable from "./components/customerTable.jsx"
-// import TextEditor from "./components/textEditor.jsx"
+
 import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider } from "@chakra-ui/react";
 import React from "react";
 import TableSample from "../../components/TableSample"
@@ -7,7 +6,7 @@ import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 import Export from "./components/export";
 import Import from "./components/import";
-import OrderInventory from "./components/OrderInventory";
+import OrderInventory from "./components/Order/OrderInventory.jsx";
 import { useQuery } from 'react-query';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -116,7 +115,7 @@ export default function Orders(){
 
 
                     
-                    <Import/>
+                    {/* <Import/> */}
                     <Export/>
                     <Box
                         as={RouterLink}
@@ -320,7 +319,7 @@ export default function Orders(){
 
 
                     {/* //Sub-heading for the table */}
-                    <Flex
+                    {/* <Flex
                         align="center"
                         justify="space-between"
                         borderRadius="8px"
@@ -338,7 +337,6 @@ export default function Orders(){
 
                     >
                         <Box>
-                            {/* Content for the title */}
                             <Heading as="h1" size="md">
                                 Search Orders:
                             </Heading>
@@ -352,15 +350,13 @@ export default function Orders(){
                                 w="800px"
                             >
                             
-                        {/* Content for the search bar */}
+                  
                         
                             <Input placeholder="Search" isReadOnly   />
                             
                         </Box>
-    
-                        {/* <ProfileBox></ProfileBox> */}
-                
-                    </Flex>
+                    
+                    </Flex> */}
                                                         
 
                      {/* //This is for the inventory */}
@@ -373,16 +369,14 @@ export default function Orders(){
                     //  borderRadius={8}
                      
                      >   
-                        {/* <InventoryTable products= {data}/> */}
-                        {/* <CustomerTable/> */}
+                        <OrderInventory products={data}/>
+
                     </Box>
         </Box>
             {/* </Flex> */}
       {/* </Box> */}
     </Box>
       
-      {/* <CustomerTable/> */}
-      {/* <OrderInventory products={0}/> */}
 
 
 
@@ -391,17 +385,3 @@ export default function Orders(){
     )
 
 }
-
-
-
-// export default function Customers() {
-//   return (
-//     <div>
-//       Profile
-      
-//       <CustomerTable/>
-//       {/* <TextEditor/> */}
-
-//     </div>
-//   )
-// }
