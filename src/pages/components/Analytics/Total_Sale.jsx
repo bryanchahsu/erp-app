@@ -143,23 +143,8 @@ const Total_Sale_Shortcut = ({ dates }) => {
     <div>
 
       <Box mb={4}>
-        {/* <Input
-          type="date"
-          placeholder="Start Date"
-          value={dates.startDate}
-          onChange={() => {}}
-        />
-        <Input
-          type="date"
-          placeholder="End Date"
-          value={dates.endDate}
-          onChange={() => {}}
-        /> */}
-        <Button onClick={filterOrdersByDate}>Apply Filter</Button>
-        <Button onClick={() => setDataInterval("daily")}>Daily</Button>
-        <Button onClick={() => setDataInterval("weekly")}>Weekly</Button>
-        <Button onClick={() => setDataInterval("monthly")}>Monthly</Button>
-        <Heading size="lg" mb={4}>
+
+        <Heading size="xs" mb={4}>
         Sales Over Time
       </Heading>
       </Box>

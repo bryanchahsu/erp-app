@@ -8,7 +8,7 @@ import React, { useState } from "react";
 
 import Total_Sale_Shortcut from "../Total_Sale";
 import CustomDatePicker from "../CustomDatepicker";
-import DateRangePicker from "./DateRangePicker";
+import DateRangePick from "./DateRangePicker";
 import FlexboxWithInnerBoxes from "./flexboxsample";
 
 
@@ -156,7 +156,7 @@ export default function SalesOverTime(){
             {/* <CustomDatePicker/> */}
             test
         </Flex> 
-        <DateRangePicker/>               
+        <DateRangePick/>               
         {/* <CustomDatePicker/> */}
 
         {/* inventory table below */}
