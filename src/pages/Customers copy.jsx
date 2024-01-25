@@ -11,15 +11,10 @@ import Import from "./components/import";
 import { useQuery } from 'react-query';
 import { Link as RouterLink } from 'react-router-dom';
 import CustomerTable from "./components/Customer/CustomerTable.jsx";
-import UserTable from "./components/Customer/UserTable.jsx";
 
 
 const fetchData = async () => {
-
-    //this uses json db
     // const response = await fetch('http://localhost:8000/customer');
-
-    //this uses django webserver
     const response = await fetch('http://127.0.0.1:8000/customers/');
 
     if (!response.ok) {
@@ -30,27 +25,11 @@ const fetchData = async () => {
 
   };
   
-// const fetchData = async () => {
-//     const response = await fetch('http://127.0.0.1:8000/customers/');
-  
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-  
-//     const data = await response.json();
-  
-//     // Ensure data is always an array, even if it's empty
-//     return Array.isArray(data) ? data : [];
-//   };
 
-  
 export default function Customers(){
     const { data, isLoading, isError } = useQuery('customers', fetchData);
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
-
-    // console.log('Fetched data:', data);
-
 
 
     const containerStyle = {
@@ -220,7 +199,7 @@ export default function Customers(){
                                 <span style={boldStyle}>
                                     0-30 &nbsp;&nbsp;  
                                     <span >
-                                        3 
+                                        3 varients
                                     </span>
                                 </span>
                             </li>
@@ -236,7 +215,7 @@ export default function Customers(){
                                 <span style={boldStyle}>
                                     31-90 &nbsp; 
                                     <span >
-                                    10 
+                                    10 variants
                                     </span>
                                 </span>
                             </li>
@@ -252,7 +231,7 @@ export default function Customers(){
                                 <span style={boldStyle}>
                                     91+ &nbsp;&nbsp;  
                                     <span >
-                                    10 
+                                    10 variants
                                     </span>
                                 </span>
                             </li>
@@ -285,7 +264,7 @@ export default function Customers(){
                                 <span style={boldStyle}>
                                     0-30 &nbsp;&nbsp;  
                                     <span >
-                                        3 
+                                        3 varients
                                     </span>
                                 </span>
                             </li>
@@ -301,7 +280,7 @@ export default function Customers(){
                                 <span style={boldStyle}>
                                     31-90 &nbsp; 
                                     <span >
-                                    10 
+                                    10 variants
                                     </span>
                                 </span>
                             </li>
@@ -317,7 +296,7 @@ export default function Customers(){
                                 <span style={boldStyle}>
                                     91+ &nbsp;&nbsp;  
                                     <span >
-                                    10 
+                                    10 variants
                                     </span>
                                 </span>
                             </li>
@@ -395,8 +374,7 @@ export default function Customers(){
                      
                      >   
 
-                    <UserTable userData= {data} />
-                        {/* <CustomerTable customers={data}/> */}
+                        <CustomerTable customers={data}/>
 
                     </Box>
         </Box>
@@ -413,3 +391,17 @@ export default function Customers(){
     )
 
 }
+
+
+
+// export default function Customers() {
+//   return (
+//     <div>
+//       Profile
+      
+//       <CustomerTable/>
+//       {/* <TextEditor/> */}
+
+//     </div>
+//   )
+// }
