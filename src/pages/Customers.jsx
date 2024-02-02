@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 import { Link as RouterLink } from 'react-router-dom';
 import CustomerTable from "./components/Customer/CustomerTable.jsx";
 import UserTable from "./components/Customer/UserTable.jsx";
+import CustomerTableSort from "./components/Customer/CustomerTableSort.jsx";
 
 
 const fetchData = async () => {
@@ -29,6 +30,7 @@ const fetchData = async () => {
     return response.json();
 
   };
+
   
 // const fetchData = async () => {
 //     const response = await fetch('http://127.0.0.1:8000/customers/');
@@ -49,7 +51,7 @@ export default function Customers(){
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
 
-    // console.log('Fetched data:', data);
+    console.log('Fetched data:', data);
 
 
 
@@ -395,8 +397,9 @@ export default function Customers(){
                      
                      >   
 
-                    <UserTable userData= {data} />
-                        {/* <CustomerTable customers={data}/> */}
+                    {/* <UserTable userData= {data} />
+                    <CustomerTable customers={data}/> */}
+                    <CustomerTableSort customers= {data.customers}/>
 
                     </Box>
         </Box>

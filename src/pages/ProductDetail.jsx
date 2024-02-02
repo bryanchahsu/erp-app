@@ -15,7 +15,11 @@ import { useQuery } from 'react-query';
 
 
 const fetchProductDetail = async (productId) => {
-  const response = await fetch(`http://localhost:8000/products/${productId}`);
+  //django
+  const response = await fetch(`http://127.0.0.1:8000/products/${productId}`);
+  
+  //json db
+  // const response = await fetch(`http://localhost:8000/products/${productId}`);
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }

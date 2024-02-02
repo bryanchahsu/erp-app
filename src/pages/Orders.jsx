@@ -12,6 +12,12 @@ import { Link as RouterLink } from 'react-router-dom';
 
 
 const fetchData = async () => {
+
+    //Django
+    // const response = await fetch('http://127.0.0.1:8000/orders/');
+
+
+    //Json DB
     const response = await fetch('http://localhost:8000/orders');
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -26,6 +32,8 @@ export default function Orders(){
     const { data, isLoading, isError } = useQuery('products', fetchData);
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
+    
+    console.log(data)
 
 
     const containerStyle = {
@@ -306,73 +314,40 @@ export default function Orders(){
         
 
         {/* inventory table below */}
-        <Box
-                h="100%"
-                w="100%"
-                right="70px"
-
-                position= "relative"
-                top= "20px"
-                borderRadius="8px"
-                
-                >
-
-
-                    {/* //Sub-heading for the table */}
-                    {/* <Flex
+        <Flex justify="space-between" maxheight= "10px"
                         align="center"
-                        justify="space-between"
                         borderRadius="8px"
                         borderBottom={'solid'}
                         borderColor="gray.300" // Customize the border color
                         borderWidth="1px" // Customize the border width
-                        bg="white"
-                        h="60px"
-                        px={4}
-                        position="absolute"
-                        top={1}
-                        left={4}
-                        right={-120}
-                        zIndex={10}
+                        // justify="space-between"
+                        width="calc(100% + 100px)"
+                        marginLeft="-50px" // Move it to the left by 50px
+                        mt= "20px"
+                        mr= "20px"
+        >
 
-                    >
-                        <Box>
-                            <Heading as="h1" size="md">
-                                Search Orders:
-                            </Heading>
-                        </Box>
-                        
-                        <Box
-                                // bg="#F0F0F0"
-                                borderRadius="8px"
-                                mx="auto" // Center the search input horizontally
-                                p={2}
-                                w="800px"
-                            >
-                            
-                  
-                        
-                            <Input placeholder="Search" isReadOnly   />
-                            
-                        </Box>
-                    
-                    </Flex> */}
-                                                        
 
                      {/* //This is for the inventory */}
-                     <Box
-                     top={-1}
+                     {/* <Box
+                    //  top={-1}
+                     left={30}
+                     right={10}
                      position= "absolute"
-                    //  bg="black"
+                     bg="purple"
                      h="100%"
                      w="100%"
                     //  borderRadius={8}
                      
-                     >   
+                     >    */}
+
+
                         <OrderInventory products={data}/>
 
-                    </Box>
-        </Box>
+                    {/* </Box> */}
+
+
+        </Flex>
             {/* </Flex> */}
       {/* </Box> */}
     </Box>

@@ -13,7 +13,12 @@ import { Link as RouterLink } from 'react-router-dom';
 
 //FETCHING DATA FOR THE INVENTORY TABLE
 const fetchData = async () => {
-    const response = await fetch('http://localhost:8000/products');
+
+        //Django
+    const response = await fetch('http://127.0.0.1:8000/products/');
+
+    //Json DB
+    // const response = await fetch('http://localhost:8000/products');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -33,7 +38,7 @@ export default function Products(){
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
 
-
+    console.log(data)
   
     // STYLES 
     const containerStyle = {
@@ -379,7 +384,7 @@ export default function Products(){
                     //  borderRadius={8}
                      
                      >   
-                        <InventoryTable products= {data}/>
+                        <InventoryTable products= {data.products}/>
                     </Box>
         </Box>
             {/* </Flex> */}

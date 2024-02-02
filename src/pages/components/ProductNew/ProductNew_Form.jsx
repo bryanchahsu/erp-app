@@ -13,21 +13,26 @@ import Header_Save from './Header_Save';
 
 //React Query API
 
-const createPost = async (newPost) => {
-  const response = await fetch('http://localhost:8000/products/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newPost),
-  });
+// const createPost = async (newPost) => {
 
-  if (!response.ok) {
-    throw new Error('Error creating post');
-  }
+//   //django
+//   const response = await fetch('http://127.0.0.1:8000/products/products/new/', {
 
-  return response.json();
-};
+//   //db json
+//   // const response = await fetch('http://localhost:8000/products/', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(newPost),
+//   });
+
+//   if (!response.ok) {
+//     throw new Error('Error creating post');
+//   }
+
+//   return response.json();
+// };
 
 
 // Main function
@@ -39,6 +44,7 @@ const ProductNew_Form = () => {
     description: "", // Initial value for description
     sku: "", // Initial value for sku
     quantity: 0, // Initial value for quantity
+    price: 0.0,
     cost: 0.0, // Initial value for cost
   });
   const modules = {
@@ -60,14 +66,14 @@ const ProductNew_Form = () => {
   const [showHeader, setShowHeader] = useState(false);
 
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const createPostMutation = useMutation((newPost) => createPost(newPost), {
-    onSuccess: () => {
-      // Invalidate and refetch the list of posts after a successful POST
-      queryClient.invalidateQueries('posts');
-    },
-  });
+  // const createPostMutation = useMutation((newPost) => createPost(newPost), {
+  //   onSuccess: () => {
+  //     // Invalidate and refetch the list of posts after a successful POST
+  //     queryClient.invalidateQueries('posts');
+  //   },
+  // });
  
 
   const handleChange = (e) => {
@@ -92,28 +98,28 @@ const ProductNew_Form = () => {
     }
   };
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    // const formData = new FormData(e.target);
-    // const newPost = {
-    //   title: formData.get('title'),
-    //   body: formData.get('body'),
-    // };
-    const sanitizedDescription = DOMPurify.sanitize(productDetails.description);
-    console.log("Sanitized Description:", sanitizedDescription);
-    createPostMutation.mutate({ ...productDetails, description: sanitizedDescription });
+  //   // const formData = new FormData(e.target);
+  //   // const newPost = {
+  //   //   title: formData.get('title'),
+  //   //   body: formData.get('body'),
+  //   // };
+  //   const sanitizedDescription = DOMPurify.sanitize(productDetails.description);
+  //   console.log("Sanitized Description:", sanitizedDescription);
+  //   createPostMutation.mutate({ ...productDetails, description: sanitizedDescription });
     
 
-    setProductDetails({
-      title: "", // Reset to the initial value
-      description: "", // Reset to the initial value
-      sku: "", // Reset to the initial value
-      quantity: 0, // Reset to the initial value
-      cost: 0.0, // Reset to the initial value
-    });
+  //   setProductDetails({
+  //     title: "", // Reset to the initial value
+  //     description: "", // Reset to the initial value
+  //     sku: "", // Reset to the initial value
+  //     quantity: 0, // Reset to the initial value
+  //     cost: 0.0, // Reset to the initial value
+  //   });
 
-  };
+  // };
 
 
 
@@ -123,6 +129,7 @@ const ProductNew_Form = () => {
       ...prevProductDetails,
       description: value
     }));
+    console.log(productDetails)
   };
   /////////////////////////////////////////// SAVE HEADER STATES////////////////////////////////////
 
@@ -285,6 +292,24 @@ const ProductNew_Form = () => {
 
                   {/* Cost */}
                   <Box bg="white" borderRadius="8px" boxShadow="0 0.5px 2px grey">
+                    <Heading as="h2" size="xs" p="10px">
+                      Price
+                    </Heading>
+                    <Input
+                      name= "price"
+                      variant="filled"
+                      value={productDetails.price}
+                      p="10px"
+                      border="1px solid #CBD5E0"
+                      borderRadius="4px"
+                      _hover={{ borderColor: "gray.300" }}
+                      _focus={{ borderColor: "gray.400" }}
+                      onChange={handleChange}
+                      type="number" // Set the input type to "number"
+                      step="0.01"   // Set the step to allow decimal values 
+                    />
+                  </Box>
+                  <Box bg="white" borderRadius="8px" boxShadow="0 0.5px 2px grey" ml="2.5">
                     <Heading as="h2" size="xs" p="10px">
                       Cost
                     </Heading>
