@@ -18,6 +18,9 @@ import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 import InventoryTable from "./components/Dashboard_Inventory"
 import Indicator_test from "./components/Indicator_test";
+import QRCodeGenerator from "./components/QR/QRCodeGnerator"
+import QRCodeScanner from "./components/QR/QRCodeScanner"
+
 
 export default function Dashboard() {
   const firstDivStyle= {
@@ -43,7 +46,7 @@ export default function Dashboard() {
      <Sidebar/>
 
     {/* This is for the right small sidebar/dashboard */}
-     <Flex
+     {/* <Flex
 
       direction="column"
       borderRight={'solid'}
@@ -58,16 +61,14 @@ export default function Dashboard() {
       right={0}
       zIndex={1}
       
-    >
-      {/* Sidebar content */}
-        <Box p={4}
+    > */}
+        {/* <Box p={4}
             mt={20}
             borderBottom= "1px solid"
             borderBottomColor=" gray.300"
             h="150px"
-            > 
-          {/* Sidebar items */}
-          {/* ... */}
+            >  */}
+{/* 
           <List spacing={2}>
             <ListItem>
               <Box
@@ -144,8 +145,15 @@ export default function Dashboard() {
 
 
 
-      
-    </Flex>
+       */}
+
+
+
+    {/* </Flex> */}
+
+
+
+
     {/* <Container
       bg= "#F0F0F0"
       h= "1000px"
@@ -178,10 +186,13 @@ export default function Dashboard() {
             
         >
             Total Session & Sales
-            <Indicator_test></Indicator_test>
+            {/* <Indicator_test></Indicator_test> */}
+            <QRCodeGenerator/>
+            <QRCodeScanner/>
+
 
         </Box>
-        <Box 
+        {/* <Box 
             // top= {1000}
             // left= {500}
             mt="50px" 
@@ -229,7 +240,7 @@ export default function Dashboard() {
         </Box>   
         {/* </Container> */}
 
-        <Box 
+        {/* <Box 
             // top= {1000}
             // left= {500}
             mt="50px" 
@@ -243,8 +254,8 @@ export default function Dashboard() {
         >
           Inventory Table
             <InventoryTable/>          
-        </Box>
-   
+        </Box> */}
+    
 
 
     </div>

@@ -14,11 +14,11 @@ import { Link as RouterLink } from 'react-router-dom';
 const fetchData = async () => {
 
     //Django
-    // const response = await fetch('http://127.0.0.1:8000/orders/');
+    const response = await fetch('http://127.0.0.1:8000/orders/');
 
 
     //Json DB
-    const response = await fetch('http://localhost:8000/orders');
+    // const response = await fetch('http://localhost:8000/orders');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -342,7 +342,7 @@ export default function Orders(){
                      >    */}
 
 
-                        <OrderInventory products={data}/>
+                        {/* <OrderInventory products={data}/> */}
 
                     {/* </Box> */}
 
