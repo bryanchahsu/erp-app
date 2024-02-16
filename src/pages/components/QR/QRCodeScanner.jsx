@@ -1,35 +1,28 @@
 import React, { useState } from 'react';
-import {QrReader} from 'react-qr-reader';
+import { QrReader } from 'react-qr-reader';
 
-function QRCodeScanner() {
-  const [scannedData, setScannedData] = useState('');
-  const [error, setError] = useState(null);
-
-  const handleScan = data => {
-    if (data) {
-      setScannedData(data);
-      setError(null); // Reset error if scanning succeeds
-    }
-  };
-
-  const handleError = err => {
-    console.error('QR Code Scanner Error:', err);
-    setError('Failed to scan QR code. Please try again.'); // Provide user feedback
-  };
+const QRCodeScanner = (props) => {
+  const [data, setData] = useState('No result');
 
   return (
-    <div>
-      <h2>QR Code Scanner</h2>
+    <>
       <QrReader
-        delay={300}
-        onError={handleError}
-        onScan={handleScan}
+        key="environment"
+        constraints={{ facingMode: 'environment' }}
+        onResult={(result, error) => {
+          if (!!result) {
+            setData(result?.text);
+          }
+
+          if (!!error) {
+            console.info(error);
+          }
+        }}
         style={{ width: '100%' }}
       />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {scannedData && <p>Scanned Data: {scannedData}</p>}
-    </div>
+      <p>{data}</p>
+    </>
   );
-}
+};
 
-export default QRCodeScanner;
+export default QRCodeScanner; // Add this line to export the component as default

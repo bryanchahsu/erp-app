@@ -20,6 +20,7 @@ import InventoryTable from "./components/Dashboard_Inventory"
 import Indicator_test from "./components/Indicator_test";
 import QRCodeGenerator from "./components/QR/QRCodeGnerator"
 import QRCodeScanner from "./components/QR/QRCodeScanner"
+import QRCodeScanner_draft from "./components/QR/QRCodeScanner_draft";
 
 
 export default function Dashboard() {
@@ -185,10 +186,11 @@ export default function Dashboard() {
             
             
         >
-            Total Session & Sales
+            {/* Total Session & Sales */}
             {/* <Indicator_test></Indicator_test> */}
             <QRCodeGenerator/>
             <QRCodeScanner/>
+            {/* <QRCodeScanner_draft/> */}
 
 
         </Box>

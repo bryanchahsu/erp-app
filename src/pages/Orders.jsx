@@ -342,7 +342,7 @@ export default function Orders(){
                      >    */}
 
 
-                        {/* <OrderInventory products={data}/> */}
+                        <OrderInventory products={data}/>
 
                     {/* </Box> */}
 

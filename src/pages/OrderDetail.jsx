@@ -20,7 +20,14 @@ import OrderPage from "./components/OrderDetail/OrderDetail";
 
 //////////////
 const fetchProductDetail = async (orderId) => {
-  const response = await fetch(`http://localhost:8000/orders/${orderId}`);
+  //json db
+  // const response = await fetch(`http://localhost:8000/orders/${orderId}`);
+
+  //
+  const response = await fetch(`http://127.0.0.1:8000/orders/${orderId}`);
+
+  // const response = await fetch(`http://127.0.0.1:8000/orders/${orderId}`);
+
   // const response = await fetch(`http://localhost:8000/orders/1`);
   
 

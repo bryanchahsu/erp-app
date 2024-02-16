@@ -8,9 +8,10 @@ import {
   Td,
   Checkbox,
   Box,
+  Link as ChakraLink,
   Input,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as ReactLink } from "react-router-dom";
 
 const OrderInventory = ({ products }) => {
   const [inventoryData, setInventoryData] = useState([]);
@@ -19,60 +20,62 @@ const OrderInventory = ({ products }) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Calculate and set the aggregated quantity for each item
   useEffect(() => {
-    if (products && Array.isArray(products.results)) {
-      // Mapping the products to fit the new structure
-      const updatedInventoryData = products.results.map((item) => ({
-        id: item.id,
-        orderDate: new Date(item.order_date).toLocaleString(),
-        customerName: item.customer.name,
-        total: item.total,
-        fulfillmentStatus: item.fulfillment_status,
-        price: item.total_amount_spent,
-        tags: item.tags.join(", "), // Assuming tags is an array of strings
-        totalQuantity: item.total_quantity,
-        isChecked: false,
-      }));
+    const updatedInventoryData = products.map((item) => {
+      // Check if item.items is defined and not null
+      const items = item.items || [];
 
-      // Sort the data based on the selected column and order
-      if (sortColumn) {
-        updatedInventoryData.sort((a, b) => {
-          const aValue = a[sortColumn];
-          const bValue = b[sortColumn];
-
-          if (sortOrder === "asc") {
-            if (typeof aValue === "string" && typeof bValue === "string") {
-              return aValue.localeCompare(bValue);
-            } else if (typeof aValue === "number" && typeof bValue === "number") {
-              return aValue - bValue;
-            } else {
-              return 0;
-            }
-          } else {
-            if (typeof aValue === "string" && typeof bValue === "string") {
-              return bValue.localeCompare(aValue);
-            } else if (typeof aValue === "number" && typeof bValue === "number") {
-              return bValue - aValue;
-            } else {
-              return 0;
-            }
-          }
-        });
-      }
-
-      // Filter the data based on the search query
-      const filteredData = updatedInventoryData.filter((item) =>
-        Object.values(item).some((value) =>
-          String(value).toLowerCase().includes(searchQuery.toLowerCase())
-        )
+      // Calculate the aggregated quantity for each item
+      const totalQuantity = items.reduce(
+        (acc, product) => acc + product.quantity,
+        0
       );
 
-      setInventoryData(filteredData);
-    } else {
-      setInventoryData([]);
+      return {
+        ...item,
+        totalQuantity: totalQuantity,
+        isChecked: false, // Add a property to track checkbox state
+      };
+    });
+
+    // Sort the data based on the selected column and order
+    if (sortColumn) {
+      updatedInventoryData.sort((a, b) => {
+        const aValue = a[sortColumn];
+        const bValue = b[sortColumn];
+
+        if (sortOrder === "asc") {
+          if (typeof aValue === "string" && typeof bValue === "string") {
+            return aValue.localeCompare(bValue);
+          } else if (typeof aValue === "number" && typeof bValue === "number") {
+            return aValue - bValue;
+          } else {
+            return 0; // No comparison for other data types
+          }
+        } else {
+          if (typeof aValue === "string" && typeof bValue === "string") {
+            return bValue.localeCompare(aValue);
+          } else if (typeof aValue === "number" && typeof bValue === "number") {
+            return bValue - aValue;
+          } else {
+            return 0; // No comparison for other data types
+          }
+        }
+      });
     }
+
+    // Filter the data based on the search query
+    const filteredData = updatedInventoryData.filter((item) =>
+      Object.values(item).some((value) =>
+        String(value).toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+
+    setInventoryData(filteredData);
   }, [products, sortColumn, sortOrder, searchQuery]);
 
+  // Function to handle column sorting
   const handleSort = (column) => {
     if (column === sortColumn) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -82,6 +85,7 @@ const OrderInventory = ({ products }) => {
     }
   };
 
+  // Function to handle checkbox selection
   const handleCheckboxChange = (itemId) => {
     const updatedData = inventoryData.map((item) => {
       if (item.id === itemId) {
@@ -96,6 +100,7 @@ const OrderInventory = ({ products }) => {
     setInventoryData(updatedData);
   };
 
+  // Function to render sortable headers
   const renderSortableHeader = (label, column) => {
     return (
       <Th
@@ -120,6 +125,7 @@ const OrderInventory = ({ products }) => {
 
       {/* Table */}
       <Table variant="simple" w="100%">
+        {/* Rest of the component code remains the same */}
         <Thead>
           <Tr bg="#F0F0F0">
             <Th>
@@ -151,44 +157,45 @@ const OrderInventory = ({ products }) => {
                 />
               </Td>
               <Td>
-                <RouterLink to={`/orders/${item.id}`}>
+                <ChakraLink as={ReactLink} to={`/orders/${item.id}`}>
                   <Box>{item.id}</Box>
-                </RouterLink>
+                </ChakraLink>
               </Td>
               <Td>
-                <RouterLink to={`/orders/${item.id}`}>
+                <ChakraLink as={ReactLink} to={`/orders/${item.id}`}>
                   <Box>{item.orderDate}</Box>
-                </RouterLink>
+                </ChakraLink>
               </Td>
               <Td>
-                <RouterLink to={`/orders/${item.id}`}>
+                <ChakraLink as={ReactLink} to={`/orders/${item.id}`}>
                   <Box>{item.customerName}</Box>
-                </RouterLink>
+                </ChakraLink>
               </Td>
               <Td>
-                <RouterLink to={`/orders/${item.id}`}>
+                <ChakraLink as={ReactLink} to={`/orders/${item.id}`}>
                   <Box>{item.total}</Box>
-                </RouterLink>
+                </ChakraLink>
               </Td>
               <Td>
-                <RouterLink to={`/orders/${item.id}`}>
+                <ChakraLink as={ReactLink} to={`/orders/${item.id}`}>
                   <Box>{item.fulfillmentStatus}</Box>
-                </RouterLink>
+                </ChakraLink>
               </Td>
               <Td>
-                <RouterLink to={`/orders/${item.id}`}>
+                <ChakraLink as={ReactLink} to={`/orders/${item.id}`}>
                   <Box>{item.price}</Box>
-                </RouterLink>
+                </ChakraLink>
               </Td>
               <Td>
-                <RouterLink to={`/orders/${item.id}`}>
+                <ChakraLink as={ReactLink} to={`/orders/${item.id}`}>
                   <Box>{item.tags}</Box>
-                </RouterLink>
+                </ChakraLink>
               </Td>
               <Td>
-                <RouterLink to={`/orders/${item.id}`}>
-                  <Box>{item.totalQuantity}</Box>
-                </RouterLink>
+                <ChakraLink as={ReactLink} to={`/orders/${item.id}`}>
+                  <Box>{item.totalQuantity}</Box>{" "}
+                  {/* Display the aggregated quantity */}
+                </ChakraLink>
               </Td>
             </Tr>
           ))}

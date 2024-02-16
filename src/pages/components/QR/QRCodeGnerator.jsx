@@ -12,7 +12,6 @@ function QRCodeGenerator() {
 
   return (
     <div>
-      <h1>Generate QR Code for Google.com</h1>
       <button onClick={generateQRCode}>Generate QR Code</button>
       {qrData && <QRCode value={qrData} />}
     </div>
