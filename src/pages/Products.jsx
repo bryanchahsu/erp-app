@@ -120,15 +120,16 @@ export default function Products(){
                 
 
                 {/* Nested flexbox */}
-                <Flex
-                    
-                    // bg="black"
-                    >
+                <Flex>
+                    <Box marginRight="10px">
+                        {/* <Button colorScheme="gray" variant="solid" bg="#E3E3E3">Box 1</Button> */}
+                        <Export/>
+                    </Box>
+                    <Box marginRight="10px">
+                        {/* <Button colorScheme="gray" variant="solid" bg="#E3E3E3">Box 2</Button> */}
+                        <Import marginRight = "50"/>
 
-
-                    
-                    <Import/>
-                    <Export/>
+                    </Box>
                     <Box
                         as={RouterLink}
                         // bg="#E6E6E6"
@@ -145,10 +146,10 @@ export default function Products(){
                         alignItems="center"
                         justifyContent="center"
                         pr="0.5em"
-                        pl="0.5em"
-                        ml= "3"  
+                        pl="0.50em"
+                        // ml= "2"  
                         >
-                      Add Product  
+                      Add Products  
                     </Box>
                 </Flex>
 

@@ -47,6 +47,7 @@ const router = createBrowserRouter(
       {/* <Route path="orders" element={<OrderPage/>} /> */}
       <Route path="products" element={<Products/>} />
       <Route path="customers" element={<Customers />} />
+      
       <Route path="customers/new" element={<CustomerNew />} />
 
       <Route path="dashboards" element={<Create />} />
@@ -54,6 +55,9 @@ const router = createBrowserRouter(
       <Route path="products/new" element={<ProductNew />} />
       <Route path="products/:productId" element={<ProductDetail />} />
       <Route path="orders/:orderId" element={<OrderDetail />} />
+      <Route path="customers/:customerId" element={<Customers />} />
+
+
       {/* <Route path="orders/2" element={<OrderPage />} /> */}
       {/* <Route path="orders/test" element={<SearchBar />} /> */}
 

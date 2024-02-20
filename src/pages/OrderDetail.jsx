@@ -24,7 +24,7 @@ const fetchProductDetail = async (orderId) => {
   // const response = await fetch(`http://localhost:8000/orders/${orderId}`);
 
   //
-  const response = await fetch(`http://127.0.0.1:8000/orders/${orderId}`);
+  const response = await fetch(`http://127.0.0.1:8000/orders/${orderId}/`);
 
   // const response = await fetch(`http://127.0.0.1:8000/orders/${orderId}`);
 
@@ -46,6 +46,7 @@ export default function OrderDetail(){
   const { data, isLoading, isError, error } = useQuery(['order', orderId], () =>
     fetchProductDetail(orderId)
   );
+  console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error.message}</div>;

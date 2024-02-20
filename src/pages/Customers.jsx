@@ -1,6 +1,6 @@
 // import CustomerTable from "./components/customerTable.jsx"
 // import TextEditor from "./components/textEditor.jsx"
-import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider } from "@chakra-ui/react";
+import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider, Button } from "@chakra-ui/react";
 import React from "react";
 import TableSample from "../../components/TableSample"
 import Header from "./components/Header"
@@ -135,15 +135,16 @@ export default function Customers(){
                 
 
                 {/* Nested flexbox */}
-                <Flex
+                {/* <Flex
+                    spacing="5px"
                     
                     // bg="black"
-                    >
+                    > */}
 
-
-                    
-                    <Import/>
+{/* 
                     <Export/>
+
+                    <Import marginRight = "50"/>
                     <Box
                         as={RouterLink}
                         // bg="#E6E6E6"
@@ -160,12 +161,46 @@ export default function Customers(){
                         alignItems="center"
                         justifyContent="center"
                         pr="0.5em"
-                        pl="0.5em"
+                        pl="0.50em"
                         ml= "2"  
                         >
                       Add Customer  
                     </Box>
+                </Flex> */}
+
+                <Flex>
+                    <Box marginRight="10px">
+                        {/* <Button colorScheme="gray" variant="solid" bg="#E3E3E3">Box 1</Button> */}
+                        <Export/>
+                    </Box>
+                    <Box marginRight="10px">
+                        {/* <Button colorScheme="gray" variant="solid" bg="#E3E3E3">Box 2</Button> */}
+                        <Import marginRight = "50"/>
+
+                    </Box>
+                    <Box
+                        as={RouterLink}
+                        // bg="#E6E6E6"
+                        borderRadius="md"
+                        cursor="pointer"
+                        _hover={{
+                          bg: "#CCCCCC",
+                        }}
+                        bg="black"
+                        color="white"
+                        to="/customers/new"
+                        textAlign="center"  // Center the text
+                        display="flex"     // Use flexbox to center vertically and horizontally
+                        alignItems="center"
+                        justifyContent="center"
+                        pr="0.5em"
+                        pl="0.50em"
+                        // ml= "2"  
+                        >
+                      Add Customer  
+                    </Box>
                 </Flex>
+            
 
 
                 {/* <ProfileBox></ProfileBox> */}

@@ -29,7 +29,10 @@ const Export = () => {
 
   return (
     <>
-      <Button bg="#E3E3E3" right ="80px"onClick={openExportModal}>Export</Button>
+      <Button bg="#E3E3E3" 
+        // right ="50px" 
+        // mr= "2"
+        onClick={openExportModal}>Export</Button>
 
       <Modal isOpen={isExportModalOpen} onClose={closeExportModal}>
         <ModalOverlay />
