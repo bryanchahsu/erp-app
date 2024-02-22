@@ -1,18 +1,31 @@
-import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, List, ListItem } from "@chakra-ui/react";
-import { Select } from '@chakra-ui/react'
+import React from 'react';
+import {
+  Box,
+  Flex,
+  Text,
+  VStack,
+  HStack,
+  Button,
+  Image,
+  Divider,
+  Tag,
+  Badge,
+  Stack,
+  Link,
+  useColorModeValue
+} from '@chakra-ui/react';
+
+import BackButton from "./components/back";
 import { Link as RouterLink, useParams } from 'react-router-dom';
-import React from "react";
+
+
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 
-import Export from "./components/export";
-import Import from "./components/import";
 
 import ProductDetailTest from "./ProductDetailTest";
-import BackButton from "./components/back";
 import SalesChannelsList from "./components/test2_saleschannel";
 import { useQuery } from 'react-query';
-
 
 const fetchProductDetail = async (productId) => {
   //django
@@ -25,155 +38,153 @@ const fetchProductDetail = async (productId) => {
   }
   return response.json();
 };
-export default function ProductDetail(){
 
-    // Access the URL parameter ":productId"
-    let { productId } = useParams();
 
-    // Use "productId" to fetch product details using React Query
-    const { data, isLoading, isError, error } = useQuery(['product', productId], () =>
-    fetchProductDetail (productId)
-    );
+const ProductDetail = () => {
+  // Replace this with actual data
+  const orderItems = [
+    { name: 'Art of Tea Filter Bags', price: '$7.00', quantity: 2, sku: 'AOTFB' },
+    { name: 'Hibiscus Cooler', price: '$32.00', quantity: 1, sku: 'HC1' },
+    { name: 'Classic Black Tea - Award Winning', price: '$21.00', quantity: 1, sku: 'CLB1' },
+    { name: "Tali's Masala Chai Tea", price: '$40.00', quantity: 1, sku: 'TMC1' },
+  ];
+  const borderColor = useColorModeValue('gray.200', 'gray.600');
 
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error: {error.message}</div>;
 
-      
-    const firstDivStyle= {
-        background: "#F0F0F0",
-        margin: 0,
-        padding: 0,
-        minHeight: '100vh', // To ensure the background covers the full viewport height
-      };
-    return(
-        <div>
-            <Header/>
-            <Sidebar/>
-            <Box
+  let { productId } = useParams();
+
+  // Use "productId" to fetch product details using React Query
+  const { data, isLoading, isError, error } = useQuery(['product', productId], () =>
+  fetchProductDetail (productId)
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
+
+
+  
+  const firstDivStyle= {
+    background: "#F0F0F0",
+    margin: 0,
+    padding: 0,
+    minHeight: '100vh', // To ensure the background covers the full viewport height
+  };
+
+  return (  
+    <div>
+      <Header/>
+      <Sidebar/>
+{/* 
+      <Box
               position="relative"
-              mt={10}
+              mt={0}
               ml={250}
-              p={100}
-              bg="#F0F0F0"
+              p={50}
+              bg="#F0F0F0"  
               h="1000px"
               minWidth={500}
-                  >
-              <Flex
-                  align="center"
-                  justify="space-between"
-                  // borderBottom={'solid'}
-                  // borderColor="gray.300" // Customize the border color
-                  // borderWidth="1px" // Customize the border width
-                  bg="#F0F0F0"
-                  h="60px"
-                  px={4}
-                  position="absolute"
-                  top={5}
-                  left={200}
-                  right={0}
-                  zIndex={10}>
-                <Box>
-                  {/* Content for the title */}
-                      {/* <BackButton/> */}
-                      <Heading as="h1" size="md" ml= "190px">
-                        <BackButton/>
-                          Back Button with Product Name
-                      </Heading>
-                </Box>
-                
+                  > */}
 
-                {/* Nested flexbox */}
-                {/* <Flex
-                     
-                    // bg="black"
-                    >
-                    <Export/>
-                    <Import/>
-                </Flex> */}
+                    
+      <Box 
+            // maxWidth="1200px" 
+            ml={250}
+            mt={50}
+            minWidth={500}
+            bg="#F0F0F0"
+            position="relative"
+            // margin="auto"
+            p={5}
+      >
+        {/* Header */}
+        <Text fontSize="2xl" fontWeight="bold" mt={2} mb= {-5} textAlign="left" ml="325px">
+          <BackButton/>
+          Product Details</Text>
 
-              </Flex>
-              
-              <Flex flexDirection="row" alignItems="center" bg="" height="1000px" minWidth="600"  mt="-20px">
+        <Box 
+        // borderWidth="1px" borderColor={borderColor} borderRadius="lg" p={0}
+          // bg="black"
+          ml="300px"
+          mr="250px"
+        >            
 
-                {/* Left Container */}
-                <Flex width="50%" ml="250px" mt="-250px"  bg="#F0F0F0" h="70%"  alignItems="center" flexDirection="column" 
-                              // borderRadius={8}
-                            //  boxShadow="0 2px 4px grey"
-                             >
-                              
-                  <ProductDetailTest products= {data}/>
-                 
+          <Flex direction={{ base: 'column', lg: 'row' }} gap={0} >
+            {/* Left Column */}
+            <Box flex="3" 
+                //  bg="#F0F0F0"
+                // bg="black"
+                //  p= "10px"
+                 >
+              <ProductDetailTest products= {data}/>
+
+            </Box>
+
+            {/* Right Column */}
+            <Box flex="1" bg="white" pl="20px" pt="15px" >
+              <VStack spacing={5} alignItems="stretch">
+                {/* Customer Details */}
+                <VStack spacing={1} alignItems="stretch">
+                  <Text fontWeight="semibold">Customer</Text>
+                  <Text>Patric Donahue</Text>
+                  <Text>12 orders</Text>
+                </VStack>
+
+                <Divider />
+
+                {/* Contact Information */}
+                <VStack spacing={1} alignItems="stretch">
+                  <Text fontWeight="semibold">Contact information</Text>
+                  <Text>cowdltla@gmail.com</Text>
+                  <Text>No phone number</Text>
+                </VStack>
+
+                <Divider />
+
+                {/* Shipping Address */}
+                <VStack spacing={1} alignItems="stretch">
+                  <Text fontWeight="semibold">Shipping address</Text>
+                  <Text>Patricia Donahue</Text>
+                  <Text>Cow Cafe</Text>
+                  <Text>342 West Pico Boulevard</Text>
+                  <Text>Los Angeles CA 90015</Text>
+                  <Text>United States</Text>
+                  <Text>(323) 919-1280</Text>
+                  <Link color="blue.500" href="#">View map</Link>
+                </VStack>
+
+                <Divider />
+
+                {/* Billing Address */}
+                <VStack spacing={1} alignItems="stretch">
+                  <Text fontWeight="semibold">Billing address</Text>
+                  <Text>Same as shipping address</Text>
+                </VStack>
+
+                <Divider />
+
+                {/* Conversion Summary */}
+                <Stack spacing={1}>
+                  <Badge colorScheme="purple">Conversion summary</Badge>
+                  <Text fontSize="sm">This is their 11th order</Text>
+                  <Text fontSize="sm">1st session was direct to your store</Text>
+                  <Text fontSize="sm">1 session over 1 day</Text>
+                  <Link color="blue.500" href="#">View conversion details</Link>
+                </Stack>
+
+                <Divider />
+
+                {/* Fraud Analysis */}
+                <Flex alignItems="center" justifyContent="space-between">
+                  <Badge colorScheme="red">Fraud analysis</Badge>
+                  <Link color="blue.500" href="#">View report</Link>
                 </Flex>
-                
-                {/* Right Container */}
-                <Flex width="20%" 
-                      ml="-50px" 
-                      mr="50px"
-                      mt="-425px"
-                      
-                      // bg="white" 
-                      h="500px"
-                      alignItems="center" 
-                      flexDirection="column"
-                      // borderRadius={8}
-                      // boxShadow="0 2px 4px grey"
-                      
-                      // bg="green"
-                      >
-                      <Flex
-                        p={5}
-                        // m="10px"
-                        // ml="20px"
-                        mt= "20px"
-                        borderRadius="8px"
-                        boxShadow="0 2px 4px grey"
-                        h="100px"
-                        w="75%"
-                        flexDirection="column"
-                        // alignItems="center"
-                        bg="white"
-                      >
-                        Status
-                        <Select placeholder='Select option'>
-                          <option value='option1'>Active</option>
-                          <option value='option2'>Draft</option>
-                        </Select>
-           
-                      </Flex>
+              </VStack>
+            </Box>
+          </Flex>
+        </Box>
+      </Box>
+    </div>
+  );
+};
 
-                      <Flex
-                        p={10}
-                        // m="10px"
-                        // ml="20px"
-                        mt= "20px"
-                        borderRadius="8px"
-                        boxShadow="0 2px 4px grey"
-                        h="200px"
-                        w="75%"
-                        flexDirection="column"
-                        alignItems="center"
-                        bg="white"
-                      >
-                        <Box flex="1" bg="white" p={4}>
-                          <SalesChannelsList/>
-                        </Box>
-                        {/* <Box flex="1" bg="blue.300" p={4}>
-                          Sales
-                        </Box> */}
-
-                      </Flex>
-                      
-
-
-
-                  
-                </Flex>
-              </Flex> 
-            </Box>                                 
-
-
-            {/* <ProductInformationPage/> */}
- 
-        </div>
-    )
-}
+export default ProductDetail;

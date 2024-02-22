@@ -46,7 +46,7 @@ export default function OrderDetail(){
   const { data, isLoading, isError, error } = useQuery(['order', orderId], () =>
     fetchProductDetail(orderId)
   );
-  console.log(data);
+  console.log(data);                 
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error.message}</div>;
@@ -63,11 +63,6 @@ export default function OrderDetail(){
         <div>
             <Header/>
             <Sidebar/>
-
-
-
-
-            {/* <OrderPage/> */}
 
             <Box
               position="relative"
@@ -107,7 +102,7 @@ export default function OrderDetail(){
                           Back Button with Product Name
                       </Heading>
                 </Box> */}
-              <OrderPage/>
+              <OrderPage data= {data}/>
 
             </Box>                                 
 
