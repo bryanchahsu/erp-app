@@ -13,25 +13,58 @@ import {
   Stack // Add Stack to the imports
 } from '@chakra-ui/react';
 
-
 import BackButton from '../back';
 
 const OrderPage = ({ data }) => {
+
+
+
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit'
+    }).format(date);
+  };
   const borderColor = useColorModeValue('gray.200', 'gray.600');
 
   return (
     <Box maxWidth="1200px" margin="auto" p={5}>
-      <Text fontSize="2xl" fontWeight="bold" mb={5} textAlign="left" ml="-15px">
+      <Text fontSize="2xl" fontWeight="bold" mb={-2} textAlign="left" ml="-20px">
         <BackButton/>
         Order Details
+      </Text>
+      {/* <Text fontSize="1x1" fontWeight="bold" mb={5} textAlign="left" ml="-15px">
+        Order Details
+      </Text> */}
+      <Text fontSize="s"
+            ml= "30px"
+            mb={5}
+            
+            >
+        {formatDate(data.order_date)} from Online Store
       </Text>
 
       <Box>
         <Flex direction={{ base: 'column', lg: 'row' }} gap={5}>
-          <Box flex="2" bg="white">
-            <VStack spacing={5} alignItems="stretch">
+
+          {/* left container */}
+          <Box flex="2" bg="#F0F0F0"
+              // borderRadius="8px"
+              // boxShadow="0 0.5px 2px grey"
+              // height="auto" // Adjust height dynamically based on content
+
+              >
+            <VStack spacing={5} alignItems="stretch"
+                          borderRadius="8px"
+                          boxShadow="0 0.5px 2px grey"
+                          height="auto" // Adjust height dynamically based on content
+                          bg="white"
+            >
               {data.items.map((item, index) => (
-                <Flex key={index} justifyContent="space-between" alignItems="center" p={2} borderWidth="1px" borderColor={borderColor} borderRadius="lg">
+                <Flex key={index} justifyContent="space-between" alignItems="center" p={2} borderWidth="1px" borderColor={borderColor} borderRadius="lg" bg ="white">
                   <VStack alignItems="start">
                     <Text fontWeight="semibold">{item.product.title}</Text>
                     <Text fontSize="sm">SKU: {item.product.sku}</Text>
@@ -48,22 +81,27 @@ const OrderPage = ({ data }) => {
                 <HStack justifyContent="space-between">
                   <Text fontWeight="semibold">Shipping</Text>
                   <Text>{data.shippingMethod}</Text>
+                  
                 </HStack>
                 <Divider />
                 <HStack justifyContent="space-between">
                   <Text fontWeight="semibold" fontSize="lg">Total</Text>
                   <Text fontSize="lg">${data.total}</Text>
+
                 </HStack>
               </VStack>
 
               <HStack spacing={2}>
-                <Tag size="lg" variant="solid" colorScheme="green">Fulfilled</Tag>
+                <Tag ml= "3px" size="lg" variant="solid" colorScheme="green">Fulfilled</Tag>
                 <Tag size="lg" variant="solid" colorScheme="blue">Paid</Tag>
               </HStack>
             </VStack>
           </Box>
-
-          <Box flex="1" bg="white" pl="20px" pt="15px" >
+          
+          {/* right container */}
+          <Box flex="1" bg="white" pl="20px" pt="15px" 
+                        borderRadius="8px"
+                        boxShadow="0 0.5px 2px grey" >
             <VStack spacing={5} alignItems="stretch">
               <VStack spacing={1} alignItems="stretch">
                 <Text fontWeight="semibold">Customer</Text>
@@ -83,14 +121,15 @@ const OrderPage = ({ data }) => {
 
               <VStack spacing={1} alignItems="stretch">
                 <Text fontWeight="semibold">Shipping address</Text>
-                <Text>{data.customer.name}</Text>
-                {/* You can add more address details here */}
+                <Text>{data.customer.address.street}, {data.customer.address.city}, {data.customer.address.state} {data.customer.address.zip_code}</Text>
               </VStack>
 
               <Divider />
 
               <VStack spacing={1} alignItems="stretch">
                 <Text fontWeight="semibold">Billing address</Text>
+                <Text>{data.customer.address.street}, {data.customer.address.city}, {data.customer.address.state} {data.customer.address.zip_code}</Text>
+
                 {/* You can add billing address details here */}
               </VStack>
 

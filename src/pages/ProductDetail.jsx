@@ -12,7 +12,8 @@ import {
   Badge,
   Stack,
   Link,
-  useColorModeValue
+  useColorModeValue,
+  Select
 } from '@chakra-ui/react';
 
 import BackButton from "./components/back";
@@ -120,64 +121,50 @@ const ProductDetail = () => {
             </Box>
 
             {/* Right Column */}
-            <Box flex="1" bg="white" pl="20px" pt="15px" >
+            <Box flex="1" bg="#F0F0F0" pl="20px" pt="15px" >
               <VStack spacing={5} alignItems="stretch">
-                {/* Customer Details */}
-                <VStack spacing={1} alignItems="stretch">
-                  <Text fontWeight="semibold">Customer</Text>
-                  <Text>Patric Donahue</Text>
-                  <Text>12 orders</Text>
-                </VStack>
+              <Flex
+                        p={5}
+                        // m="10px"
+                        // ml="20px"
+                        mt= "25px"
+                        borderRadius="8px"
+                        boxShadow="0 0.5px 2px grey"                       
+                        h="100px"
+                        w="75%"
+                        flexDirection="column"
+                        // alignItems="center"
+                        bg="white"
+                      >
+                        Status
+                        <Select placeholder='Select option'>
+                          <option value='option1'>Active</option>
+                          <option value='option2'>Draft</option>
+                        </Select>
+           
+                      </Flex>
 
-                <Divider />
+                      <Flex
+                        p={10}
+                        // m="10px"
+                        // ml="20px"
+                        mt= "10px"
+                        borderRadius="8px"
+                        boxShadow="0 0.5px 2px grey"                       
+                        h="200px"
+                        w="75%"
+                        flexDirection="column"
+                        alignItems="center"
+                        bg="white"
+                      >
+                        <Box flex="1" bg="white" p={4} >
+                          <SalesChannelsList/>
+                        </Box>
+                        {/* <Box flex="1" bg="blue.300" p={4}>
+                          Sales
+                        </Box> */}
 
-                {/* Contact Information */}
-                <VStack spacing={1} alignItems="stretch">
-                  <Text fontWeight="semibold">Contact information</Text>
-                  <Text>cowdltla@gmail.com</Text>
-                  <Text>No phone number</Text>
-                </VStack>
-
-                <Divider />
-
-                {/* Shipping Address */}
-                <VStack spacing={1} alignItems="stretch">
-                  <Text fontWeight="semibold">Shipping address</Text>
-                  <Text>Patricia Donahue</Text>
-                  <Text>Cow Cafe</Text>
-                  <Text>342 West Pico Boulevard</Text>
-                  <Text>Los Angeles CA 90015</Text>
-                  <Text>United States</Text>
-                  <Text>(323) 919-1280</Text>
-                  <Link color="blue.500" href="#">View map</Link>
-                </VStack>
-
-                <Divider />
-
-                {/* Billing Address */}
-                <VStack spacing={1} alignItems="stretch">
-                  <Text fontWeight="semibold">Billing address</Text>
-                  <Text>Same as shipping address</Text>
-                </VStack>
-
-                <Divider />
-
-                {/* Conversion Summary */}
-                <Stack spacing={1}>
-                  <Badge colorScheme="purple">Conversion summary</Badge>
-                  <Text fontSize="sm">This is their 11th order</Text>
-                  <Text fontSize="sm">1st session was direct to your store</Text>
-                  <Text fontSize="sm">1 session over 1 day</Text>
-                  <Link color="blue.500" href="#">View conversion details</Link>
-                </Stack>
-
-                <Divider />
-
-                {/* Fraud Analysis */}
-                <Flex alignItems="center" justifyContent="space-between">
-                  <Badge colorScheme="red">Fraud analysis</Badge>
-                  <Link color="blue.500" href="#">View report</Link>
-                </Flex>
+                      </Flex>
               </VStack>
             </Box>
           </Flex>

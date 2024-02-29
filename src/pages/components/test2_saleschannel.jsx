@@ -4,8 +4,8 @@ const SalesChannelsList = () => {
   const salesChannels = [
     "Online Store",
     "Amazon",
-    "eBay",
-    "In-person Sales",
+    "Walmart",
+    // "In-person Sales",
     // Add more sales channels as needed
   ];
 

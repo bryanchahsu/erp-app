@@ -38,6 +38,10 @@ import Header_Save from './Header_Save';
 // Main function
 
 const ProductNew_Form = () => {
+
+
+  const apiUrl = "http://127.0.0.1:8000/products/new";
+
   // const [productDetails, setProductDetails] = useState({ ...products });
   const [productDetails, setProductDetails] = useState({
     title: "", // Initial value for title
@@ -97,6 +101,7 @@ const ProductNew_Form = () => {
       }));
     }
   };
+  
   
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -174,7 +179,7 @@ const ProductNew_Form = () => {
       // height="100%"
       >
         {/* <Header_Save productDetails={productDetails}/> */}
-        {productDetails && <Header_Save productDetails={productDetails} />}
+        {productDetails && <Header_Save productDetails={productDetails} apiUrl= {apiUrl} />}
 
       {/* Product Details */}
       <Box flex="2" padding="10px" borderRadius="8px" boxShadow="0 0.5px 2px grey" 
@@ -343,32 +348,6 @@ const ProductNew_Form = () => {
         <ImageUpload/>
       </Box>
 
-
-
-
-      {/* /////////////////////////// header_save//////////// */}
-      {/* {showHeader && (
-        <Box p="10px" bg="gray.200">
-          <Flex justify="space-between">
-            <Heading size="md">Unsaved Changes</Heading>
-            <Button variant="outline" colorScheme="red" onClick={handleDiscard}>
-              Discard
-            </Button>
-            <Button colorScheme="green" onClick={handleSubmit }>
-            
-              Save
-            </Button>
-          </Flex>
-        </Box>
-      )} */}
-
-      {/* <Input
-        placeholder="Type something..."
-        value={inputValue}
-        onChange={handleChange_test}
-        mt={showHeader ? '60px' : '0'} // Adjust the margin top based on header visibility
-      /> */}
-   
     </Flex>
   );
 };

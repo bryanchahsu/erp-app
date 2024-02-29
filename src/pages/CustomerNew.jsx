@@ -6,12 +6,8 @@ import React from "react";
 import Header_Save from "./components/ProductNew/Header_Save";
 import Sidebar from "./components/Sidebar"
 
-import Export from "./components/export";
-import Import from "./components/import";
-
 import ProductDetailTest from "./ProductDetailTest";
 import BackButton from "./components/back";
-import SalesChannelsList from "./components/test2_saleschannel";
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import CustomerForm from "./components/CustomerNew/CustomerForm";
 

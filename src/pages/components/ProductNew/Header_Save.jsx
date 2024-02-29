@@ -6,8 +6,10 @@ import DOMPurify from 'dompurify';
 import { useNavigate } from 'react-router-dom';
 
 // Define API Query Function
-const createPost = async (newPost) => {
-  const response = await fetch('http://127.0.0.1:8000/products/new', {
+const createPost = async (newPost, apiUrl) => {
+  const response = await fetch(apiUrl, {
+    // const response = await fetch('http://127.0.0.1:8000/products/new', {
+
     // const response = await fetch('http://localhost:8000/products/', {
     method: 'POST',
     headers: {
@@ -23,7 +25,7 @@ const createPost = async (newPost) => {
   return response.json();
 };
 
-export default function Header_Save({ productDetails }) {
+export default function Header_Save({ productDetails, apiUrl }) {
   const [outerPadding, setOuterPadding] = useState(400); // Initial padding for the outer container
   const boxWidth = 300; // Desired width for both boxes
   const spaceBetween = 200; // Adjust the space between the boxes
@@ -32,7 +34,7 @@ export default function Header_Save({ productDetails }) {
 
   const queryClient = useQueryClient();
 
-  const createPostMutation = useMutation((newPost) => createPost(newPost), {
+  const createPostMutation = useMutation((newPost) => createPost(newPost, apiUrl), {
     onSuccess: () => {
       // Invalidate and refetch the list of posts after a successful POST
       queryClient.invalidateQueries('posts');
@@ -63,7 +65,7 @@ export default function Header_Save({ productDetails }) {
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(productDetails)
+    // console.log(productDetails)
   
     if (!productDetails || !productDetails.description) {
       // Handle the case where productDetails or its description is undefined or null
@@ -72,7 +74,7 @@ export default function Header_Save({ productDetails }) {
     }
   
     const sanitizedDescription = DOMPurify.sanitize(productDetails.description);
-    console.log('Sanitized Description:', sanitizedDescription);
+    // console.log('Sanitized Description:', sanitizedDescription);
   
     try {
       const response = await createPostMutation.mutateAsync({

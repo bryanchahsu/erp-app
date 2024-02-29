@@ -29,7 +29,8 @@ export default function ProductNew(){
     // if (isLoading) return <div>Loading...</div>;
     // if (isError) return <div>Error: {error.message}</div>;
 
-      
+    const apiUrl = "http://127.0.0.1:8000/products/new";
+
     const firstDivStyle= {
         background: "#F0F0F0",
         margin: 0,

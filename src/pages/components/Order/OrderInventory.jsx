@@ -110,7 +110,11 @@ const OrderInventory = ({ products }) => {
   };
 
   return (
-    <Box p={4} bg="#F5F5F5" mt="0px">
+    <Box p={4} bg="#F5F5F5" mt="0px"
+      width="calc(100% + 135px)"
+      borderRadius="8px"
+
+      >
       {/* Search input */}
       <Input
         placeholder="Search"
@@ -194,6 +198,7 @@ const OrderInventory = ({ products }) => {
           ))}
         </Tbody>
       </Table>
+      
     </Box>
   );
 };
