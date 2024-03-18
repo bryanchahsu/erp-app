@@ -3,190 +3,107 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
-  Stack,
   Button,
-  useToast,
+  VStack,
   Box,
+  Divider
 } from '@chakra-ui/react';
-import { useMutation } from 'react-query';
-// import axios from 'axios';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import Header_Save from '../Header_Save';
 
-function CustomerForm() {
-  const [isLoading, setIsLoading] = useState(false);
-  const mutation = useMutation(data => axios.post('/api/customer', data));
-  const toast = useToast();
+const CustomerForm = () => {
+  const apiUrl = 'http://127.0.0.1:8000/customers/new';
 
-  const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    address: {
       country: '',
-      address: '',
-      apartment: '',
+      street: '',
+      apartment_suite: '',
       city: '',
       state: '',
-      zipCode: '',
-      phone: '',
-      acceptsMarketing: false,
-      taxExempt: false,
+      zip_code: ''
     },
-    validationSchema: Yup.object().shape({
-      firstName: Yup.string().required('First name is required'),
-      lastName: Yup.string().required('Last name is required'),
-      email: Yup.string().email('Invalid email format').required('Email is required'),
-      country: Yup.string().required('Country is required'),
-      address: Yup.string().required('Address is required'),
-      apartment: Yup.string(),
-      city: Yup.string().required('City is required'),
-      state: Yup.string().required('State is required'),
-      zipCode: Yup.string().required('ZIP Code is required'),
-      phone: Yup.string(),
-      acceptsMarketing: Yup.boolean(),
-      taxExempt: Yup.boolean(),
-    }),
-    onSubmit: async (values) => {
-      try {
-        setIsLoading(true);
-        await mutation.mutateAsync(values);
-        toast({
-          title: 'Customer created.',
-          description: 'New customer has been added.',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        });
-        // You can redirect or perform any other action after successful submission
-      } catch (error) {
-        toast({
-          title: 'Error creating customer.',
-          description: error.message,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    },
+    phone: ''
   });
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      address: {
+        ...prevState.address,
+        [name]: value
+      }
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData); // Submit form data to server
+    // Call your API to submit formData
+  };
+
   return (
-    <Box 
-    // bg="black"
-    >
-    <form onSubmit={formik.handleSubmit}>
-      <Stack spacing={4}>
-        <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
-          <FormControl isRequired>
-            <FormLabel>First name</FormLabel>
-            <Input
-              placeholder="First name"
-              name="firstName"
-              onChange={formik.handleChange}
-              value={formik.values.firstName}
-            />
-            {formik.errors.firstName && <div>{formik.errors.firstName}</div>}
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Last name</FormLabel>
-            <Input
-              placeholder="Last name"
-              name="lastName"
-              onChange={formik.handleChange}
-              value={formik.values.lastName}
-            />
-            {formik.errors.lastName && <div>{formik.errors.lastName}</div>}
-          </FormControl>
-        </Stack>
-        <FormControl isRequired>
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            name="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-          />
-          {formik.errors.email && <div>{formik.errors.email}</div>}
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Country</FormLabel>
-          <Input
-            name="country"
-            onChange={formik.handleChange}
-            value={formik.values.country}
-          />
-          {formik.errors.country && <div>{formik.errors.country}</div>}
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Address</FormLabel>
-          <Input
-            name="address"
-            onChange={formik.handleChange}
-            value={formik.values.address}
-          />
-          {formik.errors.address && <div>{formik.errors.address}</div>}
+    <form onSubmit={handleSubmit}>
+      <VStack spacing={4}>
+        {formData && <Header_Save dataDetails={formData} apiUrl={apiUrl} />}
+        <FormControl>
+          <FormLabel>Name:</FormLabel>
+          <Input name="name" value={formData.name} placeholder="Enter your name" onChange={handleChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Apartment, suite, etc.</FormLabel>
-          <Input
-            name="apartment"
-            onChange={formik.handleChange}
-            value={formik.values.apartment}
-          />
+          <FormLabel>Email:</FormLabel>
+          <Input name="email" value={formData.email} type="email" placeholder="Enter your email" onChange={handleChange} />
         </FormControl>
-        <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
-          <FormControl isRequired>
-            <FormLabel>City</FormLabel>
-            <Input
-              name="city"
-              onChange={formik.handleChange}
-              value={formik.values.city}
-            />
-            {formik.errors.city && <div>{formik.errors.city}</div>}
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>State</FormLabel>
-            <Input
-              name="state"
-              onChange={formik.handleChange}
-              value={formik.values.state}
-            />
-            {formik.errors.state && <div>{formik.errors.state}</div>}
-          </FormControl>
-        </Stack>
-        <FormControl isRequired>
-          <FormLabel>ZIP Code</FormLabel>
-          <Input
-            name="zipCode"
-            onChange={formik.handleChange}
-            value={formik.values.zipCode}
-          />
-          {formik.errors.zipCode && <div>{formik.errors.zipCode}</div>}
+        <Box>
+          <Divider />
+        </Box>
+        <FormControl>
+          <FormLabel>Country:</FormLabel>
+          <Input name="country" value={formData.address.country} placeholder="Enter your country" onChange={handleAddressChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Phone</FormLabel>
-          <Input
-            name="phone"
-            onChange={formik.handleChange}
-            value={formik.values.phone}
-          />
+          <FormLabel>Street:</FormLabel>
+          <Input name="street" value={formData.address.street} placeholder="Enter your street" onChange={handleAddressChange} />
         </FormControl>
-      </Stack>
-      <Button
-        colorScheme="blue"
-        ml={3}
-        type="submit"
-        isLoading={isLoading}
-      >
-        Save Customer
-      </Button>
+        <FormControl>
+          <FormLabel>Apartment/Suite:</FormLabel>
+          <Input name="apartment_suite" value={formData.address.apartment_suite} placeholder="Enter your apartment/suite" onChange={handleAddressChange} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>City:</FormLabel>
+          <Input name="city" value={formData.address.city} placeholder="Enter your city" onChange={handleAddressChange} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>State:</FormLabel>
+          <Input name="state" value={formData.address.state} placeholder="Enter your state" onChange={handleAddressChange} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Zip Code:</FormLabel>
+          <Input name="zip_code" value={formData.address.zip_code} placeholder="Enter your zip code" onChange={handleAddressChange} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Phone:</FormLabel>
+          <Input name="phone" value={formData.phone} placeholder="Enter your phone number" onChange={handleChange} />
+        </FormControl>
+        <Button
+          type="submit"
+          colorScheme="blue"
+        >
+          Submit
+        </Button>
+      </VStack>
     </form>
-    </Box>
   );
-}
+};
 
 export default CustomerForm;

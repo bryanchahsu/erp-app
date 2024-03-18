@@ -20,7 +20,6 @@ import ProductNew from './pages/ProductNew'
 import OrderPage from './pages/components/OrderDetail/OrderDetail'
 import OrderNew from './pages/OrderNew'  
 import Total_Sale from './pages/components/Analytics/Reports/Total_Sales'
-import CreateCustomerModal from './pages/components/OrderNew/CustomerForm'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import CustomerNew from './pages/CustomerNew'
 import CustomerDetail from './pages/CustomerDetail'

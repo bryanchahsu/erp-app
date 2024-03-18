@@ -8,7 +8,8 @@ import BackButton from "./components/back";
 import SalesChannelsList from "./components/test2_saleschannel";
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import ProductNew_Form from "./components/ProductNew/ProductNew_Form";
-import Header_Save from "./components/ProductNew/Header_Save";
+
+
 // const fetchProductDetail = async (productId) => {
 //   const response = await fetch(`http://localhost:8000/products/${productId}`);
 //   if (!response.ok) {
@@ -29,7 +30,6 @@ export default function ProductNew(){
     // if (isLoading) return <div>Loading...</div>;
     // if (isError) return <div>Error: {error.message}</div>;
 
-    const apiUrl = "http://127.0.0.1:8000/products/new";
 
     const firstDivStyle= {
         background: "#F0F0F0",
@@ -87,6 +87,7 @@ export default function ProductNew(){
                   // bg="black"
                   >
                   <ProductNew_Form />
+                  
                 </Flex>
 
 

@@ -19,12 +19,12 @@ import OrderPage from "./components/OrderDetail/OrderDetail";
 
 
 //////////////
-const fetchProductDetail = async (orderId) => {
+const fetchProductDetail = async (customerId) => {
   //json db
   // const response = await fetch(`http://localhost:8000/orders/${orderId}`);
 
   //
-  const response = await fetch(`http://127.0.0.1:8000/orders/${orderId}/`);
+  const response = await fetch(`http://127.0.0.1:8000/customers/${customerId}/`);
 
   // const response = await fetch(`http://127.0.0.1:8000/orders/${orderId}`);
 
@@ -41,10 +41,10 @@ export default function CustomerDetail(){
 //////////////
 
   //  // Access the URL parameter ":productId"
-  const { orderId } = useParams();
+  const { customerId } = useParams();
 
-  const { data, isLoading, isError, error } = useQuery(['order', orderId], () =>
-    fetchProductDetail(orderId)
+  const { data, isLoading, isError, error } = useQuery(['order', customerId], () =>
+    fetchProductDetail(customerId)
   );
   console.log(data);                 
 
@@ -102,7 +102,7 @@ export default function CustomerDetail(){
                           Back Button with Product Name
                       </Heading>
                 </Box> */}
-              <OrderPage data= {data}/>
+              {/* <OrderPage data= {data}/> */}
 
             </Box>                                 
 

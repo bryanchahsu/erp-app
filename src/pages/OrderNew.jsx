@@ -2,8 +2,8 @@ import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, List, ListI
         Tag, Image   } from "@chakra-ui/react";
 import { Select } from '@chakra-ui/react'
 import { Link as RouterLink, useParams } from 'react-router-dom';
-import React from "react";
-import Header_Save from "./components/ProductNew/Header_Save";
+import React, { useState } from 'react';
+import Header_Save from "./components/Header_Save";
 import Sidebar from "./components/Sidebar"
 
 import Export from "./components/export";
@@ -13,8 +13,11 @@ import ProductDetailTest from "./ProductDetailTest";
 import BackButton from "./components/back";
 import SalesChannelsList from "./components/test2_saleschannel";
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import ProductTable from "./components/OrderNew/OrderNew";
+import ProductTable from "./components/OrderNew/ProductSearch";
+import CustomerSearch from "./components/OrderNew/CustomerSearch"  
 // import ProductNew_Form from "./components/ProductNew/ProductNew_Form";
+import OrderForm from "./components/OrderNew/OrderForm";
+
 
 
 
@@ -22,23 +25,29 @@ import ProductTable from "./components/OrderNew/OrderNew";
 
 
 export default function OrderNew(){
-    const orderItems = [
-      { name: 'Art of Tea Filter Bags', price: '$7.00', quantity: 2, sku: 'AOTFB' },
-      { name: 'Hibiscus Cooler', price: '$32.00', quantity: 1, sku: 'HC1' },
-      { name: 'Classic Black Tea - Award Winning', price: '$21.00', quantity: 1, sku: 'CLB1' },
-      { name: "Tali's Masala Chai Tea", price: '$40.00', quantity: 1, sku: 'TMC1' },
-    ];
-    const borderColor = useColorModeValue('gray.200', 'gray.600');
+    // const orderItems = [
+    //   { name: 'Art of Tea Filter Bags', price: '$7.00', quantity: 2, sku: 'AOTFB' },
+    //   { name: 'Hibiscus Cooler', price: '$32.00', quantity: 1, sku: 'HC1' },
+    //   { name: 'Classic Black Tea - Award Winning', price: '$21.00', quantity: 1, sku: 'CLB1' },
+    //   { name: "Tali's Masala Chai Tea", price: '$40.00', quantity: 1, sku: 'TMC1' },
+    // ];
 
-    // const borderColor = useColorModeValue('gray.200', 'gray.600');
-    const firstDivStyle= {
-        background: "#F0F0F0",
-        margin: 0,
-        padding: 0,
-        minHeight: '100vh', // To ensure the background covers the full viewport height
-      };
+
+    const [selectedCustomer, setSelectedCustomer] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+  
+    const handleCustomerSelect = (customerId) => {
+      setSelectedCustomer(customerId);
+    };
+  
+    const handleProductSelect = (productId) => {
+      setSelectedProduct(productId);
+    };
+
+
     return(
         <div>
+          
             <Header_Save/>
             <Sidebar/>
             <Box
@@ -67,11 +76,30 @@ export default function OrderNew(){
                     {/* Left Column */}
                     <Box flex="2" bg="white">
 
-                      <ProductTable/>
+                      <ProductTable onProductSelect={handleProductSelect}/>
                     </Box>
 
                     {/* Right Column */}
                     <Box flex="1" bg="white" pl="20px" pt="15px" >
+                      <CustomerSearch/>
+
+                      
+                    </Box>
+                    
+                  </Flex>
+                </Box>
+              </Box>
+            </Box>                                 
+
+
+            {/* <ProductInformationPage/> */}
+ 
+        </div>
+    )
+}
+
+
+// old right container
                       <VStack spacing={5} alignItems="stretch">
                         {/* Customer Details */}
                         <VStack spacing={1} alignItems="stretch">
@@ -128,19 +156,7 @@ export default function OrderNew(){
                         <Flex alignItems="center" justifyContent="space-between">
                           <Badge colorScheme="red">Fraud analysis</Badge>
                           <Link color="blue.500" href="#">View report</Link>
+                          <OrderForm/>
+
                         </Flex>
                       </VStack>
-                    </Box>
-                  </Flex>
-                </Box>
-              </Box>
-            </Box>                                 
-
-
-            {/* <ProductInformationPage/> */}
- 
-        </div>
-    )
-}
-
-

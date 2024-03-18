@@ -8,39 +8,16 @@ import useUpdateProduct from '../useUpdateProduct';
 import { useMutation, useQueryClient } from 'react-query';
 import DOMPurify from 'dompurify';
 import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS
-import Header_Save from './Header_Save';
+import Header_Save from '../Header_Save'
 
 
-//React Query API
-
-// const createPost = async (newPost) => {
-
-//   //django
-//   const response = await fetch('http://127.0.0.1:8000/products/products/new/', {
-
-//   //db json
-//   // const response = await fetch('http://localhost:8000/products/', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(newPost),
-//   });
-
-//   if (!response.ok) {
-//     throw new Error('Error creating post');
-//   }
-
-//   return response.json();
-// };
-
-
-// Main function
 
 const ProductNew_Form = () => {
 
 
   const apiUrl = "http://127.0.0.1:8000/products/new";
+  // const apiUrl = "http://127.0.0.1:8000/customers/new";
+
 
   // const [productDetails, setProductDetails] = useState({ ...products });
   const [productDetails, setProductDetails] = useState({
@@ -68,16 +45,6 @@ const ProductNew_Form = () => {
   ];
 
   const [showHeader, setShowHeader] = useState(false);
-
-
-  // const queryClient = useQueryClient();
-
-  // const createPostMutation = useMutation((newPost) => createPost(newPost), {
-  //   onSuccess: () => {
-  //     // Invalidate and refetch the list of posts after a successful POST
-  //     queryClient.invalidateQueries('posts');
-  //   },
-  // });
  
 
   const handleChange = (e) => {
@@ -103,36 +70,17 @@ const ProductNew_Form = () => {
   };
   
   
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // const formData = new FormData(e.target);
-  //   // const newPost = {
-  //   //   title: formData.get('title'),
-  //   //   body: formData.get('body'),
-  //   // };
-  //   const sanitizedDescription = DOMPurify.sanitize(productDetails.description);
-  //   console.log("Sanitized Description:", sanitizedDescription);
-  //   createPostMutation.mutate({ ...productDetails, description: sanitizedDescription });
-    
-
-  //   setProductDetails({
-  //     title: "", // Reset to the initial value
-  //     description: "", // Reset to the initial value
-  //     sku: "", // Reset to the initial value
-  //     quantity: 0, // Reset to the initial value
-  //     cost: 0.0, // Reset to the initial value
-  //   });
-
-  // };
 
 
 
   const handleQuillChange = (value) => {
-    console.log("Quill value:", value);
+    // console.log("Quill value:", value);
+    const sanitizedDescription = DOMPurify.sanitize(value);
+
     setProductDetails((prevProductDetails) => ({
       ...prevProductDetails,
-      description: value
+      // description: value
+      description: sanitizedDescription
     }));
     console.log(productDetails)
   };
@@ -179,7 +127,7 @@ const ProductNew_Form = () => {
       // height="100%"
       >
         {/* <Header_Save productDetails={productDetails}/> */}
-        {productDetails && <Header_Save productDetails={productDetails} apiUrl= {apiUrl} />}
+        {productDetails && <Header_Save dataDetails={productDetails} apiUrl= {apiUrl} />}
 
       {/* Product Details */}
       <Box flex="2" padding="10px" borderRadius="8px" boxShadow="0 0.5px 2px grey" 

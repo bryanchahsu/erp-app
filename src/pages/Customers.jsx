@@ -31,19 +31,6 @@ const fetchData = async () => {
 
   };
 
-  
-// const fetchData = async () => {
-//     const response = await fetch('http://127.0.0.1:8000/customers/');
-  
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-  
-//     const data = await response.json();
-  
-//     // Ensure data is always an array, even if it's empty
-//     return Array.isArray(data) ? data : [];
-//   };
 
   
 export default function Customers(){

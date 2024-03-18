@@ -25,7 +25,10 @@ const createPost = async (newPost, apiUrl) => {
   return response.json();
 };
 
-export default function Header_Save({ productDetails, apiUrl }) {
+export default function Header_Save({ dataDetails, apiUrl }) {
+
+  
+
   const [outerPadding, setOuterPadding] = useState(400); // Initial padding for the outer container
   const boxWidth = 300; // Desired width for both boxes
   const spaceBetween = 200; // Adjust the space between the boxes
@@ -65,21 +68,25 @@ export default function Header_Save({ productDetails, apiUrl }) {
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(productDetails)
+    // console.log(dataDetails)
+    console.log(dataDetails)
+    console.log(apiUrl)
   
-    if (!productDetails || !productDetails.description) {
-      // Handle the case where productDetails or its description is undefined or null
-      console.error('productDetails or description is undefined or null');
+    if (!dataDetails) {
+    // if (!dataDetails || !dataDetails.description) {
+
+      // Handle the case where dataDetails or its description is undefined or null
+      console.error('dataDetails or description is undefined or null');
       return;
     }
   
-    const sanitizedDescription = DOMPurify.sanitize(productDetails.description);
+    // const sanitizedDescription = DOMPurify.sanitize(dataDetails.description);
     // console.log('Sanitized Description:', sanitizedDescription);
   
     try {
       const response = await createPostMutation.mutateAsync({
-        ...productDetails,
-        description: sanitizedDescription,
+        ...dataDetails,
+        // description: sanitizedDescription,
       });
   
       // Check the response if needed

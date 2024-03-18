@@ -3,13 +3,13 @@ import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, List, ListI
 import { Select } from '@chakra-ui/react'
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import React from "react";
-import Header_Save from "./components/ProductNew/Header_Save";
 import Sidebar from "./components/Sidebar"
 
 import ProductDetailTest from "./ProductDetailTest";
 import BackButton from "./components/back";
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import CustomerForm from "./components/CustomerNew/CustomerForm";
+import Header_Save from "./components/Header_Save";
 
 
 
@@ -33,7 +33,7 @@ const firstDivStyle= {
   };
 return(
     <div>
-        <Header_Save/>
+        {/* <Header_Save/> */}
         <Sidebar/>
         <Box
           position="relative"
