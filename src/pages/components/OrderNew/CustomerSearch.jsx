@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import {
   VStack,
@@ -25,11 +25,21 @@ const fetchCustomerDetail = async (customerId) => {
   return response.json();
 };
 
-const CustomerSearch = () => {
+const CustomerSearch = ({ onCustomerInfo }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCustomerId, setSelectedCustomerId] = useState(null); // Initialize to null
   const [customerDetail, setCustomerDetail] = useState(null);
-  
+
   const { data, isLoading, isError } = useQuery('customersData', fetchCustomersData);
+
+  useEffect(() => {
+    if (selectedCustomerId !== null) {
+      onCustomerInfo(selectedCustomerId);
+      fetchCustomerDetail(selectedCustomerId)
+        .then(detail => setCustomerDetail(detail))
+        .catch(error => console.error('Error fetching customer detail:', error.message));
+    }
+  }, [selectedCustomerId, onCustomerInfo]);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching data</div>;
@@ -42,14 +52,9 @@ const CustomerSearch = () => {
     customer.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleCustomerClick = async (customerId) => {
-    try {
-      const detail = await fetchCustomerDetail(customerId);
-      setCustomerDetail(detail);
-    } catch (error) {
-      console.error('Error fetching customer detail:', error.message);
-    }
-    setSearchTerm('')
+  const handleCustomerClick = (customerId) => {
+    setSelectedCustomerId(customerId); // Update selected customer ID
+    setSearchTerm('');
   };
   
   return (
@@ -63,7 +68,7 @@ const CustomerSearch = () => {
 
       {searchTerm && (
         <div>
-          {filteredCustomers.map((customer, index) => (
+          {filteredCustomers.map((customer) => (
             <div key={customer.id} style={{ marginBottom: '20px', cursor: 'pointer' }} onClick={() => handleCustomerClick(customer.id)}>
               <h3>{customer.name}</h3>
               <p>Email: {customer.email}</p>
@@ -72,7 +77,8 @@ const CustomerSearch = () => {
         </div>
       )}
       
-      {customerDetail && (
+      {/* Render customer details only if a customer is selected */}
+      {selectedCustomerId && customerDetail && (
         <VStack spacing={5} alignItems="stretch">
           <VStack spacing={1} alignItems="stretch">
             <Badge colorScheme="purple">Customer</Badge>

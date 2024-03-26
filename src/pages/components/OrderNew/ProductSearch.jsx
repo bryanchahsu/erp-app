@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import {
   Box,
@@ -36,7 +36,7 @@ import {
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons';
 import { FaTrash } from 'react-icons/fa';
 
-const ProductTable = ({ onProductSelect }) => {
+const ProductTable = ({ onProductInfo }) => {
   const { data, isLoading, isError } = useQuery('products', async () => {
     const response = await fetch('http://127.0.0.1:8000/products/');
     if (!response.ok) {
@@ -45,14 +45,16 @@ const ProductTable = ({ onProductSelect }) => {
     return response.json();
   });
 
-  console.log(data)
-  
   const [products, setProducts] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const updatedSubtotal = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    onProductInfo(products, updatedSubtotal);
+  }, [products, onProductInfo]);
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
@@ -73,26 +75,39 @@ const ProductTable = ({ onProductSelect }) => {
   };
 
   const handleProductSelect = (item) => {
-    if (selectedProducts.includes(item.id)) {
-      setSelectedProducts(selectedProducts.filter((id) => id !== item.id));
-    } else {
-      setSelectedProducts([...selectedProducts, item.id]);
-    }
+    setSelectedProducts((prevSelected) =>
+      prevSelected.includes(item.id)
+        ? prevSelected.filter((id) => id !== item.id)
+        : [...prevSelected, item.id]
+    );
   };
 
   const addSelectedProductsToList = () => {
-    const selectedProductsToAdd = searchResults.filter((item) =>
-      selectedProducts.includes(item.id)
-    ).map((product) => ({ ...product, quantity: 1, total: product.price }));
-  
+    const selectedProductsToAdd = searchResults
+      .filter((item) => selectedProducts.includes(item.id))
+      .map((product) => ({
+        ...product,
+        quantity: 1,
+        total: product.price * 1,
+        productId: product.id,
+      }));
+
     setProducts((prevProducts) => [...prevProducts, ...selectedProductsToAdd]);
     setIsModalOpen(false);
-    setSelectedProducts([]); // Clear selected products after adding them to the list
+    setSelectedProducts([]);
     setSearchValue('');
   };
-  
+
   const deleteProduct = (id) => {
     setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
+  };
+
+  const handleQuantityChange = (id, quantity) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === id ? { ...product, quantity, total: product.price * quantity } : product
+      )
+    );
   };
 
   const subtotal = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
@@ -142,6 +157,7 @@ const ProductTable = ({ onProductSelect }) => {
               ))}
             </List>
           </ModalBody>
+
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={addSelectedProductsToList}>
               Add
@@ -159,7 +175,6 @@ const ProductTable = ({ onProductSelect }) => {
             <Th>Product</Th>
             <Th>Quantity</Th>
             <Th isNumeric>Total</Th>
-            {/* <Th>Action</Th> */}
           </Tr>
         </Thead>
         <Tbody>
@@ -167,15 +182,11 @@ const ProductTable = ({ onProductSelect }) => {
             <Tr key={product.id}>
               <Td>{product.title}</Td>
               <Td>
-                <NumberInput defaultValue={1} min={1} onChange={(value) => {
-                  const updatedProducts = products.map((p) => {
-                    if (p.id === product.id) {
-                      return { ...p, quantity: parseInt(value) };
-                    }
-                    return p;
-                  });
-                  setProducts(updatedProducts);
-                }}>
+                <NumberInput
+                  defaultValue={product.quantity}
+                  min={1}
+                  onChange={(value) => handleQuantityChange(product.id, parseInt(value))}
+                >
                   <NumberInputField />
                 </NumberInput>
               </Td>
@@ -199,8 +210,7 @@ const ProductTable = ({ onProductSelect }) => {
         <Text fontSize="lg" fontWeight="bold">${subtotal.toFixed(2)}</Text>
       </HStack>
       <HStack spacing={4}>
-        {/* <Button colorScheme="blue" size="md">Send Invoice</Button>
-        <Button colorScheme="green" size="md">Collect Payment</Button> */}
+        {/* Additional buttons can be placed here */}
       </HStack>
     </Stack>
   );

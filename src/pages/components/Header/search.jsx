@@ -1,116 +1,4 @@
-// import React, { useState } from 'react';
-// import {
-//   Input,
-//   List,
-//   ListItem,
-//   Text,
-//   Flex,
-//   Button,
-//   Spacer,
-//   Box,
-//   useDisclosure,
-//   Modal,
-//   ModalOverlay,
-//   ModalContent,
-//   ModalHeader,
-//   ModalCloseButton,
-//   ModalBody,
-// } from '@chakra-ui/react';
-// import { useQuery } from 'react-query';
 
-// const fetchData = async (query) => {
-//   const response = await fetch(`YOUR_API_URL?q=${query}`);
-//   if (!response.ok) {
-//     throw new Error('Network response was not ok');
-//   }
-//   return response.json();
-// };
-
-// const SearchBar = () => {
-//   const [searchQuery, setSearchQuery] = useState('');
-//   const { data: suggestions } = useQuery(['search', searchQuery], () => fetchData(searchQuery));
-//   const { isOpen, onOpen, onClose } = useDisclosure();
-
-//   const [searchHistory, setSearchHistory] = useState([]);
-
-//   const handleInputChange = (event) => {
-//     const { value } = event.target;
-//     setSearchQuery(value);
-//   };
-
-//   const togglePopup = () => {
-//     onOpen();
-//   };
-
-//   const handleFilter = (filter) => {
-//     // Apply filter logic based on "filter"
-//   };
-
-//   const clearHistory = () => {
-//     setSearchHistory([]);
-//   };
-
-//   const searchBarStyle = {
-//     marginTop: '120px', // Adjust the margin-top value as needed
-//   };
-
-//   return (
-//     <div style={searchBarStyle}>
-//       <Input
-//         placeholder="Search for products..."
-//         value={searchQuery}
-//         onChange={handleInputChange}
-//         size="lg" // Apply a size to the input (you can change this)
-//         variant="filled" // Apply a filled variant to the input (you can change this)
-//       />
-//       {suggestions && (
-//         <List mt={2}>
-//           {suggestions.map((suggestion) => (
-//             <ListItem
-//               key={suggestion.id}
-//               onClick={() => handleSuggestionClick(suggestion)}
-//               cursor="pointer"
-//             >
-//               <Text>{suggestion.name}</Text>
-//             </ListItem>
-//           ))}
-//         </List>
-//       )}
-
-//       <Flex mt={2}>
-//         <Button onClick={togglePopup}>Open Popup</Button>
-//         <Spacer />
-//         <Button onClick={() => handleFilter('customers')}>Customers</Button>
-//         <Button onClick={() => handleFilter('orders')}>Orders</Button>
-//         <Button onClick={() => handleFilter('products')}>Products</Button>
-//       </Flex>
-
-//       {isOpen && (
-//         <Modal isOpen={isOpen} onClose={onClose} isCentered>
-//           <ModalOverlay />
-//           <ModalContent>
-//             <ModalHeader>Popup Window</ModalHeader>
-//             <ModalCloseButton />
-//             <ModalBody>
-//               {/* Content for the popup */}
-//             </ModalBody>
-//           </ModalContent>
-//         </Modal>
-//       )}
-//       <div>
-//         <h2>Search History:</h2>
-//         <ul>
-//           {searchHistory.map((historyItem, index) => (
-//             <li key={index}>{historyItem}</li>
-//           ))}
-//         </ul>
-//         <Button onClick={clearHistory}>Clear History</Button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SearchBar;
 
 
 
@@ -146,7 +34,9 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  Link
+  Link,
+  
+  
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 import React, { useState, useEffect, useRef } from 'react';
@@ -247,26 +137,22 @@ function SearchBar() {
         />
         {/* <Button onClick={toggleDashboard}>Toggle Dashboard</Button> */}
       </Box>
-      {showDashboard && (
-        <Box ref={dashboardRef} 
-            mt="50px" 
-            p="4px"
-            background="white"
-            >
-          {/* Your dashboard content goes here */}
-          <Input
-            placeholder="Search for products..."
-            value={searchQuery}
-            onChange={handleInputChange_new}
-            size="lg" // Apply a size to the input (you can change this)
-            variant="filled" // Apply a filled variant to the input (you can change this)
-            color= "black"
-        />
-        {/* <SearchBar_></SearchBar_> */}
 
-          {/* Add your dashboard components and content */}
-
-          <Flex mt={0}>
+      <Modal isOpen={showDashboard} onClose={toggleDashboard} isCentered blockScrollOnMount={false}>
+        <ModalOverlay backgroundColor="transparent"/>
+        <ModalContent zIndex="9999" position="fixed" top="0" left="0" right="0">
+          {/* <ModalHeader>Search</ModalHeader> */}
+          <ModalCloseButton />
+          <ModalBody>
+            <Input
+              placeholder="Search for products..."
+              value={searchQuery}
+              onChange={handleInputChange_new}
+              size="lg" // Apply a size to the input (you can change this)
+              variant="filled" // Apply a filled variant to the input (you can change this)
+              color= "black"
+          />
+                      <Flex mt={0}>
             <Button onClick={togglePopup}>Open Popup</Button>
             <Spacer />
             <Button onClick={() => handleFilter('customers')}>Customers</Button>
@@ -276,35 +162,144 @@ function SearchBar() {
           {filteredItems.length > 0 && input !== '' ? (
         <SearchResults items={filteredItems} />
          ) : null}
+            <Button onClick={showDashboard} colorScheme="blue" size="lg">
+              Close
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      
 
-          
-
-
-
-          {/* Method Using API Calls */}
-
-          {/* {suggestions && ( */}
-            <Box background="black">
-              {/* <List mt={2}>
-                {suggestions.map((suggestion) => (
-                  <ListItem
-                    key={suggestion.id}
-                    onClick={() => handleSuggestionClick(suggestion)}
-                    cursor="pointer"
-                  >
-                    <Text>{suggestion.name}</Text>
-                  </ListItem>
-                ))}
-              </List> */}
-
-              
-             </Box>
-          {/* )} */}
-        </Box>
-
-      )}
+      
     </div>
   );
 }
 
 export default SearchBar;
+
+
+
+//old search bar drop down
+
+// {showDashboard && (
+//   <Box ref={dashboardRef} 
+//       mt="50px" 
+//       p="4px"
+//       background="white"
+//       >
+//     {/* Your dashboard content goes here */}
+//     <Input
+//       placeholder="Search for products..."
+//       value={searchQuery}
+//       onChange={handleInputChange_new}
+//       size="lg" // Apply a size to the input (you can change this)
+//       variant="filled" // Apply a filled variant to the input (you can change this)
+//       color= "black"
+//   />
+//   {/* <SearchBar_></SearchBar_> */}
+
+//     {/* Add your dashboard components and content */}
+
+//     <Flex mt={0}>
+//       <Button onClick={togglePopup}>Open Popup</Button>
+//       <Spacer />
+//       <Button onClick={() => handleFilter('customers')}>Customers</Button>
+//       <Button onClick={() => handleFilter('orders')}>Orders</Button>
+//       <Button onClick={() => handleFilter('products')}>Products</Button>
+//     </Flex>
+//     {filteredItems.length > 0 && input !== '' ? (
+//   <SearchResults items={filteredItems} />
+//    ) : null}
+
+    
+
+
+
+
+//       <Box background="black">
+//         {/* <List mt={2}>
+//           {suggestions.map((suggestion) => (
+//             <ListItem
+//               key={suggestion.id}
+//               onClick={() => handleSuggestionClick(suggestion)}
+//               cursor="pointer"
+//             >
+//               <Text>{suggestion.name}</Text>
+//             </ListItem>
+//           ))}
+//         </List> */}
+
+        
+//        </Box>
+//     {/* )} */}
+//   </Box>
+
+// )}
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+// import React, { useState } from 'react';
+// import {
+//   Input,
+//   Box,
+//   Button,
+//   Modal,
+//   ModalOverlay,
+//   ModalContent,
+//   ModalHeader,
+//   ModalCloseButton,
+//   ModalBody,
+// } from '@chakra-ui/react';
+
+// const SearchBar = () => {
+//   const [isOpen, setIsOpen] = useState(false);
+
+//   const toggleModal = () => {
+//     setIsOpen(!isOpen);
+//   };
+
+//   return (
+//     <div>
+//       <Input
+//         placeholder="Search..."
+//         onClick={toggleModal}
+//         size="lg"
+//         variant="filled"
+//         color="black"
+//         bg="white"
+//       />
+      // <Modal isOpen={isOpen} onClose={toggleModal} isCentered>
+      //   <ModalOverlay />
+      //   <ModalContent zIndex="9999" position="fixed" top="0" left="0" right="0">
+      //     {/* <ModalHeader>Search</ModalHeader> */}
+      //     <ModalCloseButton />
+      //     <ModalBody>
+      //       <Input
+      //         placeholder="Search..."
+      //         size="lg"
+      //         variant="filled"
+      //         color="black"
+      //         bg="white"
+      //         mb="4"
+      //       />
+      //       <Button onClick={toggleModal} colorScheme="blue" size="lg">
+      //         Close
+      //       </Button>
+      //     </ModalBody>
+      //   </ModalContent>
+      // </Modal>
+//     </div>
+//   );
+// };
+
+// export default SearchBar;
+
+

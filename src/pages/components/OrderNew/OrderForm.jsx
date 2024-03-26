@@ -60,13 +60,13 @@ const OrderForm = () => {
     e.preventDefault();
     const formData = {
       "customer": 1,
-      "order_date": "2024-03-07T12:00:00Z",
-      "fulfillment_status": "Pending",
-      "tags": [{"name":1}],
-      "total": "100.00",
+      "order_date": "2024-03-07T12:00:00Z", //static
+      "fulfillment_status": "Pending", //static
+      "tags": [{"name":1}], //from child
+      "total": "100.00", //from child
       "items": [
-          {"order": 10, "product": 1, "quantity": 2},
-          {"order": 10, "product": 2, "quantity": 3}
+          {"order": 11, "product": 1, "quantity": 2},
+          {"order": 11, "product": 2, "quantity": 3}
       ]
     };
 

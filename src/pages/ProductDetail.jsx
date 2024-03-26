@@ -58,7 +58,7 @@ const ProductDetail = () => {
   const { data, isLoading, isError, error } = useQuery(['product', productId], () =>
   fetchProductDetail (productId)
   );
-
+  console.log(data)
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error.message}</div>;
 

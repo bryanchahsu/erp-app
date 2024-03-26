@@ -1,14 +1,15 @@
-
-
 import { useState, useEffect } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, Checkbox, Input, Link, Box, Heading } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 
-
 const InventoryTable = ({ products }) => {
   const [inventoryData, setInventoryData] = useState([]);
 
-  
+  useEffect(() => {
+    if (products) {
+      setInventoryData(products);
+    }
+  }, [products]);
 
   const handleQuantityChange = (itemId, newQuantity) => {
     setInventoryData((prevInventory) =>
@@ -19,23 +20,12 @@ const InventoryTable = ({ products }) => {
   };
 
   return (
-    <Box p={4} bg="#F0F0F0" pt="70px" width="calc(100% + 135px)"
-        >
-      {/* Heading */}
-      {/* <Heading as="h2" size="md" bg="#EDEDED" p={2} mb={2}>
-        Inventory Table
-      </Heading> */}
-
-      {/* Table */}
-      <Table variant="simple" w="100%"  >
+    <Box p={4} bg="#F0F0F0" pt="70px" width="calc(100% + 135px)">
+      <Table variant="simple" w="100%">
         <Thead>
-          {/* <Tr bg="#F0F0F0" > */}
-          <Tr bg="#F0F0F0" boxShadow="0 0 2px rgba(0, 0, 0, 0.3)" >
+          <Tr bg="#F0F0F0" boxShadow="0 0 2px rgba(0, 0, 0, 0.3)">
             <Th>
-              <Checkbox 
-                    borderColor="gray.800" // Set the border color to a darker shade of gray
-                    borderWidth="2px" // Optional: Customize the border width
-              /> {/* Checkbox for select all */}
+              <Checkbox borderColor="gray.800" borderWidth="2px" />
             </Th>
             <Th>Product</Th>
             <Th>SKU</Th>
@@ -44,21 +34,17 @@ const InventoryTable = ({ products }) => {
             <Th>Update Quantity</Th>
           </Tr>
         </Thead>
-
         <Tbody>
-          {products.map((item) => (
+          {inventoryData && inventoryData.map((item) => (
             <Tr
               key={item.id}
-              _hover={{ boxShadow: "md" }} // Add hover shadow on each row
-              cursor="pointer" // Change cursor to indicate clickable row
-              boxShadow="0 0 2px rgba(0, 0, 0, 0.3)" // Darker border shadow for all sides
+              _hover={{ boxShadow: "md" }}
+              cursor="pointer"
+              boxShadow="0 0 2px rgba(0, 0, 0, 0.3)"
               bg="white"
             >
               <Td>
-                <Checkbox 
-                                    // borderColor="gray.800" // Set the border color to a darker shade of gray
-                                    // borderWidth="2px" // Optional: Customize the border width
-                /> {/* Checkbox for individual item selection */}
+                <Checkbox />
               </Td>
               <Td>
                 <Link as={ReactLink} to={`/products/${item.id}`}>
@@ -72,7 +58,7 @@ const InventoryTable = ({ products }) => {
               </Td>
               <Td>
                 <Link as={ReactLink} to={`/products/${item.id}`}>
-                  <Box>{item.quantity}</Box>
+                  <Box>{item.current_inventory}</Box>
                 </Link>
               </Td>
               <Td>
@@ -90,7 +76,6 @@ const InventoryTable = ({ products }) => {
             </Tr>
           ))}
         </Tbody>
-
       </Table>
     </Box>
   );

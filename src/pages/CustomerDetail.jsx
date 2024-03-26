@@ -14,7 +14,7 @@ import BackButton from "./components/back";
 import SalesChannelsList from "./components/test2_saleschannel";
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 // import ProductNew_Form from "./components/ProductNew/ProductNew_Form";
-import OrderPage from "./components/OrderDetail/OrderDetail";
+import CustomerPage from "./components/CustomerDetail/CustomerDetail";
 
 
 
@@ -73,6 +73,7 @@ export default function CustomerDetail(){
               h="1000px"
               minWidth={500}
                   >
+                    <CustomerPage data= {data}/>
               {/* <Flex
                   align="center"
                   justify="space-between"

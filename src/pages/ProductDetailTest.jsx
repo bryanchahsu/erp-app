@@ -225,7 +225,7 @@ const ProductDetailTest = ({products}) => {
                     <Input
                     name= "quantity"
                       variant="filled"
-                      value={productDetails.quantity}
+                      value={productDetails.current_inventory}
                       p="10px"
                       border="1px solid #CBD5E0"
                       borderRadius="4px"
