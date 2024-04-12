@@ -124,7 +124,7 @@ export default function Orders(){
 
                     
                     {/* <Import/> */}
-                    <Export/>
+                    <Export data= {data.results}/>
                     <Box
                         as={RouterLink}
                         // bg="#E6E6E6"

@@ -27,7 +27,9 @@ import { useQuery } from "react-query";
 import { Link as RouterLink } from "react-router-dom";
 
 const fetchData = async () => {
-  const response = await fetch("http://localhost:8000/orders");
+  // const response = await fetch("http://localhost:8000/orders");
+  const response = await fetch('http://127.0.0.1:8000/customers/');
+
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -41,6 +43,7 @@ export default function Total_Sale({dates}) {
   const [dataInterval, setDataInterval] = useState("daily"); // State for data aggregation interval
   const [filteredOrders, setFilteredOrders] = useState([]); // State for filtered orders
 
+  console.log(data)
   // Handle input changes for start and end dates
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
@@ -205,6 +208,7 @@ export default function Total_Sale({dates}) {
         <Tooltip />
         <Legend />
       </LineChart>
+      
     </div>
   );
 }

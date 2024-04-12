@@ -1,163 +1,241 @@
-import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Input,
-  Button,
-  Heading,
-} from "@chakra-ui/react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
-import { useQuery } from "react-query";
+import React from 'react';
+import { useQuery } from 'react-query';
 
-const fetchData = async () => {
-  const response = await fetch("http://localhost:8000/orders");
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  return response.json();
+const fetchSalesData = async (startDate, endDate) => {
+    // const response = await fetch(`http://127.0.0.1:8000//sales-report?start_date=${startDate}&end_date=${endDate}`);
+    // const response = await fetch(`http://127.0.0.1:8000/reports/sales-report/?start_date=2023-01-01&end_date=2023-12-31`);
+    const response = await fetch(`http://127.0.0.1:8000/reports/sales-report/`);
+
+    // const response = await fetch(`http://127.0.0.1:8000/reports/sales-by-sku/?start_date=2023-01-01&end_date=2024-12-31`);
+    // const response = await fetch(`http://127.0.0.1:8000/reports/order-fulfillment/`);
+
+    const customerId = 3;
+
+    // const response = await fetch(`http://127.0.0.1:8000/reports/customer-lifetime/${customerId}/`);
+
+
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
 };
 
-const Total_Sale_Shortcut = ({ dates }) => {
-  const { data, isLoading, isError } = useQuery("orders", fetchData);
-  const [dataInterval, setDataInterval] = useState("daily");
-  const [filteredOrders, setFilteredOrders] = useState([]);
+const useSalesReport = (startDate, endDate) => {
+    return useQuery(['sales-report', startDate, endDate], () => fetchSalesData(startDate, endDate));
+};
 
-  useEffect(() => {
-    filterOrdersByDate();
-  }, [dates]); // Only listen for changes in 'dates' prop
+const SalesReportComponent = ({ startDate, endDate }) => {
+    const { data, isLoading, isError, error } = useSalesReport(startDate, endDate);
+    console.log(data)
 
-  const filterOrdersByDate = () => {
-    if (!data) return;
-
-    const filtered = data.filter((order) => {
-      const orderDate = new Date(order.orderDate);
-      const startDateObj = new Date(dates.startDate);
-      const endDateObj = new Date(dates.endDate);
-
-      startDateObj.setUTCHours(0, 0, 0, 0);
-      endDateObj.setUTCHours(23, 59, 59, 999);
-
-      return orderDate >= startDateObj && orderDate <= endDateObj;
-    });
-
-    setFilteredOrders(filtered);
-  };
-
-  const calculateTotalSales = () => {
-    const salesData = [];
-
-    const startDateObj = new Date(dates.startDate);
-    const endDateObj = new Date(dates.endDate);
-
-    startDateObj.setUTCHours(0, 0, 0, 0);
-    endDateObj.setUTCHours(23, 59, 59, 999);
-
-    let currentDate = new Date(startDateObj);
-    currentDate.setUTCHours(0, 0, 0, 0);
-
-    while (currentDate <= endDateObj) {
-      const formattedDate = currentDate.toISOString().split("T")[0];
-      let totalSales = 0;
-
-      if (dataInterval === "daily") {
-        totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate);
-          orderDate.setUTCHours(0, 0, 0, 0);
-
-          if (
-            orderDate.getUTCFullYear() === currentDate.getUTCFullYear() &&
-            orderDate.getUTCMonth() === currentDate.getUTCMonth() &&
-            orderDate.getUTCDate() === currentDate.getUTCDate()
-          ) {
-            return total + order.total;
-          }
-          return total;
-        }, 0);
-
-        currentDate.setUTCHours(24, 0, 0, 0);
-      } else if (dataInterval === "weekly") {
-        const weekEndDate = new Date(currentDate);
-        weekEndDate.setUTCDate(currentDate.getUTCDate() + 6);
-        weekEndDate.setUTCHours(23, 59, 59, 999);
-
-        totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate);
-          orderDate.setUTCHours(0, 0, 0, 0);
-
-          if (
-            orderDate >= currentDate &&
-            orderDate <= weekEndDate
-          ) {
-            return total + order.total;
-          }
-          return total;
-        }, 0);
-
-        currentDate.setUTCDate(currentDate.getUTCDate() + 7);
-      } else if (dataInterval === "monthly") {
-        const nextMonthDate = new Date(
-          currentDate.getUTCFullYear(),
-          currentDate.getUTCMonth() + 1,
-          1,
-          0,
-          0,
-          0,
-          0
-        );
-
-        totalSales = filteredOrders.reduce((total, order) => {
-          const orderDate = new Date(order.orderDate);
-          orderDate.setUTCHours(0, 0, 0, 0);
-
-          if (
-            orderDate >= currentDate &&
-            orderDate < nextMonthDate
-          ) {
-            return total + order.total;
-          }
-          return total;
-        }, 0);
-
-        currentDate = nextMonthDate;
-      }
-
-      salesData.push({ name: formattedDate, sales: totalSales });
+    if (isLoading) {
+        return <div>Loading...</div>;
     }
 
-    return salesData;
-  };
+    if (isError) {
+        return <div>Error: {error.message}</div>;
+    }
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching data</div>;
-
-  const salesData = calculateTotalSales();
-
-  return (
-    <div>
-
-      <Box mb={4}>
-
-        <Heading size="xs" mb={4}>
-        Sales Over Time
-      </Heading>
-      </Box>
-      <LineChart width={800} height={300} data={salesData}>
-        <XAxis dataKey="name" />
-        <YAxis />
-        <CartesianGrid stroke="#f5f5f5" />
-        <Line type="monotone" dataKey="sales" stroke="#8884d8" />
-        <Tooltip />
-        <Legend />
-      </LineChart>
-    </div>
-  );
+    return (
+        <div>
+            {/* Render the sales report data */}
+            {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+        </div>
+    );
 };
 
-export default Total_Sale_Shortcut;
+export default SalesReportComponent;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////// old with json db
+
+// import React, { useEffect, useState } from "react";
+// import {
+//   Box,
+//   Input,
+//   Button,
+//   Heading,
+// } from "@chakra-ui/react";
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   Legend,
+// } from "recharts";
+// import { useQuery } from "react-query";
+
+// const fetchData = async () => {
+//   const response = await fetch("http://localhost:8000/orders");
+//   if (!response.ok) {
+//     throw new Error("Network response was not ok");
+//   }
+//   return response.json();
+// };
+
+// const Total_Sale_Shortcut = ({ dates }) => {
+//   const { data, isLoading, isError } = useQuery("orders", fetchData);
+//   const [dataInterval, setDataInterval] = useState("daily");
+//   const [filteredOrders, setFilteredOrders] = useState([]);
+
+//   useEffect(() => {
+//     filterOrdersByDate();
+//   }, [dates]); // Only listen for changes in 'dates' prop
+
+//   const filterOrdersByDate = () => {
+//     if (!data) return;
+
+//     const filtered = data.filter((order) => {
+//       const orderDate = new Date(order.orderDate);
+//       const startDateObj = new Date(dates.startDate);
+//       const endDateObj = new Date(dates.endDate);
+
+//       startDateObj.setUTCHours(0, 0, 0, 0);
+//       endDateObj.setUTCHours(23, 59, 59, 999);
+
+//       return orderDate >= startDateObj && orderDate <= endDateObj;
+//     });
+
+//     setFilteredOrders(filtered);
+//   };
+
+//   const calculateTotalSales = () => {
+//     const salesData = [];
+
+//     const startDateObj = new Date(dates.startDate);
+//     const endDateObj = new Date(dates.endDate);
+
+//     startDateObj.setUTCHours(0, 0, 0, 0);
+//     endDateObj.setUTCHours(23, 59, 59, 999);
+
+//     let currentDate = new Date(startDateObj);
+//     currentDate.setUTCHours(0, 0, 0, 0);
+
+//     while (currentDate <= endDateObj) {
+//       const formattedDate = currentDate.toISOString().split("T")[0];
+//       let totalSales = 0;
+
+//       if (dataInterval === "daily") {
+//         totalSales = filteredOrders.reduce((total, order) => {
+//           const orderDate = new Date(order.orderDate);
+//           orderDate.setUTCHours(0, 0, 0, 0);
+
+//           if (
+//             orderDate.getUTCFullYear() === currentDate.getUTCFullYear() &&
+//             orderDate.getUTCMonth() === currentDate.getUTCMonth() &&
+//             orderDate.getUTCDate() === currentDate.getUTCDate()
+//           ) {
+//             return total + order.total;
+//           }
+//           return total;
+//         }, 0);
+
+//         currentDate.setUTCHours(24, 0, 0, 0);
+//       } else if (dataInterval === "weekly") {
+//         const weekEndDate = new Date(currentDate);
+//         weekEndDate.setUTCDate(currentDate.getUTCDate() + 6);
+//         weekEndDate.setUTCHours(23, 59, 59, 999);
+
+//         totalSales = filteredOrders.reduce((total, order) => {
+//           const orderDate = new Date(order.orderDate);
+//           orderDate.setUTCHours(0, 0, 0, 0);
+
+//           if (
+//             orderDate >= currentDate &&
+//             orderDate <= weekEndDate
+//           ) {
+//             return total + order.total;
+//           }
+//           return total;
+//         }, 0);
+
+//         currentDate.setUTCDate(currentDate.getUTCDate() + 7);
+//       } else if (dataInterval === "monthly") {
+//         const nextMonthDate = new Date(
+//           currentDate.getUTCFullYear(),
+//           currentDate.getUTCMonth() + 1,
+//           1,
+//           0,
+//           0,
+//           0,
+//           0
+//         );
+
+//         totalSales = filteredOrders.reduce((total, order) => {
+//           const orderDate = new Date(order.orderDate);
+//           orderDate.setUTCHours(0, 0, 0, 0);
+
+//           if (
+//             orderDate >= currentDate &&
+//             orderDate < nextMonthDate
+//           ) {
+//             return total + order.total;
+//           }
+//           return total;
+//         }, 0);
+
+//         currentDate = nextMonthDate;
+//       }
+
+//       salesData.push({ name: formattedDate, sales: totalSales });
+//     }
+
+//     return salesData;
+//   };
+
+//   if (isLoading) return <div>Loading...</div>;
+//   if (isError) return <div>Error fetching data</div>;
+
+//   const salesData = calculateTotalSales();
+
+//   return (
+//     <div>
+
+//       <Box mb={4}>
+
+//         <Heading size="xs" mb={4}>
+//         Sales Over Time
+//       </Heading>
+//       </Box>
+//       <LineChart width={800} height={300} data={salesData}>
+//         <XAxis dataKey="name" />
+//         <YAxis />
+//         <CartesianGrid stroke="#f5f5f5" />
+//         <Line type="monotone" dataKey="sales" stroke="#8884d8" />
+//         <Tooltip />
+//         <Legend />
+//       </LineChart>
+//     </div>
+//   );
+// };
+
+// export default Total_Sale_Shortcut;

@@ -16,7 +16,6 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import ProductTable from "./components/OrderNew/ProductSearch";
 import CustomerSearch from "./components/OrderNew/CustomerSearch"  
 // import ProductNew_Form from "./components/ProductNew/ProductNew_Form";
-import OrderForm from "./components/OrderNew/OrderForm";
 
 const createOrder = async (orderData) => {
   try {
@@ -57,17 +56,17 @@ export default function OrderNew(){
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {
-      "customer": 1,
-      "order_date": "2024-03-07T12:00:00Z", //static
-      "fulfillment_status": "Pending", //static
-      "tags": [{"name":1}], //from child
-      "total": "100.00", //from child
-      "items": [
-          {"order": 10, "product": 1, "quantity": 2},
-          {"order": 10, "product": 2, "quantity": 3}
-      ]
-    };
+    // const formData = {
+    //   "customer": 1,
+    //   "order_date": "2024-03-07T12:00:00Z", //static
+    //   "fulfillment_status": "Pending", //static
+    //   "tags": [{"name":1}], //from child
+    //   "total": "100.00", //from child
+    //   "items": [
+    //       {"order": 10, "product": 1, "quantity": 2},
+    //       {"order": 10, "product": 2, "quantity": 3}
+    //   ]
+    // };
 
     createOrderMutation.mutate(formData);
     console.log(formData);
@@ -148,7 +147,6 @@ export default function OrderNew(){
               h="1000px"
               minWidth={500}
                   >
-                    {/* <OrderForm/> */}
 
               <Box maxWidth="1200px" 
               margin="auto"

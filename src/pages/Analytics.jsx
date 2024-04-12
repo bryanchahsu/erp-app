@@ -7,7 +7,6 @@ import Sidebar from "./components/Sidebar"
 import Indicator_test from "./components/Indicator_test";
 import Export from "./components/export";
 import Import from "./components/import";
-import MyGraph from "./components/Analytics/samplegraph";
 // import InventoryTable from "./components/ProductInventory";
 import {
     Stat,
@@ -19,8 +18,6 @@ import {
   } from '@chakra-ui/react'
 
 import DateButton from "./components/DateButton";
-import SimpleLineChart from "./components/Analytics/Total_Sale";  
-import CustomDatePicker from "./components/Analytics/CustomDatepicker";
 import Total_Sale_Shortcut from "./components/Analytics/Total_Sale";
 
 
@@ -65,7 +62,7 @@ export default function Analytics(){
       };
     
       const graphData = [
-        { id: 1, title: 'Box 1', graphReport: <Total_Sale_Shortcut dates={dates}/> },
+        // { id: 1, title: 'Box 1', graphReport: <Total_Sale_Shortcut dates={dates}/> },
         
         // { id: 1, title: 'Box 1', graphReport: <MyGraph/> },
     
@@ -126,9 +123,9 @@ export default function Analytics(){
                         Analytics
                     </Heading>
                     
+                    {/* <Button onClick={handleLogDates}>Log Dates</Button> */}
                     <DateButton onChange={handleDateChange} />
-                    <Button onClick={handleLogDates}>Log Dates</Button>
-                    {/* <CustomDatePicker/> */}
+
                     {/* <Button colorScheme="teal" onClick={handleApply}>
                         Apply
                     </Button> */}

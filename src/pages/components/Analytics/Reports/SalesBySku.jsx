@@ -9,9 +9,9 @@ import React, { useState } from "react";
 import SalesReportComponent from "../Total_Sale";
 import DateRangePick from "./DateRangePicker";
 import FlexboxWithInnerBoxes from "./flexboxsample";
-import SalesOverTimeChart from "./SalesOverTime/SOTChart";
+import SalesBySkuChart from "./SalesBySku/SBSChart";
 
-export default function SalesOverTime(){
+export default function SalesBySku(){
     // const { data, isLoading, isError } = useQuery('products', fetchData);
     // if (isLoading) return <div>Loading...</div>;
     // if (isError) return <div>Error fetching data</div>;
@@ -172,7 +172,7 @@ export default function SalesOverTime(){
                 borderRadius="8px"
                 
                 >
-                <SalesOverTimeChart/>
+                <SalesBySkuChart/>
                 {/* <SalesReportComponent startDate={startDate} endDate={endDate} /> */}
                     {/* //Sub-heading for the table */}
                     {/* <Flex

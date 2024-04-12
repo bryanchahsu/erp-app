@@ -24,6 +24,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import CustomerNew from './pages/CustomerNew'
 import CustomerDetail from './pages/CustomerDetail'
 import SalesOverTime from './pages/components/Analytics/Reports/SalesOverTime'
+import SalesBySku from './pages/components/Analytics/Reports/SalesBySku'
 
 
 
@@ -67,6 +68,8 @@ const router = createBrowserRouter(
 
       <Route path="analytics/total_sale" element={<Total_Sale />} />
       <Route path="analytics/salesovertime" element={<SalesOverTime />} />
+      <Route path="analytics/salesbysku" element={<SalesBySku />} />
+
 
 
 
