@@ -26,19 +26,82 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { useQuery } from 'react-query';
 import { useDebounce } from 'use-debounce';
 
-const SearchResults = ({ items }) => {
-  return (
-    <List>
-      {items.map((item, index) => (
-        <ListItem key={index}>
-          <Link href={`/${item.toLowerCase()}`} color="black">
-            {item}
-          </Link>
-        </ListItem>
-      ))}
-    </List>
-  );
-};
+
+function SearchResults({ data, isLoading, isError, selectedFilter  }) {
+  // Check if loading
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // Check if error
+  if (isError) {
+    return <div>Error fetching data</div>;
+  }
+
+  // Check if data is available
+  if (!data) {
+    return null; // Return null if data is null or undefined
+  }
+
+  // Extract search results
+  const results = data.results || data;
+
+  // Check if results exist
+  if (results) {
+    // Check if customers exist in results
+    const customers = results.customers || results;
+
+    // Check if orders exist in results
+    const orders = results.orders || results;
+
+    // Check if products exist in results
+    const products = results.products || results;
+
+    return (
+      <div>
+        {/* Render customers if available */}
+        {(selectedFilter === 'customers' || !selectedFilter) && customers && Array.isArray(customers) && (
+          <div>
+            <h2>Customers</h2>
+            <ul>
+              {customers.map((customer) => (
+                <li key={customer.id}><a href={`/customers/${customer.id}`}>{customer.name}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Render orders if available */}
+        {(selectedFilter === 'orders' || !selectedFilter) && orders && Array.isArray(orders) && (
+          <div>
+            <h2>Orders</h2>
+            <ul>
+              {orders.map((order) => (
+                <li key={order.id}><a href={`/orders/${order.id}`}>Order ID: {order.id}, Total: {order.total}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Render products if available */}
+        {(selectedFilter === 'products' || !selectedFilter) && products && Array.isArray(products) && (
+          <div>
+            <h2>Products</h2>
+            <ul>
+              {products.map((product) => (
+                <li key={product.id}><a href={`/products/${product.id}`}>{product.title}, Price: ${product.price}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  } else {
+    // Return null if results are not available
+    return null;
+  }
+}
+
 
 function SearchBar() {
   const items = ['Customer 1', 'Customer 2', 'Order 1', 'Order 2', 'Customer 1', 'Customer 2', 'Order 1', 'Order 3'];
@@ -47,6 +110,7 @@ function SearchBar() {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [appliedFilters, setAppliedFilters] = useState([]);
   const [showFlexBox, setShowFlexBox] = useState(true);
+  const [searchHistory, setSearchHistory] = useState([]);
 
   ///////////// API Fetch Request
   const [searchTerm, setSearchTerm] = useState('');
@@ -55,8 +119,9 @@ function SearchBar() {
   // Define a function to fetch customer data from the backend AP\
   const fetchCustomers = async (searchQuery, searchType) => {
     const url = `http://127.0.0.1:8000/search/${searchType}?q=${searchQuery}`;
-    const response = await fetch(url);
     console.log(url)
+    const response = await fetch(url);
+
 
     if (!response.ok) {
       throw new Error('Failed to fetch customers');
@@ -73,6 +138,24 @@ function SearchBar() {
 
   console.log(data)
 
+  // Load search history from local storage on component mount
+  useEffect(() => {
+    const storedHistory = localStorage.getItem('searchHistory');
+    if (storedHistory) {
+      setSearchHistory(JSON.parse(storedHistory));
+    }
+  }, []);
+
+  // Save search history to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+  }, [searchHistory]);
+
+  // Function to handle clearing search history
+  const clearHistory = () => {
+    setSearchHistory([]);
+  };
+
   /////////
 
   const handleInputChange_new = (e) => {
@@ -87,6 +170,7 @@ function SearchBar() {
     }
     setSearchTerm(e.target.value);
   };
+
   const handleFilter = (filter) => {
     // Map the filter to lowercase search types
     const filterToSearchType = {
@@ -183,9 +267,16 @@ function SearchBar() {
                 size="lg"
                 variant="filled"
                 color="black"
-                pl="10" // Adjust the padding left as needed
+                pl="10"
               />
             </InputGroup>
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : isError ? (
+              <div>Error fetching data</div>
+            ) : (
+              <SearchResults data={data} isLoading={isLoading} isError={isError} selectedFilter={selectedFilter} />
+            )}
             {showFlexBox && (
               <Flex mt={2} flexWrap="wrap">
                 <Button onClick={() => handleFilter('Customers')} colorScheme={selectedFilter === 'Customers' ? 'blue' : 'gray'} size="sm" m={1}>
@@ -199,7 +290,6 @@ function SearchBar() {
                 </Button>
               </Flex>
             )}
-            {filteredItems.length > 0 && input !== '' ? <SearchResults items={filteredItems} /> : null}
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -217,6 +307,8 @@ function SearchBar() {
       </Box>
     </div>
   );
+  
+  
 }
 
 export default SearchBar;

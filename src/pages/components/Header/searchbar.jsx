@@ -45,7 +45,7 @@ const SearchBarr = () => {
   };
 
   const clearSearch = () => {
-    setInputValue('');
+    setInputValue('');99999999999999
   };
 
   return (
