@@ -27,7 +27,18 @@ import { useQuery } from 'react-query';
 import { useDebounce } from 'use-debounce';
 
 
-function SearchResults({ data, isLoading, isError, selectedFilter  }) {
+function SearchResults({ data, isLoading, isError, selectedFilter, searchHistory, setSearchHistory }) {
+  const handleItemClick = (item) => {
+    setSearchHistory((prevHistory) => [...prevHistory, item]);
+  };
+
+  // Function to handle clearing search history
+  const clearHistory = () => {
+    setSearchHistory([]);
+  };
+
+
+
   // Check if loading
   if (isLoading) {
     return <div>Loading...</div>;
@@ -65,7 +76,11 @@ function SearchResults({ data, isLoading, isError, selectedFilter  }) {
             <h2>Customers</h2>
             <ul>
               {customers.map((customer) => (
-                <li key={customer.id}><a href={`/customers/${customer.id}`}>{customer.name}</a></li>
+                <li key={customer.id}>
+                  <a href={`/customers/${customer.id}`} onClick={() => handleItemClick(customer.name)}>
+                    {customer.name}
+                    </a>
+                </li>
               ))}
             </ul>
           </div>
@@ -93,7 +108,10 @@ function SearchResults({ data, isLoading, isError, selectedFilter  }) {
               ))}
             </ul>
           </div>
+
         )}
+
+
       </div>
     );
   } else {
@@ -275,7 +293,16 @@ function SearchBar() {
             ) : isError ? (
               <div>Error fetching data</div>
             ) : (
-              <SearchResults data={data} isLoading={isLoading} isError={isError} selectedFilter={selectedFilter} />
+              // <SearchResults data={data} isLoading={isLoading} isError={isError} selectedFilter={selectedFilter} />
+              <SearchResults
+                data={data}
+                isLoading={isLoading}
+                isError={isError}
+                selectedFilter={selectedFilter}
+                searchHistory={searchHistory} // Pass searchHistory as a prop
+                setSearchHistory={setSearchHistory} // Pass setSearchHistory to update searchHistory
+              />
+
             )}
             {showFlexBox && (
               <Flex mt={2} flexWrap="wrap">

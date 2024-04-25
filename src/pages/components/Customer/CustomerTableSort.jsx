@@ -10,10 +10,14 @@ import {
   Box,
   Link as ChakraLink,
   Input,
+  Flex,
+  Button
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
+import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 
-const CustomerTableSort = ({ customers }) => {
+
+const CustomerTableSort = ({ customers, handleNextPage, handlePreviousPage, hasNextPage, hasPreviousPage  }) => {
   const [inventoryData, setInventoryData] = useState([]);
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -106,8 +110,11 @@ const CustomerTableSort = ({ customers }) => {
   };
 
   return (
-    <Box p={4} bg="#F5F5F5" mt="0px">
-      {/* Search input */}
+    <Box p={4} bg="#F5F5F5" mt="0px"
+      width="calc(100% + 118px)"
+      borderRadius="8px"
+
+      >      {/* Search input */}
       <Input
         placeholder="Search"
         value={searchQuery}
@@ -173,7 +180,16 @@ const CustomerTableSort = ({ customers }) => {
           ))}
         </Tbody>
       </Table>
+      <Flex justify="center" mt={4}>
+        <Button onClick={handlePreviousPage} isDisabled={!hasPreviousPage} mr={2}>
+          <IoChevronBack/>
+        </Button>
+        <Button onClick={handleNextPage} isDisabled={!hasNextPage}>
+          <IoChevronForward/>
+        </Button>
+      </Flex>
     </Box>
+    
   );
 };
 

@@ -123,7 +123,7 @@ export default function Products(){
                 <Flex>
                     <Box marginRight="10px">
                         {/* <Button colorScheme="gray" variant="solid" bg="#E3E3E3">Box 1</Button> */}
-                        <Export/>
+                        <Export data = {data.results} api_type={"products"}/>
                     </Box>
                     <Box marginRight="10px">
                         {/* <Button colorScheme="gray" variant="solid" bg="#E3E3E3">Box 2</Button> */}
@@ -385,7 +385,9 @@ export default function Products(){
                     //  borderRadius={8}
                      
                      >   
-                        <InventoryTable products= {data.products}/>
+                        {/* <InventoryTable products= {data.products}/> */}
+                        <InventoryTable products= {data.results}/>
+
                     </Box>
         </Box>
             {/* </Flex> */}

@@ -9,11 +9,24 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverBody,
+  Input,
+  Flex,
 } from '@chakra-ui/react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 
-function Export({ data }) {
+function Export({ data, api_type }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedOption, setSelectedOption] = useState('current');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const handleExport = () => {
     if (selectedOption === 'current') {
@@ -71,22 +84,59 @@ function Export({ data }) {
 
   const exportAllOrders = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/orders/?all=true');
+      // const response = await fetch('http://127.0.0.1:8000/orders/?all=true');
+      // const url = `http://127.0.0.1:8000/search/${searchType}?q=${searchQuery}`;
+      const url = `http://127.0.0.1:8000/${api_type}/?all=true`;
+
+      const response = await fetch(url);
+
+
       if (!response.ok) {
         throw new Error('Failed to fetch all orders');
       }
-      const orders = await response.json();
-      const csvContent = convertToCSV(orders);
+      
+      const data = await response.json();
+
+      const csvContent = convertToCSV(data);
+
       downloadCSV(csvContent, 'all_orders.csv');
     } catch (error) {
       console.error('Error exporting all orders:', error.message);
     }
   };
-
-  const exportOrdersByDateRange = () => {
-    // Logic to export orders by date range as CSV
-    console.log('Exporting orders by date range as CSV...');
+  
+  const exportOrdersByDateRange = async () => {
+    try {
+      const startDate = '2017-01-01'; // Example start date
+      const endDate = '2024-04-30';   // Example end date
+      let allOrders = [];
+  
+      // Fetch the first page of data
+      let nextPage = `http://127.0.0.1:8000/orders/?order_date__gte=${startDate}&order_date__lte=${endDate}`;
+      while (nextPage) {
+        const response = await fetch(nextPage);
+        if (!response.ok) {
+          throw new Error('Failed to export data');
+        }
+        const data = await response.json();
+  
+        // Add results from the current page to the allOrders array
+        allOrders = [...allOrders, ...data.results];
+  
+        // Check if there is a next page
+        nextPage = data.next;
+      }
+  
+      // Convert allOrders to CSV format
+      const csvContent = convertToCSV(allOrders);
+  
+      // Download CSV
+      downloadCSV(csvContent, 'orders.csv');
+    } catch (error) {
+      console.error('Error exporting data:', error.message);
+    }
   };
+  
 
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
@@ -94,7 +144,7 @@ function Export({ data }) {
 
   return (
     <>
-      <Button onClick={onOpen}>Export to CSV</Button>
+      <Button onClick={onOpen}>Export</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -119,7 +169,8 @@ function Export({ data }) {
               />
               All Orders
             </label>
-            <label>
+
+            {api_type === 'orders' &&(<label>
               <input
                 type="radio"
                 value="date"
@@ -128,6 +179,58 @@ function Export({ data }) {
               />
               Orders by Date
             </label>
+            )}
+            {selectedOption === 'date' && (
+              <div>
+                <Flex alignItems="center" marginBottom="10px">
+                  <Input
+                    type="text"
+                    placeholder="Start date"
+                    value={startDate ? startDate.toLocaleDateString() : ''}
+                    readOnly
+                    marginRight="2"
+                    flex="1"
+                  />
+                  <ChevronRightIcon boxSize={6} mt="2" mb="2" marginRight="2" />
+                  <Input
+                    type="text"
+                    placeholder="End date"
+                    value={endDate ? endDate.toLocaleDateString() : ''}
+                    readOnly
+                    flex="1"
+                  />
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    dateFormat="MM/dd/yyyy"
+                    inline
+                  />
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    dateFormat="MM/dd/yyyy"
+                    inline
+                  />
+                </Flex>
+                <Flex justifyContent="flex-end" marginTop="10px">
+                  <Button variant="outline" marginRight="2" onClick={() => {setStartDate(null); setEndDate(null);}}>
+                    Clear Dates
+                  </Button>
+                  <Button colorScheme="teal" onClick={handleExport}>
+                    Apply
+                  </Button>
+                </Flex>
+              </div>
+            )}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleExport}>

@@ -1,6 +1,6 @@
 
 import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import TableSample from "../../components/TableSample"
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
@@ -11,10 +11,11 @@ import { useQuery } from 'react-query';
 import { Link as RouterLink } from 'react-router-dom';
 
 
-const fetchData = async () => {
+const fetchData = async (page) => {
 
     //Django
-    const response = await fetch('http://127.0.0.1:8000/orders/');
+    const url = `http://127.0.0.1:8000/orders/?page=${page}`;
+    const response = await fetch(url);
 
 
     //Json DB
@@ -29,7 +30,24 @@ const fetchData = async () => {
   
 
 export default function Orders(){
-    const { data, isLoading, isError } = useQuery('products', fetchData);
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const { data, isLoading, isError } = useQuery(['products', currentPage], () => fetchData(currentPage));
+
+
+    const hasNextPage = data?.next !== null;
+    const hasPreviousPage = data?.previous !== null;
+
+    const handleNextPage = () => {
+        setCurrentPage(currentPage + 1);
+      };
+    
+      const handlePreviousPage = () => {
+        setCurrentPage(currentPage - 1);
+      };
+
+
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
     
@@ -124,7 +142,7 @@ export default function Orders(){
 
                     
                     {/* <Import/> */}
-                    <Export data= {data.results}/>
+                    <Export data= {data.results} api_type={"orders"}/>
                     <Box
                         as={RouterLink}
                         // bg="#E6E6E6"
@@ -342,7 +360,14 @@ export default function Orders(){
                      >    */}
 
 
-                        <OrderInventory products={data}/>
+                    <OrderInventory
+                    products={data}
+                    // currentPage={currentPage}
+                    handleNextPage={handleNextPage}
+                    handlePreviousPage={handlePreviousPage}
+                    hasNextPage={hasNextPage}
+                    hasPreviousPage={hasPreviousPage}
+                    />
 
                     {/* </Box> */}
 

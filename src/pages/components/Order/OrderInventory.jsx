@@ -9,10 +9,15 @@ import {
   Checkbox,
   Box,
   Input,
+  Button,
+  Flex
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 
-const OrderInventory = ({ products }) => {
+
+
+const OrderInventory = ({ products, handleNextPage, handlePreviousPage, hasNextPage, hasPreviousPage }) => {
   const [inventoryData, setInventoryData] = useState([]);
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -109,6 +114,9 @@ const OrderInventory = ({ products }) => {
     );
   };
 
+
+  console.log(hasNextPage)
+
   return (
     <Box p={4} bg="#F5F5F5" mt="0px"
       width="calc(100% + 135px)"
@@ -198,7 +206,18 @@ const OrderInventory = ({ products }) => {
           ))}
         </Tbody>
       </Table>
-      
+
+      <Flex justify="center" mt={4}>
+        <Button onClick={handlePreviousPage} isDisabled={!hasPreviousPage} mr={2}>
+          <IoChevronBack/>
+        </Button>
+        <Button onClick={handleNextPage} isDisabled={!hasNextPage}>
+          <IoChevronForward/>
+        </Button>
+      </Flex>
+
+
+
     </Box>
   );
 };

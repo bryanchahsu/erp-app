@@ -1,7 +1,8 @@
 // import CustomerTable from "./components/customerTable.jsx"
 // import TextEditor from "./components/textEditor.jsx"
 import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider, Button } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+
 import TableSample from "../../components/TableSample"
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
@@ -15,13 +16,13 @@ import UserTable from "./components/Customer/UserTable.jsx";
 import CustomerTableSort from "./components/Customer/CustomerTableSort.jsx";
 
 
-const fetchData = async () => {
+const fetchData = async (page) => {
 
-    //this uses json db
-    // const response = await fetch('http://localhost:8000/customer');
+    //Django
+    const url = `http://127.0.0.1:8000/customers/?page=${page}`;
+    const response = await fetch(url);
 
-    //this uses django webserver
-    const response = await fetch('http://127.0.0.1:8000/customers/');
+
 
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -34,7 +35,25 @@ const fetchData = async () => {
 
   
 export default function Customers(){
-    const { data, isLoading, isError } = useQuery('customers', fetchData);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const { data, isLoading, isError } = useQuery(['customers',  currentPage], () => fetchData(currentPage));
+    // const { data, isLoading, isError } = useQuery(['products', currentPage], () => fetchData(currentPage));
+
+
+    const hasNextPage = data?.next !== null;
+    const hasPreviousPage = data?.previous !== null;
+
+    const handleNextPage = () => {
+        setCurrentPage(currentPage + 1);
+      };
+    
+      const handlePreviousPage = () => {
+        setCurrentPage(currentPage - 1);
+      };
+
+
+
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
 
@@ -158,7 +177,7 @@ export default function Customers(){
                 <Flex>
                     <Box marginRight="10px">
                         {/* <Button colorScheme="gray" variant="solid" bg="#E3E3E3">Box 1</Button> */}
-                        <Export/>
+                        <Export data={data.results} api_type={"customers"}/>
                     </Box>
                     <Box marginRight="10px">
                         {/* <Button colorScheme="gray" variant="solid" bg="#E3E3E3">Box 2</Button> */}
@@ -421,7 +440,13 @@ export default function Customers(){
 
                     {/* <UserTable userData= {data} />
                     <CustomerTable customers={data}/> */}
-                    <CustomerTableSort customers= {data.customers}/>
+                    <CustomerTableSort 
+                    customers= {data.results}
+                    handleNextPage={handleNextPage}
+                    handlePreviousPage={handlePreviousPage}
+                    hasNextPage={hasNextPage}
+                    hasPreviousPage={hasPreviousPage}
+                    />
 
                     </Box>
         </Box>
