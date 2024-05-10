@@ -14,7 +14,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import CustomerTable from "./components/Customer/CustomerTable.jsx";
 import UserTable from "./components/Customer/UserTable.jsx";
 import CustomerTableSort from "./components/Customer/CustomerTableSort.jsx";
-
+// import Table_v2 from "./components/Customer/CustomerTable_v2.jsx"
 
 const fetchData = async (page) => {
 
@@ -93,6 +93,24 @@ export default function Customers(){
        
       };
     
+      const columns = [
+        {
+          Header: 'Name',
+          accessor: 'name',
+        },
+        {
+          Header: 'Age',
+          accessor: 'age',
+        },
+        // Add more columns as needed
+      ];
+      
+      const data_v2 = [
+        { id: 1, name: 'John Doe', age: 30 },
+        { id: 2, name: 'Jane Smith', age: 25 },
+        // Add more data rows as needed
+      ];
+      
 
     return(
 
@@ -447,6 +465,8 @@ export default function Customers(){
                     hasNextPage={hasNextPage}
                     hasPreviousPage={hasPreviousPage}
                     />
+                    {/* <Table_v2 columns={columns} data={data_v2} /> */}
+
 
                     </Box>
         </Box>

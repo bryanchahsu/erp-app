@@ -222,12 +222,12 @@ function Export({ data, api_type }) {
                   />
                 </Flex>
                 <Flex justifyContent="flex-end" marginTop="10px">
-                  <Button variant="outline" marginRight="2" onClick={() => {setStartDate(null); setEndDate(null);}}>
+                  {/* <Button variant="outline" marginRight="2" onClick={() => {setStartDate(null); setEndDate(null);}}>
                     Clear Dates
                   </Button>
                   <Button colorScheme="teal" onClick={handleExport}>
                     Apply
-                  </Button>
+                  </Button> */}
                 </Flex>
               </div>
             )}

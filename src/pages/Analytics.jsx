@@ -1,4 +1,4 @@
-import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider, Button } from "@chakra-ui/react";
+import { SimpleGrid, Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import TableSample from "../../components/TableSample"
 import Header from "./components/Header"
@@ -18,13 +18,32 @@ import {
   } from '@chakra-ui/react'
 
 import DateButton from "./components/DateButton";
-import Total_Sale_Shortcut from "./components/Analytics/Total_Sale";
-
-
+import SalesOverTimeChart from "./components/Analytics/Reports/SalesOverTime/SOTChart";
+import SalesBySkuChart from "./components/Analytics/Reports/SalesBySku/SBSChart";
+import DateRangePicker from "./components/Analytics/Reports/DateRangePicker";
 
 export default function Analytics(){
 
-
+    const calculatePreviousWeek = () => {
+        const endDate = new Date();
+        const startDate = new Date(endDate);
+        startDate.setDate(startDate.getDate() - 7);
+        return {
+          startDate: startDate.toISOString().split('T')[0],
+          endDate: endDate.toISOString().split('T')[0]
+        };
+      };
+    
+      // Initialize the start and end dates to the previous 7 days
+      const initialDates = calculatePreviousWeek();
+      const [dates, setDates] = useState(initialDates);
+    
+    // Function to handle date range selection
+    const handleDateRangeChange = ({ startDate, endDate }) => {
+      setDates({ startDate, endDate });
+      
+    };
+    console.log(dates.startDate, dates.endDate)
 
     
     const containerStyle = {
@@ -40,12 +59,12 @@ export default function Analytics(){
         minHeight: '100vh', // To ensure the background covers the full viewport height
       };
 
-    const [dates, setDates] = useState({
-        // startDate: "2023-07-15T10:00:00Z", // start with null or a specific date if required
-        // endDate: "2023-07-16T15:30:00Z", // start with null or a specific date if required
-        startDate: "2023-07-15", // yyyy-MM-dd format
-        endDate: "2023-07-16",   // yyyy-MM-dd format
-      });
+    // const [dates, setDates] = useState({
+    //     // startDate: "2023-07-15T10:00:00Z", // start with null or a specific date if required
+    //     // endDate: "2023-07-16T15:30:00Z", // start with null or a specific date if required
+    //     startDate: "2023-07-15", // yyyy-MM-dd format
+    //     endDate: "2023-07-16",   // yyyy-MM-dd format
+    //   });
 
     // const [dates, setDates] = useState({
     // startDate: null, // start with null or a specific date if required
@@ -91,7 +110,7 @@ export default function Analytics(){
      <Box 
         position="relative"
             // bg= "blue"
-            mt= {10}
+            mt= "60px"
             ml={250}
             p={100}
             // bg="black"
@@ -107,7 +126,10 @@ export default function Analytics(){
                 // borderBottom={'solid'}
                 // borderColor="gray.300" // Customize the border color
                 // borderWidth="1px" // Customize the border width
-                bg="#F0F0F0"
+                // bg="#F0F0F0"
+                
+                bg="blue"
+
                 h="60px"
                 px={4}
                 position="absolute"
@@ -117,20 +139,22 @@ export default function Analytics(){
                 zIndex={10}
 
             >
-                <Box>
+                <Box
+                    bg="purple"
+                >
                 {/* Content for the title */}
-                    <Heading as="h1" size="md">
+                    <Heading as="h1" size="md" ml= "100px">
                         Analytics
                     </Heading>
                     
                     {/* <Button onClick={handleLogDates}>Log Dates</Button> */}
-                    <DateButton onChange={handleDateChange} />
+                    {/* <DateButton ml= "100px" onChange={handleDateChange} /> */}
 
                     {/* <Button colorScheme="teal" onClick={handleApply}>
                         Apply
                     </Button> */}
 
-
+                    <DateRangePicker startDate={dates.startDate} endDate={dates.endDate} onDateRangeChange={handleDateRangeChange} />
 
 
                 </Box>
@@ -141,13 +165,9 @@ export default function Analytics(){
                     
                     // bg="black"
                     >
-                    <Export/>
-                    <Import/>
-                </Flex>
-
-
-                {/* <ProfileBox></ProfileBox> */}
-                    
+                    {/* <Export/> */}
+                    {/* <Import/> */}
+                </Flex>                    
         </Flex>
 
 
@@ -156,59 +176,76 @@ export default function Analytics(){
                 w="100%"
                 // bg="purple"
                 position= "relative"
-                top= "80px"
+                // top= "80px"
                 borderRadius="8px"
                 
                 >
 
-
-                    {/* //Sub-heading for the table */}
-                    <Flex
-                        align="center"
-                        justify="space-between"
-                        borderRadius="8px"
-                        borderBottom={'solid'}
-                        borderColor="gray.300" // Customize the border color
-                        borderWidth="1px" // Customize the border width
-                        bg="white"
-                        h="60px"
-                        px={4}
-                        position="absolute"
-                        top={0}
-                        left={0}
-                        right={0}
-                        marginBottom="10px"
-                        // zIndex={10}
-
-                    >
-                        <Box>
-                        {/* Content for the title */}
-                        <Heading as="h1" size="md">
-                            Reports:
-                        </Heading>
-                        </Box>
-                        
-                        <Box
-                                // bg="#F0F0F0"
-                                borderRadius="8px"
-                                mx="auto" // Center the search input horizontally
-                                p={2}
-                                w="800px"
-                            >
-                            
-                        {/* Content for the search bar */}
-                        
-                            <Input placeholder="Search" />
-                            
-                        </Box>
-    
-                        {/* <ProfileBox></ProfileBox> */}
-                
-                    </Flex>
-                                                        
-
                      {/* //This is for the inventory */}
-                     <Flex flexWrap="wrap" justifyContent="center" position="absolute" marginTop="100px">
+                     {/* <Flex flexWrap="wrap" justifyContent="center" position="absolute" marginTop="100px" bg= 'blue'> */}
+
+
+                     <Box p={8} >
+                <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
+                    {/* Total Sales */}
+                    <Box bg="white" p={6} borderRadius="md">
+                        
+                        {/* <SalesOverTimeChart/> */}
+
+                        <SalesBySkuChart startDate={dates.startDate} endDate={dates.endDate} />
+                        
+                        {/* <Stat>
+                            <StatLabel>Total Sales</StatLabel>
+                            <StatNumber>$10,485.67</StatNumber>
+                            <StatHelpText>133% ↑</StatHelpText>
+                        </Stat> */}
+                    </Box>
+
+                    {/* Sales by Channel */}
+                    <Box bg="white" p={6} borderRadius="md">
+                        <SalesOverTimeChart startDate={dates.startDate} endDate={dates.endDate} />
+
+                        {/* <Stat>
+                            <StatLabel>Sales by Channel</StatLabel>
+                        </Stat> */}
+                    </Box>
+
+                    {/* Conversion Rate */}
+                    <Box bg="white" p={6} borderRadius="md">
+                        <Stat>
+                            <StatLabel>Online Store Conversion Rate</StatLabel>
+                            <StatNumber>13.53%</StatNumber>
+                            <StatHelpText>77% ↑</StatHelpText>
+                        </Stat>
+                    </Box>
+
+                    {/* Total Orders */}
+                    <Box bg="white" p={6} borderRadius="md">
+                        <Stat>
+                            <StatLabel>Total Orders</StatLabel>
+                            <StatNumber>18</StatNumber>
+                        </Stat>
+                    </Box>
+
+                    {/* Average Order Value */}
+                    <Box bg="white" p={6} borderRadius="md">
+                        <Stat>
+                            <StatLabel>Average Order Value</StatLabel>
+                            <StatNumber>$565.53</StatNumber>
+                            <StatHelpText>57% ↑</StatHelpText>
+                        </Stat>
+                    </Box>
+
+                    {/* Online Store Sessions */}
+                    <Box bg="white" p={6} borderRadius="md">
+                        <Stat>
+                            <StatLabel>Online Store Sessions</StatLabel>
+                            <StatNumber>133</StatNumber>
+                        </Stat>
+                    </Box>
+                </SimpleGrid>
+            </Box>
+
                         {graphData.map((item) => (
                             <Box
                             key={item.id}
@@ -224,7 +261,7 @@ export default function Analytics(){
                             {item.graphReport} {/* Render the component from graphReport property */}
                             </Box>
                         ))}
-                    </Flex>
+                    {/* </Flex> */}
 
                     
 

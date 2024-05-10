@@ -25,7 +25,7 @@ import CustomerNew from './pages/CustomerNew'
 import CustomerDetail from './pages/CustomerDetail'
 import SalesOverTime from './pages/components/Analytics/Reports/SalesOverTime'
 import SalesBySku from './pages/components/Analytics/Reports/SalesBySku'
-
+import Analytics_test from './pages/Analytics_test'
 
 
 const queryClient = new QueryClient();
@@ -52,7 +52,9 @@ const router = createBrowserRouter(
       <Route path="customers/new" element={<CustomerNew />} />
 
       <Route path="dashboards" element={<Create />} />
+      {/* <Route path="analytics" element={<Analytics_test />} /> */}
       <Route path="analytics" element={<Analytics />} />
+
       <Route path="products/new" element={<ProductNew />} />
       <Route path="products/:productId" element={<ProductDetail />} />
       <Route path="orders/:orderId" element={<OrderDetail />} />

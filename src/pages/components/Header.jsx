@@ -28,7 +28,7 @@ export default function Header() {
           </Heading>
         </Box>
 
-        <Box bg="#1A1A1A">
+        <Box bg="">
           <Flex align="center" p="4px">
 
             {/* <Input

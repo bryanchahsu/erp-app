@@ -23,8 +23,12 @@ import {
   TagCloseButton,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
+import { Spinner } from '@chakra-ui/react';
+
 import { useQuery } from 'react-query';
 import { useDebounce } from 'use-debounce';
+import { FaUserCircle, FaShoppingCart, FaBox } from 'react-icons/fa';
+
 
 
 function SearchResults({ data, isLoading, isError, selectedFilter, searchHistory, setSearchHistory }) {
@@ -68,57 +72,92 @@ function SearchResults({ data, isLoading, isError, selectedFilter, searchHistory
     // Check if products exist in results
     const products = results.products || results;
 
+
+
     return (
       <div>
-        {/* Render customers if available */}
-        {(selectedFilter === 'customers' || !selectedFilter) && customers && Array.isArray(customers) && (
-          <div>
-            <h2>Customers</h2>
-            <ul>
-              {customers.map((customer) => (
-                <li key={customer.id}>
-                  <a href={`/customers/${customer.id}`} onClick={() => handleItemClick(customer.name)}>
-                    {customer.name}
-                    </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Render orders if available */}
-        {(selectedFilter === 'orders' || !selectedFilter) && orders && Array.isArray(orders) && (
-          <div>
-            <h2>Orders</h2>
-            <ul>
-              {orders.map((order) => (
-                <li key={order.id}><a href={`/orders/${order.id}`}>Order ID: {order.id}, Total: {order.total}</a></li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Render products if available */}
-        {(selectedFilter === 'products' || !selectedFilter) && products && Array.isArray(products) && (
-          <div>
-            <h2>Products</h2>
-            <ul>
-              {products.map((product) => (
-                <li key={product.id}><a href={`/products/${product.id}`}>{product.title}, Price: ${product.price}</a></li>
-              ))}
-            </ul>
-          </div>
-
-        )}
-
-
-      </div>
-    );
+      {/* Render customers if available */}
+      {(selectedFilter === 'customers' || !selectedFilter) && customers && Array.isArray(customers) && (
+        <Box mb="4">
+          <List styleType="none" pl="0">
+            {customers.map((customer) => (
+              <ListItem key={customer.id} mb="2">
+                <Box
+                  as="a"
+                  href={`/customers/${customer.id}`}
+                  onClick={() => handleItemClick(customer.name)}
+                  _hover={{ bg: 'gray.200' }}
+                  display="flex"
+                  alignItems="center"
+                  color="#333333"
+                  p="2"
+                  borderRadius="md"
+                >
+                  <FaUserCircle color="gray" style={{ marginRight: '8px' }} /> {/* Person Icon */}
+                  {customer.name}
+                </Box>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      )}
+  
+      {/* Render orders if available */}
+      {(selectedFilter === 'orders' || !selectedFilter) && orders && Array.isArray(orders) && (
+        <Box mb="4">
+          <List styleType="none" pl="0">
+            {orders.map((order) => (
+              <ListItem key={order.id} mb="2">
+                <Box
+                  as="a"
+                  href={`/orders/${order.id}`}
+                  _hover={{ bg: 'gray.200' }}
+                  display="flex"
+                  alignItems="center"
+                  color="#333333"
+                  p="2"
+                  borderRadius="md"
+                >
+                  <FaShoppingCart color="gray" style={{ marginRight: '8px' }} /> {/* Shopping Cart Icon */}
+                  Order ID: {order.id}, Total: {order.total}
+                </Box>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      )}
+  
+      {/* Render products if available */}
+      {(selectedFilter === 'products' || !selectedFilter) && products && Array.isArray(products) && (
+        <Box mb="4">
+          <List styleType="none" pl="0">
+            {products.map((product) => (
+              <ListItem key={product.id} mb="2">
+                <Box
+                  as="a"
+                  href={`/products/${product.id}`}
+                  _hover={{ bg: 'gray.200' }}
+                  display="flex"
+                  alignItems="center"
+                  color="#333333"
+                  p="2"
+                  borderRadius="md"
+                >
+                  <FaBox color="gray" style={{ marginRight: '8px' }} /> {/* Product Icon */}
+                  
+                  {product.title}, Price: ${product.price}
+                </Box>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      )}
+    </div>
+  );
   } else {
-    // Return null if results are not available
     return null;
   }
-}
+};
 
 
 function SearchBar() {
@@ -136,6 +175,8 @@ function SearchBar() {
 
   // Define a function to fetch customer data from the backend AP\
   const fetchCustomers = async (searchQuery, searchType) => {
+
+
     const url = `http://127.0.0.1:8000/search/${searchType}?q=${searchQuery}`;
     console.log(url)
     const response = await fetch(url);
@@ -275,9 +316,9 @@ function SearchBar() {
               ))}
             </Flex>
             <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <SearchIcon color="gray.300" mt="10px" />
-              </InputLeftElement>
+            <InputLeftElement pointerEvents="none">
+                {isLoading ? <Spinner color="black" size="sm" mt="10px" /> : <SearchIcon color="gray.300" mt="10px" />}
+            </InputLeftElement>
               <Input
                 placeholder="Search for products..."
                 value={input}
@@ -286,6 +327,8 @@ function SearchBar() {
                 variant="filled"
                 color="black"
                 pl="10"
+                focusBorderColor="gray"
+                borderColor="gray.100"
               />
             </InputGroup>
             {isLoading ? (
@@ -320,7 +363,7 @@ function SearchBar() {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <Box color="white">
+      <Box color="black">
         <Input
           placeholder="Search for products..."
           value={input}
@@ -330,6 +373,10 @@ function SearchBar() {
           color="black"
           bg="black"
           onClick={toggleDashboard}
+          _hover={{ bg: 'black' , borderColor: "white" }} // Override hover styles to keep background black
+          focusBorderColor="gray"
+          borderColor= "gray.700"
+
         />
       </Box>
     </div>

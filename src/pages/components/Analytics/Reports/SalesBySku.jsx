@@ -5,25 +5,42 @@ import Export from "../../export";
 import { Flex, Box, Table, Thead, Tbody, Tr, Th, Td, Input, Heading, Divider } from "@chakra-ui/react";
 import { Link as RouterLink } from 'react-router-dom';
 import React, { useState } from "react";
-
+import DateRangePicker from "./DateRangePicker";
+import SalesOverTimeChart from "./SalesOverTime/SOTChart";
 import SalesReportComponent from "../Total_Sale";
-import DateRangePick from "./DateRangePicker";
 import FlexboxWithInnerBoxes from "./flexboxsample";
 import SalesBySkuChart from "./SalesBySku/SBSChart";
 
 export default function SalesBySku(){
-    // const { data, isLoading, isError } = useQuery('products', fetchData);
-    // if (isLoading) return <div>Loading...</div>;
-    // if (isError) return <div>Error fetching data</div>;
 
+  const calculatePreviousWeek = () => {
+    const endDate = new Date();
+    const startDate = new Date(endDate);
+    startDate.setDate(startDate.getDate() - 7);
+    return {
+      startDate: startDate.toISOString().split('T')[0],
+      endDate: endDate.toISOString().split('T')[0]
+    };
+  };
 
-    const startDate = '2024-03-07';
-    const endDate = '2024-03-08';
+  // Initialize the start and end dates to the previous 7 days
+  const initialDates = calculatePreviousWeek();
+  const [dates, setDates] = useState(initialDates);
 
-    const [dates, setDates] = useState({
-        startDate: "2023-07-15", // yyyy-MM-dd format
-        endDate: "2023-07-16",   // yyyy-MM-dd format
-      });
+// Function to handle date range selection
+const handleDateRangeChange = ({ startDate, endDate }) => {
+  setDates({ startDate, endDate });
+  
+};
+console.log(dates.startDate, dates.endDate)
+
+    // const startDate = '2024-03-07';
+    // const endDate = '2024-03-08';
+
+    // const [dates, setDates] = useState({
+    //     startDate: "2023-07-15", // yyyy-MM-dd format
+    //     endDate: "2023-07-16",   // yyyy-MM-dd format
+    //   });
 
     const containerStyle = {
         flexBasis: "20%", // Equal width for all containers (5 containers = 100%)
@@ -99,7 +116,7 @@ export default function SalesBySku(){
                 {/* Content for the title */}
                     <Heading as="h1" size="md" ml="40px">
                         <BackButton/>
-                        Sales Over Time
+                        Sales By SKU
                     </Heading>
                 </Box>
                 
@@ -156,10 +173,9 @@ export default function SalesBySku(){
                         marginLeft="-50px" // Move it to the left by 50px
                         bg="white"
         >
-            {/* <FlexboxWithInnerBoxes/>           */}
-            test
+          <DateRangePicker startDate={dates.startDate} endDate={dates.endDate} onDateRangeChange={handleDateRangeChange} />
+
         </Flex> 
-        {/* <DateRangePick/>                */}
 
         {/* inventory table below */}
         <Box
@@ -172,7 +188,9 @@ export default function SalesBySku(){
                 borderRadius="8px"
                 
                 >
-                <SalesBySkuChart/>
+                <SalesBySkuChart startDate={dates.startDate} endDate={dates.endDate} />
+                {/* <SalesOverTimeChart startDate={dates.startDate} endDate={dates.endDate} /> */}
+
                 {/* <SalesReportComponent startDate={startDate} endDate={endDate} /> */}
                     {/* //Sub-heading for the table */}
                     {/* <Flex

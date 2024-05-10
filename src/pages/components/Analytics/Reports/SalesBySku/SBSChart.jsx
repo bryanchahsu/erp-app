@@ -3,18 +3,28 @@ import { useQuery } from "react-query";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import ReactTable from "react-table"; // Import React-Table
 import "react-table/react-table.css"; // Import React-Table CSS
+import DateRangePicker from "../DateRangePicker";
 
-const fetchSalesBySku = async () => {
-  const response = await fetch(`http://127.0.0.1:8000/reports/sales-by-sku/`);
+const fetchSalesBySku = async (startDate, endDate) => {
+  console.log('Fetching data for date range:', startDate, 'to', endDate);
+
+  // const startDate = '2024-03-01';
+  // const endDate = '2024-03-31';
+  const url = `http://127.0.0.1:8000/reports/sales-by-sku/?start_date=${startDate}&end_date=${endDate}`;
+  const response = await fetch(url);
+
+  
   if (!response.ok) {
-    throw new Error("Failed to fetch sales by SKU data");
+    console.error('Failed to fetch sales over time data:', response.status, response.statusText);
+    throw new Error("Failed to fetch sales over time data");
   }
   return response.json();
   
 };
 
-const SalesBySkuChart = () => {
-  const { isLoading, error, data } = useQuery("salesBySku", fetchSalesBySku);
+const SalesBySkuChart = ({ startDate, endDate }) => {
+  const { isLoading, error, data } = useQuery(["salesBySku", startDate, endDate], () => fetchSalesBySku(startDate, endDate));
+
   console.log(data)
 
   if (isLoading) return <div>Loading...</div>;

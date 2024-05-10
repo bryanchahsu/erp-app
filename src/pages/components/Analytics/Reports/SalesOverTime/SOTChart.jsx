@@ -4,17 +4,33 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import ReactTable from "react-table"; // Import React-Table
 import "react-table/react-table.css"; // Import React-Table CSS
 
-const fetchSalesOverTime = async () => {
+const fetchSalesOverTime = async (startDate, endDate) => {
+  console.log('Fetching data for date range:', startDate, 'to', endDate);
+
   // Make API call to fetch sales over time data
-  const response = await fetch(`http://127.0.0.1:8000/reports/sales-report/`);
+  // const response = await fetch(`http://127.0.0.1:8000/reports/sales-report/`);
+  // const startDate = '2024-03-01';
+  // const endDate = '2024-03-31';
+  const url = `http://127.0.0.1:8000/reports/sales-report/?start_date=${startDate}&end_date=${endDate}`;
+  // const url = `http://127.0.0.1:8000/reports/sales-by-sku/`;
+  console.log('API URL:', url);
+
+
+
+  const response = await fetch(url);
+
+
+  
   if (!response.ok) {
+    console.error('Failed to fetch sales over time data:', response.status, response.statusText);
     throw new Error("Failed to fetch sales over time data");
   }
+
   return response.json();
 };
 
-const SalesOverTimeChart = () => {
-  const { isLoading, error, data } = useQuery("salesOverTime", fetchSalesOverTime);
+const SalesOverTimeChart = ({ startDate, endDate }) => {
+  const { isLoading, error, data } = useQuery(["salesOverTime", startDate, endDate], () => fetchSalesOverTime(startDate, endDate));
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
